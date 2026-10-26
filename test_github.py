@@ -62,6 +62,8 @@ class FakeGitHub:
         self.requests.append((method, path))
         if auth != f"Bearer {self.token}":
             return 401, {"message": "Bad credentials"}
+        if path.endswith("/"):
+            return 404, {"message": "Not Found"}                       # the real GitHub does this for a trailing slash
         prefix = f"/repos/{REPO}"
         if not path.startswith(prefix):
             return 404, {"message": "Not Found"}

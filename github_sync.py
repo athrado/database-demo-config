@@ -49,7 +49,7 @@ def get_config() -> GitHubConfig | None:
 
 
 def _call(cfg: GitHubConfig, method: str, path: str, body: dict | None = None) -> dict:
-    url = f"{cfg.api_url}/repos/{cfg.repo}/{path}"
+    url = f"{cfg.api_url}/repos/{cfg.repo}" + (f"/{path}" if path else "")      # no trailing slash: GitHub answers 404 for it
     headers = {"Authorization": f"Bearer {cfg.token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
     try:
         resp = requests.request(method, url, headers=headers, json=body, timeout=TIMEOUT)
