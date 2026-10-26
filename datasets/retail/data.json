@@ -1,0 +1,218 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Emma Wilson",
+      "email": "emma.wilson@example.com",
+      "phone": "+447700900101",
+      "address": "14 Orchard Lane, Bristol BS1 4DJ",
+      "plan": "Gold member",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "loyalty_points": 2340,
+      "member_since": "12 March 2021"
+    },
+    "C002": {
+      "name": "Liam Carter",
+      "email": "liam.carter@example.com",
+      "phone": "+447700900102",
+      "address": "3 Mill Street, Leeds LS1 5AB",
+      "plan": "Silver member",
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "notes": [],
+      "loyalty_points": 870,
+      "member_since": "02 September 2023"
+    },
+    "C003": {
+      "name": "Olivia Brown",
+      "email": "olivia.brown@example.com",
+      "phone": "+447700900103",
+      "address": "27 Harbour Road, Cardiff CF10 4PA",
+      "plan": "Bronze member",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "loyalty_points": 120,
+      "member_since": "19 May 2025"
+    },
+    "C004": {
+      "name": "Noah Patel",
+      "email": "noah.patel@example.com",
+      "phone": "+447700900104",
+      "address": "9 Station Court, Manchester M1 3FF",
+      "plan": "Gold member",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "loyalty_points": 3015,
+      "member_since": "30 January 2020"
+    }
+  },
+  "orders": {
+    "O1001": {
+      "customer_id": "C001",
+      "status": "delivered",
+      "placed": "{{today-20d}}",
+      "currency": "GBP",
+      "total": 108.0,
+      "payment_method": "Credit card",
+      "items": [
+        {
+          "sku": "SKU-1042",
+          "name": "Running shoes",
+          "quantity": 1,
+          "unit_price": 89.0
+        },
+        {
+          "sku": "SKU-2210",
+          "name": "Sports socks (3 pack)",
+          "quantity": 2,
+          "unit_price": 9.5
+        }
+      ],
+      "tracking_number": "TRK84120031",
+      "delivery_address": "14 Orchard Lane, Bristol BS1 4DJ"
+    },
+    "O1002": {
+      "customer_id": "C001",
+      "status": "shipped",
+      "placed": "{{today-2d}}",
+      "currency": "GBP",
+      "total": 129.99,
+      "payment_method": "PayPal",
+      "items": [
+        {
+          "sku": "SKU-3308",
+          "name": "Wireless headphones",
+          "quantity": 1,
+          "unit_price": 129.99
+        }
+      ],
+      "tracking_number": "TRK84120877",
+      "delivery_address": "14 Orchard Lane, Bristol BS1 4DJ"
+    },
+    "O1003": {
+      "customer_id": "C002",
+      "status": "processing",
+      "placed": "{{today-1d}}",
+      "currency": "GBP",
+      "total": 228.8,
+      "payment_method": "Credit card",
+      "items": [
+        {
+          "sku": "SKU-5521",
+          "name": "Coffee machine",
+          "quantity": 1,
+          "unit_price": 199.0
+        },
+        {
+          "sku": "SKU-5530",
+          "name": "Coffee beans 1kg",
+          "quantity": 2,
+          "unit_price": 14.9
+        }
+      ]
+    },
+    "O1004": {
+      "customer_id": "C003",
+      "status": "cancelled",
+      "placed": "{{today-9d}}",
+      "currency": "GBP",
+      "total": 24.0,
+      "payment_method": "Gift card",
+      "items": [
+        {
+          "sku": "SKU-7710",
+          "name": "Yoga mat",
+          "quantity": 1,
+          "unit_price": 24.0
+        }
+      ]
+    },
+    "O1005": {
+      "customer_id": "C004",
+      "status": "delivered",
+      "placed": "{{today-14d}}",
+      "currency": "GBP",
+      "total": 349.0,
+      "payment_method": "Bank transfer",
+      "items": [
+        {
+          "sku": "SKU-9001",
+          "name": "Standing desk",
+          "quantity": 1,
+          "unit_price": 349.0
+        }
+      ],
+      "tracking_number": "TRK84119004",
+      "delivery_address": "9 Station Court, Manchester M1 3FF"
+    },
+    "O1006": {
+      "customer_id": "C004",
+      "status": "shipped",
+      "placed": "{{today-3d}}",
+      "currency": "GBP",
+      "total": 79.0,
+      "payment_method": "Credit card",
+      "items": [
+        {
+          "sku": "SKU-9012",
+          "name": "Desk lamp",
+          "quantity": 2,
+          "unit_price": 39.5
+        }
+      ],
+      "tracking_number": "TRK84120990",
+      "delivery_address": "9 Station Court, Manchester M1 3FF"
+    }
+  },
+  "returns": {
+    "R5001": {
+      "customer_id": "C001",
+      "order_id": "O1001",
+      "reason": "Too small",
+      "status": "pending",
+      "refund_amount": 89.0,
+      "currency": "GBP",
+      "requested": "{{today-1d}}"
+    },
+    "R5002": {
+      "customer_id": "C004",
+      "order_id": "O1005",
+      "reason": "Changed my mind",
+      "status": "approved",
+      "refund_amount": 349.0,
+      "currency": "GBP",
+      "requested": "{{today-4d}}"
+    }
+  },
+  "issues": {
+    "I7001": {
+      "customer_id": "C002",
+      "order_id": "O1003",
+      "category": "Late delivery",
+      "priority": "medium",
+      "status": "open",
+      "opened": "{{today-1d}}",
+      "description": "Customer asked where the order is; the warehouse shows it as still being packed."
+    },
+    "I7002": {
+      "customer_id": "C003",
+      "order_id": "O1004",
+      "category": "Refund not received",
+      "priority": "high",
+      "status": "investigating",
+      "opened": "{{today-5d}}",
+      "description": "Order was cancelled but the gift card balance was not restored."
+    }
+  }
+}

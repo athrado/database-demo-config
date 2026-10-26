@@ -1,0 +1,173 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Sarah Okafor",
+      "email": "sarah.okafor@acme.example",
+      "phone": "+442079460501",
+      "address": "London office, floor 3",
+      "plan": "Standard support",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "department": "Finance",
+      "manager": "Greg Hall",
+      "employee_no": "E-20431"
+    },
+    "C002": {
+      "name": "David Kim",
+      "email": "david.kim@acme.example",
+      "phone": "+442079460502",
+      "address": "London office, floor 5",
+      "plan": "VIP support",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "department": "Engineering",
+      "manager": "Mia Chen",
+      "employee_no": "E-10872"
+    },
+    "C003": {
+      "name": "Lucia Fernandez",
+      "email": "lucia.fernandez@acme.example",
+      "phone": "+34910000503",
+      "address": "Madrid office, floor 2",
+      "plan": "Standard support",
+      "preferences": {
+        "language": "es",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "department": "Sales",
+      "manager": "Pablo Ruiz",
+      "employee_no": "E-30118"
+    },
+    "C004": {
+      "name": "Murat Yildiz",
+      "email": "murat.yildiz@acme.example",
+      "phone": "+902120000504",
+      "address": "Istanbul office, floor 1",
+      "plan": "Standard support",
+      "preferences": {
+        "language": "tr",
+        "contact_by": "sms"
+      },
+      "notes": [],
+      "department": "HR",
+      "manager": "Selin Arslan",
+      "employee_no": "E-40295"
+    }
+  },
+  "tickets": {
+    "INC10001": {
+      "customer_id": "C001",
+      "title": "VPN keeps disconnecting",
+      "category": "Network",
+      "priority": "medium",
+      "status": "in progress",
+      "created": "{{today-2d}}",
+      "assigned_to": "Network team",
+      "description": "VPN drops every 10-15 minutes when working from home."
+    },
+    "INC10002": {
+      "customer_id": "C002",
+      "title": "Laptop battery swollen",
+      "category": "Hardware",
+      "priority": "critical",
+      "status": "open",
+      "created": "{{today}}",
+      "assigned_to": "Hardware desk",
+      "description": "Battery is bulging and the trackpad is lifting. Employee has stopped using the laptop."
+    },
+    "INC10003": {
+      "customer_id": "C003",
+      "title": "Cannot print to Floor 2 printer",
+      "category": "Printing",
+      "priority": "low",
+      "status": "resolved",
+      "created": "{{today-6d}}",
+      "assigned_to": "Service desk"
+    },
+    "INC10004": {
+      "customer_id": "C004",
+      "title": "Password reset loop",
+      "category": "Accounts",
+      "priority": "high",
+      "status": "pending",
+      "created": "{{today-1d}}",
+      "assigned_to": "Service desk",
+      "description": "Password reset email arrives but the new password is rejected after login."
+    }
+  },
+  "assets": {
+    "AS5001": {
+      "customer_id": "C001",
+      "type": "Laptop",
+      "model": "ThinkPad T14",
+      "asset_tag": "ACME-LT-04311",
+      "serial_number": "PF3K8821",
+      "purchase_date": "{{today-700d}}",
+      "warranty_end_date": "{{today+30d}}",
+      "status": "in use"
+    },
+    "AS5002": {
+      "customer_id": "C002",
+      "type": "Laptop",
+      "model": "MacBook Pro 16",
+      "asset_tag": "ACME-LT-02210",
+      "serial_number": "C02XK1QDJG5H",
+      "purchase_date": "{{today-1100d}}",
+      "warranty_end_date": "{{today-30d}}",
+      "status": "faulty"
+    },
+    "AS5003": {
+      "customer_id": "C002",
+      "type": "Phone",
+      "model": "iPhone 15",
+      "asset_tag": "ACME-PH-00981",
+      "serial_number": "F2LXK0A9",
+      "purchase_date": "{{today-300d}}",
+      "warranty_end_date": "{{today+430d}}",
+      "status": "in use"
+    },
+    "AS5004": {
+      "customer_id": "C003",
+      "type": "Laptop",
+      "model": "Dell Latitude 5440",
+      "asset_tag": "ACME-LT-05102",
+      "serial_number": "7HK4N93",
+      "purchase_date": "{{today-200d}}",
+      "warranty_end_date": "{{today+530d}}",
+      "status": "in use"
+    }
+  },
+  "requests": {
+    "RQ6001": {
+      "customer_id": "C001",
+      "type": "Software access",
+      "title": "Access to Power BI",
+      "approver": "Greg Hall",
+      "status": "pending approval",
+      "requested": "{{today-3d}}"
+    },
+    "RQ6002": {
+      "customer_id": "C003",
+      "type": "New hardware",
+      "title": "Second monitor",
+      "approver": "Pablo Ruiz",
+      "status": "approved",
+      "requested": "{{today-8d}}"
+    },
+    "RQ6003": {
+      "customer_id": "C004",
+      "type": "Onboarding",
+      "title": "Set up accounts for new starter (Ece Aksoy)",
+      "approver": "Selin Arslan",
+      "status": "in progress",
+      "requested": "{{today-2d}}"
+    }
+  }
+}

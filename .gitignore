@@ -1,0 +1,12 @@
+.env
+data/
+azurite-data/
+__pycache__/
+*.pyc
+documents_out/
+.streamlit/secrets.toml
+data.backup.json
+
+# generated sample documents (they live in Blob Storage, not in git)
+*.pdf
+documents-*.html

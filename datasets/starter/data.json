@@ -1,0 +1,62 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Alex Example",
+      "email": "alex.example@example.com",
+      "phone": "+441234567001",
+      "plan": "Standard",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": []
+    },
+    "C002": {
+      "name": "Jordan Sample",
+      "email": "jordan.sample@example.com",
+      "phone": "+441234567002",
+      "plan": "Premium",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [
+        "Prefers calls after 5 pm"
+      ]
+    },
+    "C003": {
+      "name": "Sam Placeholder",
+      "email": "sam.placeholder@example.com",
+      "phone": "+441234567003",
+      "plan": "Basic",
+      "preferences": {
+        "language": "fr",
+        "contact_by": "sms"
+      },
+      "notes": []
+    }
+  },
+  "orders": {
+    "O1001": {
+      "customer_id": "C001",
+      "item": "Starter kit",
+      "status": "shipped",
+      "total": 49.9,
+      "currency": "GBP"
+    },
+    "O1002": {
+      "customer_id": "C002",
+      "item": "Annual subscription",
+      "status": "processing",
+      "total": 199.0,
+      "currency": "GBP"
+    },
+    "O1003": {
+      "customer_id": "C002",
+      "item": "Extra seat",
+      "status": "delivered",
+      "total": 15.0,
+      "currency": "GBP"
+    }
+  }
+}

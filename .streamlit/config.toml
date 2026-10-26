@@ -1,0 +1,15 @@
+# Streamlit looks for this file in the folder you run `streamlit run app.py` from.
+#
+# Defining BOTH themes adds a theme switcher to the app's menu (the three-dots menu, top right):
+# system / sun (light) / moon (dark). The choice is remembered in the browser. Until someone picks one,
+# the app follows the system setting.
+#
+# To force dark mode with no switcher, replace everything below with:
+#     [theme]
+#     base = "light"
+
+[theme.light]
+primaryColor = "#3b82f6"
+
+[theme.dark]
+primaryColor = "#3b82f6"

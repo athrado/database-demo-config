@@ -1,0 +1,42 @@
+{
+  "primary": "customers",
+  "collections": {
+    "customers": {
+      "subtitle": [
+        "plan"
+      ],
+      "first": [
+        "email",
+        "phone",
+        "address",
+        "loyalty_points",
+        "member_since"
+      ]
+    },
+    "orders": {
+      "link": "customer_id",
+      "title": "id",
+      "first": [
+        "placed",
+        "total",
+        "payment_method",
+        "items"
+      ]
+    },
+    "returns": {
+      "link": "customer_id",
+      "title": "order_id",
+      "subtitle": [
+        "reason"
+      ]
+    },
+    "issues": {
+      "link": "customer_id",
+      "title": "category",
+      "first": [
+        "order_id",
+        "priority"
+      ]
+    }
+  }
+}

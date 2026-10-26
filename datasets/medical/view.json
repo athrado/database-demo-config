@@ -1,0 +1,63 @@
+{
+  "primary": "customers",
+  "collections": {
+    "customers": {
+      "label": "Patients",
+      "label_one": "Patient",
+      "icon": "🧑‍⚕️",
+      "accent": "teal",
+      "subtitle": [
+        "plan"
+      ],
+      "first": [
+        "email",
+        "phone",
+        "address",
+        "date_of_birth",
+        "gp",
+        "allergies"
+      ]
+    },
+    "appointments": {
+      "link": "customer_id",
+      "title": "department",
+      "subtitle": [
+        "doctor"
+      ],
+      "first": [
+        "date",
+        "time",
+        "location"
+      ]
+    },
+    "prescriptions": {
+      "link": "customer_id",
+      "title": "medication",
+      "first": [
+        "dosage",
+        "frequency",
+        "refills_left"
+      ]
+    },
+    "claims": {
+      "link": "customer_id",
+      "title": "type",
+      "first": [
+        "amount"
+      ]
+    },
+    "lab_results": {
+      "link": "customer_id",
+      "title": "test",
+      "label": "Lab results",
+      "label_one": "Lab result",
+      "icon": "🧪",
+      "accent": "teal",
+      "first": [
+        "value",
+        "unit",
+        "reference_range"
+      ]
+    }
+  }
+}

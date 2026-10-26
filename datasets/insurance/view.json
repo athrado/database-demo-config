@@ -1,0 +1,47 @@
+{
+  "primary": "customers",
+  "collections": {
+    "customers": {
+      "label": "Policy holders",
+      "label_one": "Policy holder",
+      "subtitle": [
+        "plan"
+      ],
+      "first": [
+        "email",
+        "phone",
+        "address",
+        "date_of_birth"
+      ]
+    },
+    "claims": {
+      "link": "customer_id",
+      "title": "type",
+      "subtitle": [
+        "reason"
+      ],
+      "first": [
+        "car",
+        "address"
+      ]
+    },
+    "requests": {
+      "link": "customer_id",
+      "title": "type"
+    },
+    "quotes": {
+      "link": "customer_id",
+      "title": "type",
+      "subtitle": [
+        "vehicle"
+      ],
+      "first": [
+        "vehicle",
+        "estimated_quote",
+        "main_driver",
+        "estimated_annual_mileage",
+        "expected_delivery_date"
+      ]
+    }
+  }
+}

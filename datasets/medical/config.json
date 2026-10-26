@@ -1,0 +1,7 @@
+{
+  "title": "Medical",
+  "description": "Health practice and insurer: patients with appointments, prescriptions, reimbursement claims and lab results. All people and values are fictional.",
+  "icon": "🩺",
+  "default_table": "demomedical",
+  "order": 50
+}

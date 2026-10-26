@@ -1,0 +1,7 @@
+{
+  "title": "Telco",
+  "description": "Mobile operator: customers with tariffs, lines, invoices (one overdue), network issues and tariff requests.",
+  "icon": "📶",
+  "default_table": "demotelco",
+  "order": 30
+}

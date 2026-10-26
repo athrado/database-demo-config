@@ -1,0 +1,55 @@
+{
+  "primary": "customers",
+  "collections": {
+    "customers": {
+      "label": "Employees",
+      "label_one": "Employee",
+      "icon": "🧑‍💼",
+      "subtitle": [
+        "plan",
+        "department"
+      ],
+      "first": [
+        "email",
+        "phone",
+        "address",
+        "manager",
+        "employee_no"
+      ]
+    },
+    "tickets": {
+      "link": "customer_id",
+      "title": "title",
+      "icon": "🎫",
+      "first": [
+        "category",
+        "priority",
+        "created",
+        "assigned_to",
+        "description"
+      ]
+    },
+    "assets": {
+      "link": "customer_id",
+      "title": "model",
+      "subtitle": [
+        "type"
+      ],
+      "first": [
+        "asset_tag",
+        "serial_number",
+        "warranty_end_date"
+      ]
+    },
+    "requests": {
+      "link": "customer_id",
+      "title": "title",
+      "subtitle": [
+        "type"
+      ],
+      "first": [
+        "approver"
+      ]
+    }
+  }
+}

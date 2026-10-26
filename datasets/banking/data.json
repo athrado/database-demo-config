@@ -1,0 +1,946 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Elena Bianchi",
+      "email": "elena.bianchi@example.com",
+      "phone": "+39 347 000 0301",
+      "address": "Via Torino 28, 20123 Milano MI",
+      "plan": "Standard current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "date_of_birth": "14 February 1984",
+      "kyc_status": "verified",
+      "customer_since": "21 June 2016",
+      "credit_profile": {
+        "loan_eligible": true,
+        "pre_approved_limit": 10000,
+        "currency": "EUR",
+        "risk_band": "B",
+        "note": "Salary paid in regularly; no other credit."
+      },
+      "documents_page_url": "{{docs:documents-C001.html}}"
+    },
+    "C002": {
+      "name": "Marco Rossi",
+      "email": "marco.rossi@example.com",
+      "phone": "+39 333 000 0302",
+      "address": "Via Appia Nuova 120, 00183 Roma RM",
+      "plan": "Premium current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "date_of_birth": "30 July 1991",
+      "kyc_status": "verified",
+      "customer_since": "02 April 2012",
+      "credit_profile": {
+        "loan_eligible": true,
+        "pre_approved_limit": 15000,
+        "currency": "EUR",
+        "risk_band": "A",
+        "note": "Healthy balance; no proactive offer needed."
+      },
+      "documents_page_url": "{{docs:documents-C002.html}}"
+    },
+    "C003": {
+      "name": "Chiara Esposito",
+      "email": "chiara.esposito@example.com",
+      "phone": "+39 349 000 0303",
+      "address": "Via Toledo 210, 80134 Napoli NA",
+      "plan": "Student account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "notes": [],
+      "date_of_birth": "09 November 2003",
+      "kyc_status": "pending",
+      "customer_since": "{{today-40d}}",
+      "credit_profile": {
+        "loan_eligible": false,
+        "pre_approved_limit": 0,
+        "currency": "EUR",
+        "risk_band": "n/a",
+        "note": "Not eligible: identity check (KYC) still pending and account under 3 months old."
+      },
+      "documents_page_url": "{{docs:documents-C003.html}}"
+    },
+    "C004": {
+      "name": "Alessandro Conti",
+      "email": "alessandro.conti@example.com",
+      "phone": "+39 335 000 0304",
+      "address": "Corso Vittorio Emanuele II 45, 10123 Torino TO",
+      "plan": "Premium current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "date_of_birth": "21 April 1977",
+      "kyc_status": "verified",
+      "customer_since": "15 September 2009",
+      "credit_profile": {
+        "loan_eligible": true,
+        "pre_approved_limit": 20000,
+        "currency": "EUR",
+        "risk_band": "A",
+        "note": "Average balance just above the threshold: no alert."
+      },
+      "documents_page_url": "{{docs:documents-C004.html}}"
+    },
+    "C005": {
+      "name": "Francesca Romano",
+      "email": "francesca.romano@example.com",
+      "phone": "+39 338 000 0305",
+      "address": "Via Indipendenza 9, 40121 Bologna BO",
+      "plan": "Standard current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "date_of_birth": "03 May 1989",
+      "kyc_status": "verified",
+      "customer_since": "30 January 2018",
+      "credit_profile": {
+        "loan_eligible": false,
+        "pre_approved_limit": 0,
+        "currency": "EUR",
+        "risk_band": "C",
+        "note": "Not eligible for a new loan: an existing loan is still running (see Loans)."
+      },
+      "documents_page_url": "{{docs:documents-C005.html}}"
+    }
+  },
+  "accounts": {
+    "A1001": {
+      "customer_id": "C001",
+      "type": "Current account",
+      "iban": "IT61 X030 6909 6061 0000 0012 345",
+      "currency": "EUR",
+      "balance": 241.8,
+      "average_balance_3m": 212.4,
+      "monthly_average_balance": [
+        {
+          "month": "{{month:today-3m}}",
+          "average_balance": 265.1,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-2m}}",
+          "average_balance": 198.7,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-1m}}",
+          "average_balance": 173.4,
+          "currency": "EUR"
+        }
+      ],
+      "status": "active"
+    },
+    "A1002": {
+      "customer_id": "C002",
+      "type": "Current account",
+      "iban": "IT60 X054 2811 1010 0000 0123 456",
+      "currency": "EUR",
+      "balance": 2310.4,
+      "average_balance_3m": 1839.22,
+      "monthly_average_balance": [
+        {
+          "month": "{{month:today-3m}}",
+          "average_balance": 1790.2,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-2m}}",
+          "average_balance": 1912.6,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-1m}}",
+          "average_balance": 1814.85,
+          "currency": "EUR"
+        }
+      ],
+      "status": "active"
+    },
+    "A1003": {
+      "customer_id": "C003",
+      "type": "Current account",
+      "iban": "IT31 X050 3401 6000 0000 0067 890",
+      "currency": "EUR",
+      "balance": 312.0,
+      "average_balance_3m": 289.9,
+      "monthly_average_balance": [
+        {
+          "month": "{{month:today-3m}}",
+          "average_balance": 330.4,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-2m}}",
+          "average_balance": 280.0,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-1m}}",
+          "average_balance": 259.3,
+          "currency": "EUR"
+        }
+      ],
+      "status": "active"
+    },
+    "A1004": {
+      "customer_id": "C004",
+      "type": "Current account",
+      "iban": "IT93 X031 1101 0000 0000 0054 321",
+      "currency": "EUR",
+      "balance": 410.1,
+      "average_balance_3m": 305.2,
+      "monthly_average_balance": [
+        {
+          "month": "{{month:today-3m}}",
+          "average_balance": 322.6,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-2m}}",
+          "average_balance": 301.9,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-1m}}",
+          "average_balance": 291.1,
+          "currency": "EUR"
+        }
+      ],
+      "status": "active"
+    },
+    "A1005": {
+      "customer_id": "C005",
+      "type": "Current account",
+      "iban": "IT41 X056 9601 6000 0000 0011 223",
+      "currency": "EUR",
+      "balance": 95.3,
+      "average_balance_3m": 120.0,
+      "monthly_average_balance": [
+        {
+          "month": "{{month:today-3m}}",
+          "average_balance": 140.2,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-2m}}",
+          "average_balance": 120.8,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-1m}}",
+          "average_balance": 99.0,
+          "currency": "EUR"
+        }
+      ],
+      "status": "active"
+    }
+  },
+  "cards": {
+    "K2001": {
+      "customer_id": "C001",
+      "type": "Debit card",
+      "last4": "4821",
+      "expires": "09/2028",
+      "status": "active",
+      "daily_limit": 800,
+      "currency": "EUR"
+    },
+    "K2002": {
+      "customer_id": "C002",
+      "type": "Debit card",
+      "last4": "1190",
+      "expires": "12/2027",
+      "status": "active",
+      "daily_limit": 2000,
+      "currency": "EUR"
+    },
+    "K2003": {
+      "customer_id": "C004",
+      "type": "Credit card",
+      "last4": "5502",
+      "expires": "06/2029",
+      "status": "active",
+      "daily_limit": 3000,
+      "currency": "EUR"
+    }
+  },
+  "transactions": {
+    "TX1001": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00055543866",
+      "booking_date": "{{lastmonth:3}}",
+      "value_date": "{{lastmonth:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Giorgio Ferrari",
+      "beneficiary_iban": "IT98 X056 9601 6000 0000 0120 001",
+      "causale": "Impianto elettrico cucina - acconto",
+      "amount": -400.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8001",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Giorgio Ferrari, {{lastmonth:3}}",
+      "doc_url": "{{docs:DOC8001.pdf}}"
+    },
+    "TX1002": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00055646813",
+      "booking_date": "{{lastmonth:15}}",
+      "value_date": "{{lastmonth:16}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "G. Ferrari",
+      "beneficiary_iban": "IT98 X056 9601 6000 0000 0120 001",
+      "causale": "Impianto elettrico cucina - secondo acconto",
+      "amount": -450.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8002",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - G. Ferrari, {{lastmonth:15}}",
+      "doc_url": "{{docs:DOC8002.pdf}}"
+    },
+    "TX1003": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00055749760",
+      "booking_date": "{{lastmonth:28}}",
+      "value_date": "{{lastmonth:28}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Ferari Giorgio",
+      "beneficiary_iban": "IT98 X056 9601 6000 0000 0120 001",
+      "causale": "Elettricista - saldo lavori cucina",
+      "amount": -350.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8003",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Ferari Giorgio, {{lastmonth:28}}",
+      "doc_url": "{{docs:DOC8003.pdf}}"
+    },
+    "TX1004": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00055852707",
+      "booking_date": "{{today}}",
+      "value_date": "{{today+1d}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Giorgio Ferrari",
+      "beneficiary_iban": "IT98 X056 9601 6000 0000 0120 001",
+      "causale": "Prese aggiuntive corridoio",
+      "amount": -180.0,
+      "currency": "EUR",
+      "status": "pending",
+      "doc_id": "DOC8004",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Giorgio Ferrari, {{today}}",
+      "doc_url": "{{docs:DOC8004.pdf}}"
+    },
+    "TX1005": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00055955654",
+      "booking_date": "{{lastmonth:9}}",
+      "value_date": "{{lastmonth:10}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Studio Notarile Bruno",
+      "beneficiary_iban": "IT49 X056 9601 6000 0000 0120 010",
+      "causale": "Onorario notaio - atto di acquisto",
+      "amount": -950.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8005",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Studio Notarile Bruno, {{lastmonth:9}}",
+      "doc_url": "{{docs:DOC8005.pdf}}"
+    },
+    "TX1006": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00056058601",
+      "booking_date": "{{lastyear:02-10}}",
+      "value_date": "{{lastyear:02-11}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Paolo Greco",
+      "beneficiary_iban": "IT17 X056 9601 6000 0000 0120 004",
+      "causale": "Idraulico - impianto bagno",
+      "amount": -1450.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8006",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Paolo Greco, {{lastyear:02-10}}",
+      "doc_url": "{{docs:DOC8006.pdf}}"
+    },
+    "TX1007": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00056161548",
+      "booking_date": "{{lastyear:03-22}}",
+      "value_date": "{{lastyear:03-23}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "VITALE MARCO PIASTRELLE",
+      "beneficiary_iban": "IT87 X056 9601 6000 0000 0120 005",
+      "causale": "Ristrutturazione bagno - posa piastrelle, acconto",
+      "amount": -2100.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8007",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - VITALE MARCO PIASTRELLE, {{lastyear:03-22}}",
+      "doc_url": "{{docs:DOC8007.pdf}}"
+    },
+    "TX1008": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00056264495",
+      "booking_date": "{{lastyear:05-14}}",
+      "value_date": "{{lastyear:05-15}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "M. Vitale",
+      "beneficiary_iban": "IT87 X056 9601 6000 0000 0120 005",
+      "causale": "Ristrutturazione bagno - saldo piastrelle",
+      "amount": -1900.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8008",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - M. Vitale, {{lastyear:05-14}}",
+      "doc_url": "{{docs:DOC8008.pdf}}"
+    },
+    "TX1009": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00056367442",
+      "booking_date": "{{lastyear:06-28}}",
+      "value_date": "{{lastyear:06-28}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Costa Ed. Srl",
+      "beneficiary_iban": "IT60 X056 9601 6000 0000 0120 006",
+      "causale": "Opere murarie ristrutturazione appartamento",
+      "amount": -5200.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8009",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Costa Ed. Srl, {{lastyear:06-28}}",
+      "doc_url": "{{docs:DOC8009.pdf}}"
+    },
+    "TX1010": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00056470389",
+      "booking_date": "{{lastyear:08-08}}",
+      "value_date": "{{lastyear:08-09}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Greco P. Idraulica",
+      "beneficiary_iban": "IT17 X056 9601 6000 0000 0120 004",
+      "causale": "Collegamento caldaia",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8010",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Greco P. Idraulica, {{lastyear:08-08}}",
+      "doc_url": "{{docs:DOC8010.pdf}}"
+    },
+    "TX1011": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00056573336",
+      "booking_date": "{{lastyear:09-19}}",
+      "value_date": "{{lastyear:09-20}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "",
+      "beneficiary_iban": "IT33 X056 9601 6000 0000 0120 007",
+      "causale": "Serramenti Torino snc - infissi soggiorno, saldo",
+      "amount": -3600.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8011",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - {{lastyear:09-19}}",
+      "doc_url": "{{docs:DOC8011.pdf}}"
+    },
+    "TX1012": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "CRO 00056676283",
+      "booking_date": "{{lastyear:11-05}}",
+      "value_date": "{{lastyear:11-06}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Tinteggiature Rosi",
+      "beneficiary_iban": "IT06 X056 9601 6000 0000 0120 008",
+      "causale": "Imbiancatura intero appartamento",
+      "amount": -1250.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8012",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Tinteggiature Rosi, {{lastyear:11-05}}",
+      "doc_url": "{{docs:DOC8012.pdf}}"
+    },
+    "TX1013": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "TRN008361477",
+      "booking_date": "{{lastyear:06-16}}",
+      "value_date": "{{lastyear:06-14}}",
+      "payment_type": "F24",
+      "beneficiary_name": "Agenzia delle Entrate",
+      "causale": "F24 - IMU acconto",
+      "amount": -640.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8013",
+      "doc_category": "F24 receipt",
+      "doc_title": "F24 receipt - Agenzia delle Entrate, {{lastyear:06-16}}",
+      "doc_url": "{{docs:DOC8013.pdf}}"
+    },
+    "TX1014": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "TRN008466206",
+      "booking_date": "{{lastyear:07-12}}",
+      "value_date": "{{lastyear:07-12}}",
+      "payment_type": "direct debit",
+      "beneficiary_name": "Generali Italia SpA",
+      "causale": "Premio assicurazione casa",
+      "amount": -598.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8014",
+      "doc_category": "Direct debit notice",
+      "doc_title": "Direct debit notice - Generali Italia SpA, {{lastyear:07-12}}",
+      "doc_url": "{{docs:DOC8014.pdf}}"
+    },
+    "TX1015": {
+      "customer_id": "C004",
+      "account_id": "A1004",
+      "reference": "TRN008570935",
+      "booking_date": "{{lastmonth:5}}",
+      "value_date": "{{lastmonth:5}}",
+      "payment_type": "CBILL",
+      "beneficiary_name": "Enel Energia",
+      "causale": "Bolletta luce - bimestre",
+      "amount": -142.3,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8015",
+      "doc_category": "CBILL receipt",
+      "doc_title": "CBILL receipt - Enel Energia, {{lastmonth:5}}",
+      "doc_url": "{{docs:DOC8015.pdf}}"
+    },
+    "TX1016": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "CRO 00057088071",
+      "booking_date": "{{monthago:1:3}}",
+      "value_date": "{{monthago:1:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Immobiliare Duomo Srl",
+      "beneficiary_iban": "IT76 X056 9601 6000 0000 0120 009",
+      "causale": "Affitto {{mese:today-1m}}",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8016",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:1:3}}",
+      "doc_url": "{{docs:DOC8016.pdf}}"
+    },
+    "TX1017": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "CRO 00057191018",
+      "booking_date": "{{monthago:2:3}}",
+      "value_date": "{{monthago:2:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "IMMOB. DUOMO SRL",
+      "beneficiary_iban": "IT76 X056 9601 6000 0000 0120 009",
+      "causale": "Affitto {{mese:today-2m}}",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8017",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - IMMOB. DUOMO SRL, {{monthago:2:3}}",
+      "doc_url": "{{docs:DOC8017.pdf}}"
+    },
+    "TX1018": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "CRO 00057293965",
+      "booking_date": "{{monthago:3:3}}",
+      "value_date": "{{monthago:3:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Immobiliare Duomo Srl",
+      "beneficiary_iban": "IT76 X056 9601 6000 0000 0120 009",
+      "causale": "Affitto {{mese:today-3m}}",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8018",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:3:3}}",
+      "doc_url": "{{docs:DOC8018.pdf}}"
+    },
+    "TX1019": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "CRO 00057396912",
+      "booking_date": "{{monthago:4:3}}",
+      "value_date": "{{monthago:4:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Immobiliare Duomo Srl",
+      "beneficiary_iban": "IT76 X056 9601 6000 0000 0120 009",
+      "causale": "Affitto {{mese:today-4m}}",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8019",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:4:3}}",
+      "doc_url": "{{docs:DOC8019.pdf}}"
+    },
+    "TX1020": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "CRO 00057499859",
+      "booking_date": "{{monthago:5:3}}",
+      "value_date": "{{monthago:5:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Immobiliare Duomo",
+      "beneficiary_iban": "IT76 X056 9601 6000 0000 0120 009",
+      "causale": "Affitto {{mese:today-5m}}",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8020",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Immobiliare Duomo, {{monthago:5:3}}",
+      "doc_url": "{{docs:DOC8020.pdf}}"
+    },
+    "TX1021": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "CRO 00057602806",
+      "booking_date": "{{monthago:6:3}}",
+      "value_date": "{{monthago:6:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Immobiliare Duomo Srl",
+      "beneficiary_iban": "IT76 X056 9601 6000 0000 0120 009",
+      "causale": "Affitto {{mese:today-6m}}",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8021",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:6:3}}",
+      "doc_url": "{{docs:DOC8021.pdf}}"
+    },
+    "TX1022": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "CRO 00057705753",
+      "booking_date": "{{monthago:7:3}}",
+      "value_date": "{{monthago:7:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "",
+      "beneficiary_iban": "IT76 X056 9601 6000 0000 0120 009",
+      "causale": "Affitto {{mese:today-7m}} - Imm. Duomo",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8022",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - {{monthago:7:3}}",
+      "doc_url": "{{docs:DOC8022.pdf}}"
+    },
+    "TX1023": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "CRO 00057808700",
+      "booking_date": "{{monthago:8:3}}",
+      "value_date": "{{monthago:8:4}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Immobiliare Duomo Srl",
+      "beneficiary_iban": "IT76 X056 9601 6000 0000 0120 009",
+      "causale": "Affitto {{mese:today-8m}}",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8023",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:8:3}}",
+      "doc_url": "{{docs:DOC8023.pdf}}"
+    },
+    "TX1024": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "TRN009513496",
+      "booking_date": "{{today-1d}}",
+      "value_date": "{{today-1d}}",
+      "payment_type": "card",
+      "beneficiary_name": "Esselunga",
+      "causale": "Spesa alimentare",
+      "amount": -42.6,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8024",
+      "doc_category": "Card receipt",
+      "doc_title": "Card receipt - Esselunga, {{today-1d}}",
+      "doc_url": "{{docs:DOC8024.pdf}}"
+    },
+    "TX1025": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "reference": "TRN009618225",
+      "booking_date": "{{monthago:1:10}}",
+      "value_date": "{{monthago:1:10}}",
+      "payment_type": "direct debit",
+      "beneficiary_name": "TIM",
+      "causale": "Fattura telefono",
+      "amount": -29.99,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8025",
+      "doc_category": "Direct debit notice",
+      "doc_title": "Direct debit notice - TIM, {{monthago:1:10}}",
+      "doc_url": "{{docs:DOC8025.pdf}}"
+    },
+    "TX1026": {
+      "customer_id": "C002",
+      "account_id": "A1002",
+      "reference": "CRO 00058117541",
+      "booking_date": "{{monthago:1:20}}",
+      "value_date": "{{monthago:1:21}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Autosalone Bellini Srl",
+      "beneficiary_iban": "IT22 X056 9601 6000 0000 0120 011",
+      "causale": "Caparra auto usata - Fiat Panda",
+      "amount": -1500.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8026",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Autosalone Bellini Srl, {{monthago:1:20}}",
+      "doc_url": "{{docs:DOC8026.pdf}}"
+    },
+    "TX1027": {
+      "customer_id": "C002",
+      "account_id": "A1002",
+      "reference": "TRN009827683",
+      "booking_date": "{{monthago:1:8}}",
+      "value_date": "{{monthago:1:8}}",
+      "payment_type": "direct debit",
+      "beneficiary_name": "Fastweb",
+      "causale": "Abbonamento fibra",
+      "amount": -27.9,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8027",
+      "doc_category": "Direct debit notice",
+      "doc_title": "Direct debit notice - Fastweb, {{monthago:1:8}}",
+      "doc_url": "{{docs:DOC8027.pdf}}"
+    },
+    "TX1028": {
+      "customer_id": "C002",
+      "account_id": "A1002",
+      "reference": "TRN009932412",
+      "booking_date": "{{today-2d}}",
+      "value_date": "{{today-2d}}",
+      "payment_type": "card",
+      "beneficiary_name": "Eni Station",
+      "causale": "Carburante",
+      "amount": -54.1,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8028",
+      "doc_category": "Card receipt",
+      "doc_title": "Card receipt - Eni Station, {{today-2d}}",
+      "doc_url": "{{docs:DOC8028.pdf}}"
+    },
+    "TX1029": {
+      "customer_id": "C002",
+      "account_id": "A1002",
+      "reference": "CRO 00058426382",
+      "booking_date": "{{monthago:9:15}}",
+      "value_date": "{{monthago:9:16}}",
+      "payment_type": "SEPA transfer",
+      "beneficiary_name": "Universita di Roma La Sapienza",
+      "beneficiary_iban": "IT92 X056 9601 6000 0000 0120 012",
+      "causale": "Tasse universitarie - seconda rata",
+      "amount": -780.0,
+      "currency": "EUR",
+      "status": "completed",
+      "doc_id": "DOC8029",
+      "doc_category": "Transfer receipt",
+      "doc_title": "Transfer receipt - Universita di Roma La Sapienza, {{monthago:9:15}}",
+      "doc_url": "{{docs:DOC8029.pdf}}"
+    }
+  },
+  "loans": {
+    "LN3001": {
+      "customer_id": "C005",
+      "product": "Personal loan",
+      "original_amount": 12000,
+      "outstanding": 7480.5,
+      "monthly_instalment": 310.0,
+      "apr": 5.9,
+      "remaining_months": 26,
+      "currency": "EUR",
+      "status": "active",
+      "started": "{{today-22m}}"
+    }
+  },
+  "rules": {
+    "R-LOWBAL": {
+      "name": "Low average balance",
+      "description": "Average balance of the current account below the threshold over the period: the assistant contacts the customer proactively and offers help with liquidity.",
+      "threshold": 300,
+      "currency": "EUR",
+      "period_months": 3,
+      "action": "Proactive contact, then offer a personal loan",
+      "requires": "loan_eligible = true in the customer's credit profile",
+      "status": "active"
+    },
+    "R-DOCLINKS": {
+      "name": "Document links in chat",
+      "description": "When a customer asks for documents (e.g. transfer receipts), list the links in the chat as long as there are no more than max_links_in_chat of them. Above that, send the link to the documents page instead.",
+      "max_links_in_chat": 5,
+      "documents_page_field": "documents_page_url",
+      "action": "Send the links, or the link in the customer's documents_page_url when there are too many",
+      "status": "active"
+    }
+  },
+  "alerts": {
+    "AL4001": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "type": "Low average balance",
+      "average_balance_3m": 212.4,
+      "threshold": 300,
+      "currency": "EUR",
+      "period": "last 3 months",
+      "detected": "{{today}}",
+      "status": "new",
+      "suggested_action": "Offer a personal loan (up to the pre-approved limit)"
+    },
+    "AL4002": {
+      "customer_id": "C003",
+      "account_id": "A1003",
+      "type": "Low average balance",
+      "average_balance_3m": 289.9,
+      "threshold": 300,
+      "currency": "EUR",
+      "period": "last 3 months",
+      "detected": "{{today}}",
+      "status": "no offer",
+      "suggested_action": "Do not offer a loan: not eligible",
+      "reason": "KYC pending, account under 3 months old"
+    },
+    "AL4003": {
+      "customer_id": "C005",
+      "account_id": "A1005",
+      "type": "Low average balance",
+      "average_balance_3m": 120.0,
+      "threshold": 300,
+      "currency": "EUR",
+      "period": "last 3 months",
+      "detected": "{{today-14d}}",
+      "status": "declined",
+      "suggested_action": "Offer a personal loan",
+      "reason": "Customer said no thanks; has a loan running"
+    }
+  },
+  "loan_offers": {
+    "LO-5000-24": {
+      "product": "Personal loan",
+      "amount": 5000,
+      "duration_months": 24,
+      "monthly_instalment": 221.6,
+      "apr": 6.0,
+      "total_repayable": 5318.4,
+      "total_interest": 318.4,
+      "currency": "EUR"
+    },
+    "LO-5000-36": {
+      "product": "Personal loan",
+      "amount": 5000,
+      "duration_months": 36,
+      "monthly_instalment": 152.11,
+      "apr": 6.0,
+      "total_repayable": 5475.96,
+      "total_interest": 475.96,
+      "currency": "EUR"
+    },
+    "LO-7500-24": {
+      "product": "Personal loan",
+      "amount": 7500,
+      "duration_months": 24,
+      "monthly_instalment": 332.4,
+      "apr": 6.0,
+      "total_repayable": 7977.6,
+      "total_interest": 477.6,
+      "currency": "EUR"
+    },
+    "LO-7500-36": {
+      "product": "Personal loan",
+      "amount": 7500,
+      "duration_months": 36,
+      "monthly_instalment": 228.16,
+      "apr": 6.0,
+      "total_repayable": 8213.76,
+      "total_interest": 713.76,
+      "currency": "EUR"
+    },
+    "LO-10000-24": {
+      "product": "Personal loan",
+      "amount": 10000,
+      "duration_months": 24,
+      "monthly_instalment": 443.21,
+      "apr": 6.0,
+      "total_repayable": 10637.04,
+      "total_interest": 637.04,
+      "currency": "EUR"
+    },
+    "LO-10000-36": {
+      "product": "Personal loan",
+      "amount": 10000,
+      "duration_months": 36,
+      "monthly_instalment": 304.22,
+      "apr": 6.0,
+      "total_repayable": 10951.92,
+      "total_interest": 951.92,
+      "currency": "EUR"
+    }
+  },
+  "loan_requests": {
+    "LRQ5001": {
+      "customer_id": "C002",
+      "purpose": "Buying a used car",
+      "amount_min": 8000,
+      "amount_max": 10000,
+      "currency": "EUR",
+      "preferred_duration_months": 36,
+      "status": "under review",
+      "requested": "{{today-3d}}",
+      "channel": "Chat"
+    }
+  }
+}

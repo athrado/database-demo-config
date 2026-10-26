@@ -1,0 +1,212 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Clara Jansen",
+      "email": "clara.jansen@example.com",
+      "phone": "+31612000401",
+      "address": "Keizersgracht 100, 1015 Amsterdam",
+      "plan": "Standard coverage",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "date_of_birth": "12 May 1982",
+      "gp": "Dr. Anna Weber",
+      "allergies": [
+        "Penicillin"
+      ]
+    },
+    "C002": {
+      "name": "Thomas Keller",
+      "email": "thomas.keller@example.com",
+      "phone": "+41791000402",
+      "address": "Bahnhofstrasse 8, 8001 Zürich",
+      "plan": "Premium coverage",
+      "preferences": {
+        "language": "de",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "date_of_birth": "03 October 1969",
+      "gp": "Dr. Lukas Meier",
+      "allergies": [
+        "Pollen",
+        "Nuts"
+      ]
+    },
+    "C003": {
+      "name": "Elif Kaya",
+      "email": "elif.kaya@example.com",
+      "phone": "+905320000403",
+      "address": "Atatürk Bulvarı 17, 06420 Ankara",
+      "plan": "Basic coverage",
+      "preferences": {
+        "language": "tr",
+        "contact_by": "sms"
+      },
+      "notes": [],
+      "date_of_birth": "25 January 1995",
+      "gp": "Dr. Mehmet Yilmaz",
+      "allergies": []
+    },
+    "C004": {
+      "name": "Pierre Lambert",
+      "email": "pierre.lambert@example.com",
+      "phone": "+33611000404",
+      "address": "15 Rue Victor Hugo, 69002 Lyon",
+      "plan": "Premium coverage",
+      "preferences": {
+        "language": "fr",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "date_of_birth": "08 August 1958",
+      "gp": "Dr. Sophie Martin",
+      "allergies": [
+        "Latex"
+      ]
+    }
+  },
+  "appointments": {
+    "AP1001": {
+      "customer_id": "C001",
+      "date": "{{today+3d}}",
+      "time": "10:30",
+      "doctor": "Dr. Anna Weber",
+      "department": "General practice",
+      "location": "Amsterdam Medical Centre",
+      "status": "scheduled"
+    },
+    "AP1002": {
+      "customer_id": "C001",
+      "date": "{{today-30d}}",
+      "time": "14:00",
+      "doctor": "Dr. Anna Weber",
+      "department": "General practice",
+      "location": "Amsterdam Medical Centre",
+      "status": "completed"
+    },
+    "AP1003": {
+      "customer_id": "C002",
+      "date": "{{today+10d}}",
+      "time": "09:15",
+      "doctor": "Dr. Eva Brunner",
+      "department": "Cardiology",
+      "location": "Zürich Heart Clinic",
+      "status": "scheduled"
+    },
+    "AP1004": {
+      "customer_id": "C003",
+      "date": "{{today-2d}}",
+      "time": "11:00",
+      "doctor": "Dr. Mehmet Yilmaz",
+      "department": "Dermatology",
+      "location": "Ankara City Hospital",
+      "status": "cancelled"
+    },
+    "AP1005": {
+      "customer_id": "C004",
+      "date": "{{today+1d}}",
+      "time": "16:45",
+      "doctor": "Dr. Sophie Martin",
+      "department": "Orthopaedics",
+      "location": "Lyon Sud Clinic",
+      "status": "scheduled"
+    }
+  },
+  "prescriptions": {
+    "RX2001": {
+      "customer_id": "C001",
+      "medication": "Azithromycin",
+      "dosage": "250 mg",
+      "frequency": "Once daily for 5 days",
+      "refills_left": 0,
+      "status": "completed",
+      "prescribed": "{{today-30d}}"
+    },
+    "RX2002": {
+      "customer_id": "C002",
+      "medication": "Atorvastatin",
+      "dosage": "20 mg",
+      "frequency": "Once daily in the evening",
+      "refills_left": 3,
+      "status": "active",
+      "prescribed": "{{today-60d}}"
+    },
+    "RX2003": {
+      "customer_id": "C002",
+      "medication": "Ramipril",
+      "dosage": "5 mg",
+      "frequency": "Once daily in the morning",
+      "refills_left": 1,
+      "status": "active",
+      "prescribed": "{{today-60d}}"
+    },
+    "RX2004": {
+      "customer_id": "C004",
+      "medication": "Ibuprofen",
+      "dosage": "400 mg",
+      "frequency": "Up to 3 times daily with food",
+      "refills_left": 0,
+      "status": "expired",
+      "prescribed": "{{today-90d}}"
+    }
+  },
+  "claims": {
+    "CL3001": {
+      "customer_id": "C001",
+      "type": "GP consultation",
+      "amount": 45.0,
+      "currency": "EUR",
+      "status": "approved",
+      "submitted": "{{today-28d}}"
+    },
+    "CL3002": {
+      "customer_id": "C002",
+      "type": "ECG and consultation",
+      "amount": 380.0,
+      "currency": "CHF",
+      "status": "pending",
+      "submitted": "{{today-4d}}"
+    },
+    "CL3003": {
+      "customer_id": "C004",
+      "type": "Physiotherapy (6 sessions)",
+      "amount": 240.0,
+      "currency": "EUR",
+      "status": "rejected",
+      "submitted": "{{today-12d}}",
+      "reason": "Referral missing"
+    }
+  },
+  "lab_results": {
+    "LR4001": {
+      "customer_id": "C002",
+      "test": "LDL cholesterol",
+      "value": 3.4,
+      "unit": "mmol/L",
+      "reference_range": "< 3.0",
+      "status": "high",
+      "date": "{{today-20d}}"
+    },
+    "LR4002": {
+      "customer_id": "C002",
+      "test": "Blood pressure",
+      "value": "128/82",
+      "unit": "mmHg",
+      "reference_range": "< 130/85",
+      "status": "normal",
+      "date": "{{today-20d}}"
+    },
+    "LR4003": {
+      "customer_id": "C001",
+      "test": "Haemoglobin",
+      "value": 13.4,
+      "unit": "g/dL",
+      "reference_range": "12.0 - 15.5",
+      "status": "normal",
+      "date": "{{today-30d}}"
+    }
+  }
+}

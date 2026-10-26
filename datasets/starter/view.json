@@ -1,0 +1,9 @@
+{
+  "primary": "customers",
+  "collections": {
+    "orders": {
+      "link": "customer_id",
+      "title": "item"
+    }
+  }
+}

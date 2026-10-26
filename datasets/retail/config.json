@@ -1,0 +1,7 @@
+{
+  "title": "Retail",
+  "description": "Online shop: customers with loyalty tiers, orders with items and tracking, returns and delivery issues.",
+  "icon": "🛒",
+  "default_table": "demoretail",
+  "order": 20
+}

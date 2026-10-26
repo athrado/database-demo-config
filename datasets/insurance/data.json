@@ -1,0 +1,226 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Sophie Berthier",
+      "email": "sophie.berthier@hotmail.com",
+      "phone": "+33612345678",
+      "address": "12 Linden Gardens, London W2 4ES",
+      "plan": "Home & Car",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "date_of_birth": "03 March 1986",
+      "policy_number": "2594",
+      "account_no": "2344",
+      "joint_policy_holder": "Lucien Berthier",
+      "partner": "Lucien Berthier",
+      "children": [
+        "Malo Berthier",
+        "Cécile Berthier"
+      ]
+    },
+    "C002": {
+      "name": "Sophie Bertram",
+      "email": "sophie.bertram@hotmail.com",
+      "phone": "+33612345679",
+      "address": "12 Linden Gardens, London W2 4ES",
+      "plan": "Home & Car",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "date_of_birth": "03 March 1986",
+      "policy_number": "2595",
+      "account_no": "2345",
+      "joint_policy_holder": "Lucian Bertram",
+      "partner": "Lucian Bertram",
+      "children": [
+        "Milo Bertram",
+        "Cecilia Bertram"
+      ]
+    },
+    "C003": {
+      "name": "Thomas Martin",
+      "email": "thomas.martin@example.com",
+      "phone": "+33623456789",
+      "address": "8 Park Avenue, London W1K 7AA",
+      "plan": "Car",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "date_of_birth": "17 June 1979",
+      "policy_number": "2201",
+      "account_no": "3102",
+      "partner": "Isabelle Martin",
+      "children": [
+        "Hugo Martin"
+      ]
+    },
+    "C004": {
+      "name": "Claire Dubois",
+      "email": "claire.dubois@example.com",
+      "phone": "+33634567890",
+      "address": "22 Victoria Road, London W8 5RH",
+      "plan": "Home",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "date_of_birth": "05 September 1990",
+      "policy_number": "2202",
+      "account_no": "4488"
+    },
+    "C005": {
+      "name": "Julien Moreau",
+      "email": "julien.moreau@example.com",
+      "phone": "+33645678901",
+      "address": "5 Coronation Place, London SE1 9AA",
+      "plan": "Home & Car",
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "notes": [],
+      "date_of_birth": "29 December 1983",
+      "policy_number": "2203",
+      "account_no": "5521",
+      "partner": "Sarah Moreau",
+      "children": [
+        "Léa Moreau",
+        "Tom Moreau"
+      ]
+    }
+  },
+  "claims": {
+    "CL645233": {
+      "customer_id": "C001",
+      "type": "Lost vehicle",
+      "car": "Renault Clio",
+      "reason": "storm",
+      "status": "pending",
+      "replacement_car_in_case_of_damage": true,
+      "replacement_car_duration": "3 months"
+    },
+    "CL654534": {
+      "customer_id": "C001",
+      "type": "Home claim",
+      "address": "12 Linden Gardens, London W2 4ES",
+      "reason": "storm",
+      "status": "pending",
+      "damage_occurred": "{{today-7d}}",
+      "currently_habitable": "info required",
+      "safe_to_enter": "info required",
+      "damage_assessment": "pending",
+      "site_visit_scheduled": "action required",
+      "photos_sent": "action required",
+      "repair_estimate_received": "no",
+      "temporary_accommodation_found": "yes",
+      "temporary_accommodation_address": "info required",
+      "claim_documents_complete": "pending",
+      "insurance_coverage_confirmed": "pending",
+      "utilities_affected": "info required"
+    },
+    "CL645234": {
+      "customer_id": "C002",
+      "type": "Lost vehicle",
+      "car": "Renault Clio",
+      "reason": "storm",
+      "status": "pending",
+      "replacement_car_in_case_of_damage": true,
+      "replacement_car_duration": "3 months"
+    },
+    "CL654535": {
+      "customer_id": "C002",
+      "type": "Home claim",
+      "address": "12 Linden Gardens, London W2 4ES",
+      "reason": "storm",
+      "status": "pending",
+      "damage_occurred": "{{today-7d}}",
+      "currently_habitable": "info required",
+      "safe_to_enter": "info required",
+      "damage_assessment": "pending",
+      "site_visit_scheduled": "action required",
+      "photos_sent": "action required",
+      "repair_estimate_received": "no",
+      "temporary_accommodation_found": "yes",
+      "temporary_accommodation_address": "info required",
+      "claim_documents_complete": "pending",
+      "insurance_coverage_confirmed": "pending",
+      "utilities_affected": "info required"
+    },
+    "CL710234": {
+      "customer_id": "C003",
+      "type": "Lost vehicle",
+      "car": "Peugeot 308",
+      "reason": "a theft",
+      "status": "pending",
+      "replacement_car_in_case_of_damage": false
+    },
+    "CL720345": {
+      "customer_id": "C004",
+      "type": "Home claim",
+      "address": "22 Victoria Road, London W8 5RH",
+      "reason": "water damage",
+      "status": "open",
+      "damage_occurred": "{{today-3d}}"
+    },
+    "CL730456": {
+      "customer_id": "C005",
+      "type": "Lost vehicle",
+      "car": "Citroën C3",
+      "reason": "a road accident",
+      "status": "pending",
+      "replacement_car_in_case_of_damage": true,
+      "replacement_car_duration": "2 weeks"
+    }
+  },
+  "requests": {
+    "RQ1001": {
+      "customer_id": "C001",
+      "type": "School certificate",
+      "student": "Malo Berthier",
+      "new_school": "Jean Moulin College",
+      "address": "12 Linden Gardens, London W2 4ES",
+      "status": "pending"
+    },
+    "RQ1002": {
+      "customer_id": "C001",
+      "type": "Replacement vehicle",
+      "claim_id": "CL645233",
+      "vehicle_concerned": "Renault Clio",
+      "requested_start_date": "{{today-1d}}",
+      "requested_duration": "3 weeks",
+      "pickup_location": "12 Linden Gardens, London W2 4ES",
+      "proposed_replacement_vehicle": "Clio or equivalent",
+      "status": "pending confirmation"
+    }
+  },
+  "quotes": {
+    "Q1748": {
+      "customer_id": "C001",
+      "type": "New car insurance",
+      "vehicle": "Peugeot 5008",
+      "estimated_quote": "between 725 and 989 per year",
+      "main_driver": "Lucien Berthier",
+      "estimated_annual_mileage": "18,000 km per year",
+      "expected_delivery_date": "in 4 weeks",
+      "status": "indicative quote to be sent by email"
+    },
+    "Q2210": {
+      "customer_id": "C003",
+      "type": "New car insurance",
+      "vehicle": "Peugeot 208",
+      "estimated_quote": "between 410 and 560 per year",
+      "main_driver": "Thomas Martin",
+      "estimated_annual_mileage": "12,000 km per year",
+      "expected_delivery_date": "in 2 weeks",
+      "status": "pending"
+    }
+  }
+}

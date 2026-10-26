@@ -1,0 +1,119 @@
+{
+  "primary": "customers",
+  "collections": {
+    "customers": {
+      "subtitle": [
+        "plan"
+      ],
+      "first": [
+        "email",
+        "phone",
+        "address",
+        "date_of_birth",
+        "kyc_status",
+        "credit_profile"
+      ]
+    },
+    "accounts": {
+      "link": "customer_id",
+      "title": "type",
+      "subtitle": [
+        "iban"
+      ],
+      "first": [
+        "balance",
+        "average_balance_3m",
+        "monthly_average_balance"
+      ]
+    },
+    "cards": {
+      "link": "customer_id",
+      "title": "type",
+      "subtitle": [
+        "last4"
+      ],
+      "first": [
+        "status",
+        "expires",
+        "daily_limit"
+      ]
+    },
+    "transactions": {
+      "link": "customer_id",
+      "title": "causale",
+      "subtitle": [
+        "payment_type"
+      ],
+      "first": [
+        "booking_date",
+        "value_date",
+        "amount",
+        "beneficiary_name",
+        "reference",
+        "doc_category",
+        "doc_title",
+        "doc_url"
+      ]
+    },
+    "loans": {
+      "link": "customer_id",
+      "title": "product",
+      "icon": "🏠",
+      "accent": "amber",
+      "first": [
+        "outstanding",
+        "monthly_instalment",
+        "remaining_months"
+      ]
+    },
+    "alerts": {
+      "link": "customer_id",
+      "title": "type",
+      "icon": "🔔",
+      "accent": "red",
+      "first": [
+        "status",
+        "average_balance_3m",
+        "threshold",
+        "suggested_action"
+      ]
+    },
+    "loan_requests": {
+      "link": "customer_id",
+      "title": "purpose",
+      "label": "Loan requests",
+      "label_one": "Loan request",
+      "icon": "📝",
+      "accent": "slate",
+      "first": [
+        "amount_min",
+        "amount_max",
+        "preferred_duration_months"
+      ]
+    },
+    "rules": {
+      "title": "name",
+      "icon": "📏",
+      "accent": "purple",
+      "first": [
+        "threshold",
+        "period_months",
+        "action"
+      ]
+    },
+    "loan_offers": {
+      "title": "id",
+      "label": "Loan offers",
+      "label_one": "Loan offer",
+      "icon": "💶",
+      "accent": "green",
+      "first": [
+        "amount",
+        "duration_months",
+        "monthly_instalment",
+        "apr",
+        "total_repayable"
+      ]
+    }
+  }
+}

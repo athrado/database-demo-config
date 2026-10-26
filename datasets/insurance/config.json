@@ -1,0 +1,7 @@
+{
+  "title": "Insurance",
+  "description": "Home and car insurance: policy holders and their families, claims, requests and quotes. Sophie Berthier and Sophie Bertram have the full story.",
+  "icon": "🛡️",
+  "default_table": "demoinsurance",
+  "order": 10
+}

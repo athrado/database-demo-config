@@ -1,0 +1,184 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Daniel Hughes",
+      "email": "daniel.hughes@example.com",
+      "phone": "+447700900201",
+      "address": "21 Bridge Street, Glasgow G1 4XY",
+      "plan": "Unlimited 5G",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "account_no": "TC-100201"
+    },
+    "C002": {
+      "name": "Priya Sharma",
+      "email": "priya.sharma@example.com",
+      "phone": "+447700900202",
+      "address": "5 Kingsway, Birmingham B2 5QT",
+      "plan": "Family Plus",
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "notes": [],
+      "account_no": "TC-100202"
+    },
+    "C003": {
+      "name": "Hannah Moore",
+      "email": "hannah.moore@example.com",
+      "phone": "+447700900203",
+      "address": "88 Church Road, Norwich NR1 3AB",
+      "plan": "SIM only 20GB",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "account_no": "TC-100203"
+    },
+    "C004": {
+      "name": "Omar Ali",
+      "email": "omar.ali@example.com",
+      "phone": "+447700900204",
+      "address": "12 Dock Lane, Liverpool L3 9AA",
+      "plan": "Unlimited 5G",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "account_no": "TC-100204"
+    }
+  },
+  "subscriptions": {
+    "S1001": {
+      "customer_id": "C001",
+      "line_number": "+44 7700 900201",
+      "tariff": "Unlimited 5G",
+      "data_allowance_gb": 500,
+      "monthly_price": 34.99,
+      "currency": "GBP",
+      "contract_end_date": "{{today+8m}}",
+      "status": "active",
+      "roaming_enabled": true
+    },
+    "S1002": {
+      "customer_id": "C002",
+      "line_number": "+44 7700 900202",
+      "tariff": "Family Plus (parent)",
+      "data_allowance_gb": 100,
+      "monthly_price": 29.0,
+      "currency": "GBP",
+      "contract_end_date": "{{today+3m}}",
+      "status": "active",
+      "roaming_enabled": false
+    },
+    "S1003": {
+      "customer_id": "C002",
+      "line_number": "+44 7700 900212",
+      "tariff": "Family Plus (child)",
+      "data_allowance_gb": 20,
+      "monthly_price": 12.0,
+      "currency": "GBP",
+      "contract_end_date": "{{today+3m}}",
+      "status": "active",
+      "roaming_enabled": false
+    },
+    "S1004": {
+      "customer_id": "C003",
+      "line_number": "+44 7700 900203",
+      "tariff": "SIM only 20GB",
+      "data_allowance_gb": 20,
+      "monthly_price": 9.0,
+      "currency": "GBP",
+      "contract_end_date": "{{today+1m}}",
+      "status": "pending",
+      "roaming_enabled": false
+    },
+    "S1005": {
+      "customer_id": "C004",
+      "line_number": "+44 7700 900204",
+      "tariff": "Unlimited 5G",
+      "data_allowance_gb": 500,
+      "monthly_price": 34.99,
+      "currency": "GBP",
+      "contract_end_date": "{{today+14m}}",
+      "status": "suspended",
+      "roaming_enabled": false
+    }
+  },
+  "invoices": {
+    "INV20261001": {
+      "customer_id": "C001",
+      "period": "September 2026",
+      "amount": 34.99,
+      "currency": "GBP",
+      "due_date": "{{today+9d}}",
+      "status": "pending"
+    },
+    "INV20261002": {
+      "customer_id": "C002",
+      "period": "September 2026",
+      "amount": 41.0,
+      "currency": "GBP",
+      "due_date": "{{today-6d}}",
+      "status": "overdue"
+    },
+    "INV20261003": {
+      "customer_id": "C003",
+      "period": "September 2026",
+      "amount": 9.0,
+      "currency": "GBP",
+      "due_date": "{{today+9d}}",
+      "status": "paid"
+    },
+    "INV20261004": {
+      "customer_id": "C004",
+      "period": "August 2026",
+      "amount": 34.99,
+      "currency": "GBP",
+      "due_date": "{{today-35d}}",
+      "status": "overdue"
+    }
+  },
+  "issues": {
+    "I3001": {
+      "customer_id": "C001",
+      "category": "Slow mobile data",
+      "priority": "medium",
+      "status": "investigating",
+      "opened": "{{today-2d}}",
+      "location": "Glasgow city centre",
+      "description": "Data speeds under 2 Mbps in the evening at home."
+    },
+    "I3002": {
+      "customer_id": "C003",
+      "category": "No signal",
+      "priority": "high",
+      "status": "open",
+      "opened": "{{today-1d}}",
+      "location": "Norwich NR1",
+      "description": "No signal indoors since Monday; outdoors works."
+    }
+  },
+  "requests": {
+    "RQ3101": {
+      "customer_id": "C002",
+      "type": "Tariff change",
+      "from": "Family Plus",
+      "to": "Family Max",
+      "status": "pending",
+      "requested": "{{today}}"
+    },
+    "RQ3102": {
+      "customer_id": "C004",
+      "type": "Reconnect suspended line",
+      "line_number": "+44 7700 900204",
+      "status": "awaiting payment",
+      "requested": "{{today-2d}}"
+    }
+  }
+}

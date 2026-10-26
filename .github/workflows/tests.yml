@@ -1,0 +1,27 @@
+# Runs on every push and pull request, including the commits the app makes with "Update seed data":
+# a seed file that no longer loads turns the run red.
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Every config loads, validates and shows
+        run: python check_datasets.py
+      - run: python test_datasets.py
+      - run: python test_documents.py
+      - run: python test_github.py
+      - run: python test_store.py          # the Azurite part is skipped when no emulator runs

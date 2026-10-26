@@ -1,0 +1,7 @@
+{
+  "title": "IT support",
+  "description": "Internal service desk: employees with tickets, laptops and phones (one faulty, one in warranty soon) and access or hardware requests.",
+  "icon": "💻",
+  "default_table": "demoit",
+  "order": 60
+}

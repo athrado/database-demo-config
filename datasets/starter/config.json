@@ -1,0 +1,7 @@
+{
+  "title": "Starter",
+  "description": "Three customers and their orders. Matches the example flow in the Teneo solution; the smallest dataset.",
+  "icon": "🌱",
+  "default_table": "demodb",
+  "order": 0
+}

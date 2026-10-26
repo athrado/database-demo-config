@@ -1,0 +1,51 @@
+{
+  "primary": "customers",
+  "collections": {
+    "customers": {
+      "subtitle": [
+        "plan"
+      ],
+      "first": [
+        "email",
+        "phone",
+        "address",
+        "account_no"
+      ]
+    },
+    "subscriptions": {
+      "link": "customer_id",
+      "title": "line_number",
+      "subtitle": [
+        "tariff"
+      ],
+      "first": [
+        "monthly_price",
+        "data_allowance_gb",
+        "contract_end_date"
+      ],
+      "labels": {
+        "data_allowance_gb": "Data allowance (GB)"
+      }
+    },
+    "invoices": {
+      "link": "customer_id",
+      "title": "period",
+      "first": [
+        "amount",
+        "due_date"
+      ]
+    },
+    "issues": {
+      "link": "customer_id",
+      "title": "category",
+      "first": [
+        "priority",
+        "location"
+      ]
+    },
+    "requests": {
+      "link": "customer_id",
+      "title": "type"
+    }
+  }
+}
