@@ -51,6 +51,9 @@ def html(markup: str) -> None:
     st.markdown(markup, unsafe_allow_html=True)
 
 
+DEFAULT_DATASET = "banking"                                          # shown when the app opens (without ?config=... in the address)
+
+
 # ---------------------------------------------------------------- storage
 def _code_stamp() -> float:
     """Changes when store.py changes. A redeploy keeps the running process, so connections cached from the OLD code must not be reused."""
@@ -146,14 +149,14 @@ if not st.session_state.get("github_pulled"):                         # at the s
             st.session_state["flash"] = f"Loaded from GitHub: {', '.join(pulled)}"
     except StoreError as exc:
         st.session_state["github_pull_error"] = f"Could not read the datasets on GitHub: {exc}"
-all_datasets ={d.name: d for d in datasets.list_datasets()}
+all_datasets = {d.name: d for d in datasets.list_datasets()}
 if "_pick_next" in st.session_state:                                  # a dataset was just created: select it
     st.session_state["config_pick"] = st.session_state.pop("_pick_next")
 if "config_pick" not in st.session_state and st.query_params.get("config") in all_datasets:
     st.session_state["config_pick"] = st.query_params["config"]      # kept in the address, so a page reload (theme switch) stays on it
 if all_datasets and st.session_state.get("config_pick") not in all_datasets:
     usual = [n for n, d in all_datasets.items() if d.default_table == table_of(base)]
-    st.session_state["config_pick"] = usual[0] if usual else next(iter(all_datasets))
+    st.session_state["config_pick"] = DEFAULT_DATASET if DEFAULT_DATASET in all_datasets else (usual[0] if usual else next(iter(all_datasets)))
 picked = all_datasets.get(st.session_state.get("config_pick"))
 if picked and st.query_params.get("config") != picked.name:
     st.query_params["config"] = picked.name
@@ -466,6 +469,11 @@ with st.sidebar:
         if leftovers:
             st.warning(f"The table also holds collections that are not part of this config any more: {', '.join(leftovers)}. "
                        "**Reset database** removes them.")
+        if st.button("🔄 Refresh database", width="stretch",
+                     help="Read the table again, and load the datasets that are on GitHub but not here yet (existing ones are not changed)."):
+            st.session_state["version"] += 1
+            st.session_state["github_pulled"] = False
+            st.rerun()
         if st.button("⬆️ Update database", width="stretch", disabled=bool(load_error),
                      help="Seed data → database. Writes the seed records into the Azure table, adding or overwriting. Records you added yourself stay."):
             try:
@@ -481,11 +489,6 @@ with st.sidebar:
             reset_dialog()
         if st.button("🗑️ Delete config", width="stretch", disabled=bool(load_error), help="Removes the config. Asks first."):
             delete_dialog()
-        if st.button("🔄 Refresh database", width="stretch",
-                     help="Read the table again, and load the datasets that are on GitHub but not here yet (existing ones are not changed)."):
-            st.session_state["version"] += 1
-            st.session_state["github_pulled"] = False
-            st.rerun()
     else:
         st.info("There are no configs yet. Add one below.")
 
@@ -544,8 +547,10 @@ with tab_browse:
         cfgs = {c: render.collection_config(c, view) for c in order}
         if st.session_state.get("browse_collection") not in order:
             st.session_state["browse_collection"] = primary
-        selected = st.radio("Collection", order, horizontal=True, key="browse_collection",
+        selected = st.pills("Collection", order, selection_mode="single", key="browse_collection",
                             format_func=lambda c: f"{cfgs[c]['icon']} {cfgs[c]['label']} ({len(data[c])})", label_visibility="collapsed")
+        if selected is None:                                          # a click on the chosen button un-chooses it: choose the main one again
+            st.rerun()
         query = st.text_input("Search", placeholder="🔍 Search names, ids, anything…", key="browse_search", label_visibility="collapsed").strip().lower()
         links = {c: render.link_field(c, data[c], primary, view) for c in order if c != primary}
 
