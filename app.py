@@ -205,7 +205,7 @@ def reset_dialog():
         except StoreError as exc:
             to_error(exc)
         else:
-            done(f"Reset the database of “{picked.title}” to its seed data: {counted(count, 'record')} in {table}")
+            done(f"Reset the Azure table {table} to the seed data of “{picked.title}”.")
     if no.button("Cancel", width="stretch"):
         st.rerun()
 
@@ -264,7 +264,7 @@ def delete_dialog():
     st.write(f"Delete **{picked.title}**? There are two separate things, and you choose what goes:")
     st.markdown(f"- **The config** is the template: its seed data and display settings, kept in the folder `datasets/{picked.name}`. "
                 f"**Update** and **Reset** load from it.")
-    st.markdown(f"- **The data** is the {counted(in_table, 'record')} that are in the table **{table}** right now. "
+    st.markdown(f"- **The data** is what is stored in the Azure table **{table}** right now. "
                 f"That is what you see in the app and what Teneo reads.")
     if sharing:
         st.caption(f"The table {table} is also used by: {', '.join(sharing)}. Only the collections of {picked.title} are ever removed.")
@@ -289,7 +289,7 @@ def delete_dialog():
 
     with st.container(border=True):
         st.markdown("**Delete the config, keep the data**")
-        st.caption(f"Removes the folder `datasets/{picked.name}`{git_note}. The {counted(in_table, 'record')} in {table} stay, and Teneo keeps working with them. "
+        st.caption(f"Removes the folder `datasets/{picked.name}`{git_note}. The Azure table {table} and its data stay, and Teneo keeps working with it. "
                    "You can no longer Update or Reset them from here.")
         if st.button("Delete config, keep the data", width="stretch"):
             try:
@@ -304,11 +304,11 @@ def delete_dialog():
         st.markdown("**Delete the config and the data**")
         owns_table = bool(picked.default_table) and picked.default_table == table and not sharing     # only then may the table itself go
         if owns_table:
-            st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and the table **{table}** itself, with its {counted(in_table, 'record')}. "
+            st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and deletes the Azure table **{table}** with all its data. "
                        "Teneo will find nothing there until you load other data.")
         else:
             why = f"because {', '.join(sharing)} uses it too" if sharing else "because it is not this config's own table"
-            st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and the {counted(in_table, 'record')} of this config in {table}. "
+            st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and removes this config's data from the Azure table {table}. "
                        f"The table itself stays, {why}.")
         if st.button("Delete config and the data", type="primary", width="stretch"):
             step = "GitHub"
@@ -334,9 +334,9 @@ def delete_dialog():
                 st.session_state.pop("config_pick", None)
                 note = git_text + ("" if folder_gone else stuck_folder_note(picked.name))
                 if owns_table:
-                    done(f"Deleted the config “{picked.title}” and the table {table} with its {counted(in_table, 'record')}." + note)
+                    done(f"Deleted the config “{picked.title}” and removed the Azure table {table} with all its data." + note)
                 else:
-                    done(f"Deleted the config “{picked.title}” and its {counted(in_table, 'record')} in {table}. The table stays." + note)
+                    done(f"Deleted the config “{picked.title}” and removed its data from the Azure table {table}. The table itself stays." + note)
     st.caption("Deleting cannot be undone.")
     if st.button("Cancel", width="stretch"):
         st.rerun()
@@ -362,7 +362,7 @@ def orphan_dialog(name: str):
         except StoreError as exc:
             to_error(exc)
         else:
-            done(f"Deleted the table {name} ({counted(records, 'record')}).")
+            done(f"Removed the Azure table {name} with all its data.")
     if no.button("Cancel", width="stretch"):
         st.rerun()
 
@@ -428,7 +428,7 @@ def add_dialog():
             for key in ("new_ds_name", "new_ds_description", "new_ds_json", "new_ds_source"):
                 st.session_state.pop(key, None)
             st.session_state["_pick_next"] = ds.name
-            done(f"Created the config “{ds.title}” with {counted(count, 'record')} in the new table {table_name}.")
+            done(f"Created the config “{ds.title}” and loaded its data into the new Azure table {table_name}.")
 
 
 # ---------------------------------------------------------------- sidebar
@@ -469,7 +469,8 @@ with st.sidebar:
         if st.button("⬆️ Update database", width="stretch", disabled=bool(load_error),
                      help="Seed data → database. Writes the seed records into the Azure table, adding or overwriting. Records you added yourself stay."):
             try:
-                done(f"Updated the database: {counted(datasets.load_into(store, picked), 'record')} from the seed data of “{picked.title}” written to {table}")
+                datasets.load_into(store, picked)
+                done(f"Updated the Azure table {table} with the seed data of “{picked.title}”.")
             except StoreError as exc:
                 to_error(exc)
         if st.button("📥 Update seed data", width="stretch", disabled=bool(load_error) or not data,
