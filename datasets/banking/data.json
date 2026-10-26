@@ -202,8 +202,8 @@
   },
   "customers": {
     "C001": {
-      "name": "Elena x Bianchi",
-      "email": "elena.bianchi@example.com",
+      "name": "Elena Bianchi",
+      "email": "elena.bianchi@hotmail.com",
       "phone": "+39 347 000 0301",
       "address": "Via Torino 28, 20123 Milano MI",
       "plan": "Standard current account",
