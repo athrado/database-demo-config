@@ -82,7 +82,7 @@ All people, numbers and companies are made up. Every config's `customers` collec
 | **Reset database** | seed data → database | Asks "Are you sure you want to reset ... to its seed data?". On Yes it empties the **whole table** and loads the seed data again, so collections left over from an older version of the config are removed too (the pop-up lists them, and the sidebar warns when there are any). If another config uses the same table, only this config's own collections are emptied. The seed data is not changed. |
 | **Delete config** | | Asks first (see below). |
 | **Refresh database** | | Reads the table again. |
-| **Add new config** | | Opens a form: a name, a table name, and the data as JSON. Write or paste your own, or start from a copy of an existing config. It creates the config (in `datasets/`) and its table. |
+| **Add New Dataset** | | Opens a form: a name, a table name, and the data as JSON. Write or paste your own, or start from a copy of an existing config. It creates the config (in `datasets/`) and its table. |
 
 Each config has its own table (its `default_table`), so picking a config also picks the table.
 
@@ -171,7 +171,7 @@ python seed.py --all
 
 1. Pick a name: `demoacme`.
 2. Create it (portal, or `az storage table create --name demoacme ...`), or skip this and let it be created with the data.
-3. In the app: sidebar → **Add new config** → name it, enter the table `demoacme`, start from a copy of `retail` (or paste your own JSON) → **Create config**.
+3. In the app: sidebar → **Add New Dataset** → name it, enter the table `demoacme`, start from a copy of `retail` (or paste your own JSON) → **Create config**.
    (Or from the command line: `python seed.py retail --table demoacme`.)
 4. Connect Teneo to it (below).
 
@@ -233,13 +233,13 @@ EXT_DATA_TABLE=demoretail          # only used for a config that names no table;
 
 Then `streamlit run app.py`. In the app:
 
-- **Sidebar:** **Test connection** (under the storage address), then the config with **Update database**, **Update seed data**, **Reset database**, **Delete config** and **Refresh database**, and **Add new config**. There is no table picker: the table comes with the config.
+- **Sidebar:** the dataset with **Refresh database**, **Update database**, **Update seed data**, **Reset database** and **Delete config**; **Add New Dataset**; **Storage Connections** (where the data is stored, Azure and GitHub, each with a test button); and the dark mode switch at the very end. There is no table picker: the table comes with the config.
 - **Browse:** pick a collection, search, and see a customer with all their records; or browse any other collection as cards. Links show as a short label (for a receipt: "Receipt DOC8001") instead of the whole address.
 - **Tables:** every collection as a plain table.
 - **Edit records:** change a record's JSON, add one, or delete one. Teneo sees it on its next read.
 - **Configs:** edit a config's `data.json`, or save the current table as a new config.
 
-**Dark mode:** at the very end of the sidebar, under **Settings**, switch **🌙 Dark mode** on or off. The page reloads once and stays on the same config; the app remembers the choice in that browser. Until someone chooses, the app follows the system setting (the ⋮ menu, top right, offers the same choice). This comes from `.streamlit/config.toml`, so run `streamlit run app.py` from this folder. (To force dark with no switcher, see the comment in that file.) The table you are looking at is shown under the config in the sidebar and as the last line of the Browse tab.
+**Dark mode:** at the very end of the sidebar, below **Storage Connections**, switch **🌙 Dark mode** on or off. The page reloads once and stays on the same config; the app remembers the choice in that browser. Until someone chooses, the app follows the system setting (the ⋮ menu, top right, offers the same choice). This comes from `.streamlit/config.toml`, so run `streamlit run app.py` from this folder. (To force dark with no switcher, see the comment in that file.) The table you are looking at is shown under the config in the sidebar and as the last line of the Browse tab.
 
 The table list needs the **List** permission on the **Service** resource type. If it is missing, the app says so
 and you can still type a table name.
@@ -441,7 +441,7 @@ GITHUB_BRANCH = "main"
 
 The sample PDFs and documents pages are never committed: `documents_out/`, `*.pdf` and `documents-*.html` are in `.gitignore`, and the app only ever commits `datasets/<name>/data.json`. Generate them with `make_documents.py` and upload them to Blob Storage (section 7).
 
-**Update seed data** commits `datasets/<name>/data.json`. **Delete config** removes the config's whole folder from the repository (every file in it) in one commit, with a message you can edit; the commit is made first, so if GitHub refuses it nothing is deleted, and the history there lets you get the config back. **Add new config** and the **Edit** tab's `data.json` editor still change local files only: on a hosted app that is lost at the next restart. Do those on your own machine, then `git commit` and `git push`.
+**Update seed data** commits `datasets/<name>/data.json`. **Delete config** removes the config's whole folder from the repository (every file in it) in one commit, with a message you can edit; the commit is made first, so if GitHub refuses it nothing is deleted, and the history there lets you get the config back. **Add New Dataset** and the **Edit** tab's `data.json` editor still change local files only: on a hosted app that is lost at the next restart. Do those on your own machine, then `git commit` and `git push`.
 
 ## Troubleshooting
 

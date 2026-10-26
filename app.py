@@ -379,7 +379,7 @@ def fill_new_json() -> None:
         st.session_state["new_ds_json"] = NEW_DATASET_TEMPLATE
 
 
-@st.dialog("Add new config", width="large")
+@st.dialog("Add New Dataset", width="large")
 def add_dialog():
     st.caption("Create a config from JSON: write or paste your own, or start from a copy of an existing one. "
                "It gets its own table, which is created when the data is written.")
@@ -436,19 +436,7 @@ def add_dialog():
 
 # ---------------------------------------------------------------- sidebar
 with st.sidebar:
-    st.title("🗄️ Database demo config")
-    kind = "azure" if is_azure(base) else "local"
-    label = "Azure Table Storage" if kind == "azure" else "Local files (no Azure configured)"
-    html(f'<span class="backend-pill backend-{kind}">{label}</span>')
-    if kind == "azure":
-        st.caption(base.account_url)
-        if st.button("Test connection", width="stretch"):
-            try:
-                st.success(store.ping() if store else base.ping())
-            except StoreError as exc:
-                to_error(exc)
-
-    st.divider()
+    st.title("Database demo config")
     st.subheader("Datasets")
     if "github_pull_error" in st.session_state:
         st.warning(st.session_state["github_pull_error"])
@@ -490,16 +478,26 @@ with st.sidebar:
         if st.button("🗑️ Delete config", width="stretch", disabled=bool(load_error), help="Removes the config. Asks first."):
             delete_dialog()
     else:
-        st.info("There are no configs yet. Add one below.")
+        st.info("There are no datasets yet. Add one with Add New Dataset below.")
 
     st.divider()
-    st.subheader("Add new config")
+    st.subheader("Add New Dataset")
     st.caption("Create one from JSON, or start from a copy of an existing one.")
-    if st.button("➕ Add new config", width="stretch"):
+    if st.button("➕ Add New Dataset", width="stretch"):
         add_dialog()
 
     st.divider()
-    st.subheader("Settings")
+    st.subheader("Storage Connections")
+    kind = "azure" if is_azure(base) else "local"
+    label = "Azure Table Storage" if kind == "azure" else "Local files (no Azure configured)"
+    html(f'<span class="backend-pill backend-{kind}">{label}</span>')
+    if kind == "azure":
+        st.caption(base.account_url)
+        if st.button("Test Azure connection", width="stretch"):
+            try:
+                st.success(store.ping() if store else base.ping())
+            except StoreError as exc:
+                to_error(exc)
     try:
         gh_config = github_sync.get_config()
     except StoreError as exc:
@@ -512,6 +510,8 @@ with st.sidebar:
                 st.success(github_sync.check_access(gh_config))
             except StoreError as exc:
                 to_error(exc)
+
+    st.divider()
     if "dark_mode" not in st.session_state:                           # start from what the page shows now
         st.session_state["dark_mode"] = st.context.theme.get("type") == "dark"
     st.toggle("🌙 Dark mode", key="dark_mode", on_change=lambda: st.session_state.update(_apply_theme=st.session_state["dark_mode"]),
@@ -524,7 +524,7 @@ with st.sidebar:
                 "window.location.reload();</script>", unsafe_allow_javascript=True)
 
 if not picked:
-    st.info("Add a config in the sidebar to get started.")
+    st.info("Add a dataset in the sidebar to get started.")
     st.stop()
 if load_error:
     st.error(load_error)
