@@ -1,121 +1,4 @@
 {
-  "customers": {
-    "C001": {
-      "name": "Elena Bianchi",
-      "email": "elena.bianchi@example.com",
-      "phone": "+39 347 000 0301",
-      "address": "Via Torino 28, 20123 Milano MI",
-      "plan": "Standard current account",
-      "preferences": {
-        "language": "en",
-        "contact_by": "phone"
-      },
-      "notes": [],
-      "date_of_birth": "14 February 1984",
-      "kyc_status": "verified",
-      "customer_since": "21 June 2016",
-      "credit_profile": {
-        "loan_eligible": true,
-        "pre_approved_limit": 10000,
-        "currency": "EUR",
-        "risk_band": "B",
-        "note": "Salary paid in regularly; no other credit."
-      },
-      "documents_page_url": "{{docs:documents-C001.html}}"
-    },
-    "C002": {
-      "name": "Marco Rossi",
-      "email": "marco.rossi@example.com",
-      "phone": "+39 333 000 0302",
-      "address": "Via Appia Nuova 120, 00183 Roma RM",
-      "plan": "Premium current account",
-      "preferences": {
-        "language": "en",
-        "contact_by": "phone"
-      },
-      "notes": [],
-      "date_of_birth": "30 July 1991",
-      "kyc_status": "verified",
-      "customer_since": "02 April 2012",
-      "credit_profile": {
-        "loan_eligible": true,
-        "pre_approved_limit": 15000,
-        "currency": "EUR",
-        "risk_band": "A",
-        "note": "Healthy balance; no proactive offer needed."
-      },
-      "documents_page_url": "{{docs:documents-C002.html}}"
-    },
-    "C003": {
-      "name": "Chiara Esposito",
-      "email": "chiara.esposito@example.com",
-      "phone": "+39 349 000 0303",
-      "address": "Via Toledo 210, 80134 Napoli NA",
-      "plan": "Student account",
-      "preferences": {
-        "language": "en",
-        "contact_by": "sms"
-      },
-      "notes": [],
-      "date_of_birth": "09 November 2003",
-      "kyc_status": "pending",
-      "customer_since": "{{today-40d}}",
-      "credit_profile": {
-        "loan_eligible": false,
-        "pre_approved_limit": 0,
-        "currency": "EUR",
-        "risk_band": "n/a",
-        "note": "Not eligible: identity check (KYC) still pending and account under 3 months old."
-      },
-      "documents_page_url": "{{docs:documents-C003.html}}"
-    },
-    "C004": {
-      "name": "Alessandro Conti",
-      "email": "alessandro.conti@example.com",
-      "phone": "+39 335 000 0304",
-      "address": "Corso Vittorio Emanuele II 45, 10123 Torino TO",
-      "plan": "Premium current account",
-      "preferences": {
-        "language": "en",
-        "contact_by": "email"
-      },
-      "notes": [],
-      "date_of_birth": "21 April 1977",
-      "kyc_status": "verified",
-      "customer_since": "15 September 2009",
-      "credit_profile": {
-        "loan_eligible": true,
-        "pre_approved_limit": 20000,
-        "currency": "EUR",
-        "risk_band": "A",
-        "note": "Average balance just above the threshold: no alert."
-      },
-      "documents_page_url": "{{docs:documents-C004.html}}"
-    },
-    "C005": {
-      "name": "Francesca Romano",
-      "email": "francesca.romano@example.com",
-      "phone": "+39 338 000 0305",
-      "address": "Via Indipendenza 9, 40121 Bologna BO",
-      "plan": "Standard current account",
-      "preferences": {
-        "language": "en",
-        "contact_by": "phone"
-      },
-      "notes": [],
-      "date_of_birth": "03 May 1989",
-      "kyc_status": "verified",
-      "customer_since": "30 January 2018",
-      "credit_profile": {
-        "loan_eligible": false,
-        "pre_approved_limit": 0,
-        "currency": "EUR",
-        "risk_band": "C",
-        "note": "Not eligible for a new loan: an existing loan is still running (see Loans)."
-      },
-      "documents_page_url": "{{docs:documents-C005.html}}"
-    }
-  },
   "accounts": {
     "A1001": {
       "customer_id": "C001",
@@ -248,6 +131,46 @@
       "status": "active"
     }
   },
+  "alerts": {
+    "AL4001": {
+      "customer_id": "C001",
+      "account_id": "A1001",
+      "type": "Low average balance",
+      "average_balance_3m": 212.4,
+      "threshold": 300,
+      "currency": "EUR",
+      "period": "last 3 months",
+      "detected": "{{today}}",
+      "status": "new",
+      "suggested_action": "Offer a personal loan (up to the pre-approved limit)"
+    },
+    "AL4002": {
+      "customer_id": "C003",
+      "account_id": "A1003",
+      "type": "Low average balance",
+      "average_balance_3m": 289.9,
+      "threshold": 300,
+      "currency": "EUR",
+      "period": "last 3 months",
+      "detected": "{{today}}",
+      "status": "no offer",
+      "suggested_action": "Do not offer a loan: not eligible",
+      "reason": "KYC pending, account under 3 months old"
+    },
+    "AL4003": {
+      "customer_id": "C005",
+      "account_id": "A1005",
+      "type": "Low average balance",
+      "average_balance_3m": 120.0,
+      "threshold": 300,
+      "currency": "EUR",
+      "period": "last 3 months",
+      "detected": "{{today-14d}}",
+      "status": "declined",
+      "suggested_action": "Offer a personal loan",
+      "reason": "Customer said no thanks; has a loan running"
+    }
+  },
   "cards": {
     "K2001": {
       "customer_id": "C001",
@@ -277,6 +200,232 @@
       "currency": "EUR"
     }
   },
+  "customers": {
+    "C001": {
+      "name": "Elena Maria Bianchi",
+      "email": "elena.bianchi@example.com",
+      "phone": "+39 347 000 0301",
+      "address": "Via Torino 28, 20123 Milano MI",
+      "plan": "Standard current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "date_of_birth": "14 February 1984",
+      "kyc_status": "verified",
+      "customer_since": "21 June 2016",
+      "credit_profile": {
+        "loan_eligible": true,
+        "pre_approved_limit": 10000,
+        "currency": "EUR",
+        "risk_band": "B",
+        "note": "Salary paid in regularly; no other credit."
+      },
+      "documents_page_url": "{{docs:documents-C001.html}}"
+    },
+    "C002": {
+      "name": "Marco Rossi",
+      "email": "marco.rossi@example.com",
+      "phone": "+39 333 000 0302",
+      "address": "Via Appia Nuova 120, 00183 Roma RM",
+      "plan": "Premium current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "date_of_birth": "30 July 1991",
+      "kyc_status": "verified",
+      "customer_since": "02 April 2012",
+      "credit_profile": {
+        "loan_eligible": true,
+        "pre_approved_limit": 15000,
+        "currency": "EUR",
+        "risk_band": "A",
+        "note": "Healthy balance; no proactive offer needed."
+      },
+      "documents_page_url": "{{docs:documents-C002.html}}"
+    },
+    "C003": {
+      "name": "Chiara Esposito",
+      "email": "chiara.esposito@example.com",
+      "phone": "+39 349 000 0303",
+      "address": "Via Toledo 210, 80134 Napoli NA",
+      "plan": "Student account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "notes": [],
+      "date_of_birth": "09 November 2003",
+      "kyc_status": "pending",
+      "customer_since": "{{today-40d}}",
+      "credit_profile": {
+        "loan_eligible": false,
+        "pre_approved_limit": 0,
+        "currency": "EUR",
+        "risk_band": "n/a",
+        "note": "Not eligible: identity check (KYC) still pending and account under 3 months old."
+      },
+      "documents_page_url": "{{docs:documents-C003.html}}"
+    },
+    "C004": {
+      "name": "Alessandro Conti",
+      "email": "alessandro.conti@example.com",
+      "phone": "+39 335 000 0304",
+      "address": "Corso Vittorio Emanuele II 45, 10123 Torino TO",
+      "plan": "Premium current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "date_of_birth": "21 April 1977",
+      "kyc_status": "verified",
+      "customer_since": "15 September 2009",
+      "credit_profile": {
+        "loan_eligible": true,
+        "pre_approved_limit": 20000,
+        "currency": "EUR",
+        "risk_band": "A",
+        "note": "Average balance just above the threshold: no alert."
+      },
+      "documents_page_url": "{{docs:documents-C004.html}}"
+    },
+    "C005": {
+      "name": "Francesca Romano",
+      "email": "francesca.romano@example.com",
+      "phone": "+39 338 000 0305",
+      "address": "Via Indipendenza 9, 40121 Bologna BO",
+      "plan": "Standard current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "phone"
+      },
+      "notes": [],
+      "date_of_birth": "03 May 1989",
+      "kyc_status": "verified",
+      "customer_since": "30 January 2018",
+      "credit_profile": {
+        "loan_eligible": false,
+        "pre_approved_limit": 0,
+        "currency": "EUR",
+        "risk_band": "C",
+        "note": "Not eligible for a new loan: an existing loan is still running (see Loans)."
+      },
+      "documents_page_url": "{{docs:documents-C005.html}}"
+    }
+  },
+  "loan_offers": {
+    "LO-10000-24": {
+      "product": "Personal loan",
+      "amount": 10000,
+      "duration_months": 24,
+      "monthly_instalment": 443.21,
+      "apr": 6.0,
+      "total_repayable": 10637.04,
+      "total_interest": 637.04,
+      "currency": "EUR"
+    },
+    "LO-10000-36": {
+      "product": "Personal loan",
+      "amount": 10000,
+      "duration_months": 36,
+      "monthly_instalment": 304.22,
+      "apr": 6.0,
+      "total_repayable": 10951.92,
+      "total_interest": 951.92,
+      "currency": "EUR"
+    },
+    "LO-5000-24": {
+      "product": "Personal loan",
+      "amount": 5000,
+      "duration_months": 24,
+      "monthly_instalment": 221.6,
+      "apr": 6.0,
+      "total_repayable": 5318.4,
+      "total_interest": 318.4,
+      "currency": "EUR"
+    },
+    "LO-5000-36": {
+      "product": "Personal loan",
+      "amount": 5000,
+      "duration_months": 36,
+      "monthly_instalment": 152.11,
+      "apr": 6.0,
+      "total_repayable": 5475.96,
+      "total_interest": 475.96,
+      "currency": "EUR"
+    },
+    "LO-7500-24": {
+      "product": "Personal loan",
+      "amount": 7500,
+      "duration_months": 24,
+      "monthly_instalment": 332.4,
+      "apr": 6.0,
+      "total_repayable": 7977.6,
+      "total_interest": 477.6,
+      "currency": "EUR"
+    },
+    "LO-7500-36": {
+      "product": "Personal loan",
+      "amount": 7500,
+      "duration_months": 36,
+      "monthly_instalment": 228.16,
+      "apr": 6.0,
+      "total_repayable": 8213.76,
+      "total_interest": 713.76,
+      "currency": "EUR"
+    }
+  },
+  "loan_requests": {
+    "LRQ5001": {
+      "customer_id": "C002",
+      "purpose": "Buying a used car",
+      "amount_min": 8000,
+      "amount_max": 10000,
+      "currency": "EUR",
+      "preferred_duration_months": 36,
+      "status": "under review",
+      "requested": "{{today-3d}}",
+      "channel": "Chat"
+    }
+  },
+  "loans": {
+    "LN3001": {
+      "customer_id": "C005",
+      "product": "Personal loan",
+      "original_amount": 12000,
+      "outstanding": 7480.5,
+      "monthly_instalment": 310.0,
+      "apr": 5.9,
+      "remaining_months": 26,
+      "currency": "EUR",
+      "status": "active",
+      "started": "{{today-22m}}"
+    }
+  },
+  "rules": {
+    "R-DOCLINKS": {
+      "name": "Document links in chat",
+      "description": "When a customer asks for documents (e.g. transfer receipts), list the links in the chat as long as there are no more than max_links_in_chat of them. Above that, send the link to the documents page instead.",
+      "max_links_in_chat": 5,
+      "documents_page_field": "documents_page_url",
+      "action": "Send the links, or the link in the customer's documents_page_url when there are too many",
+      "status": "active"
+    },
+    "R-LOWBAL": {
+      "name": "Low average balance",
+      "description": "Average balance of the current account below the threshold over the period: the assistant contacts the customer proactively and offers help with liquidity.",
+      "threshold": 300,
+      "currency": "EUR",
+      "period_months": 3,
+      "action": "Proactive contact, then offer a personal loan",
+      "requires": "loan_eligible = true in the customer's credit profile",
+      "status": "active"
+    }
+  },
   "transactions": {
     "TX1001": {
       "customer_id": "C004",
@@ -293,7 +442,7 @@
       "status": "completed",
       "doc_id": "DOC8001",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Giorgio Ferrari, {{lastmonth:3}}",
+      "doc_title": "Transfer receipt - Giorgio Ferrrari, 3 September 2026",
       "doc_url": "{{docs:DOC8001.pdf}}"
     },
     "TX1002": {
@@ -792,155 +941,6 @@
       "doc_category": "Transfer receipt",
       "doc_title": "Transfer receipt - Universita di Roma La Sapienza, {{monthago:9:15}}",
       "doc_url": "{{docs:DOC8029.pdf}}"
-    }
-  },
-  "loans": {
-    "LN3001": {
-      "customer_id": "C005",
-      "product": "Personal loan",
-      "original_amount": 12000,
-      "outstanding": 7480.5,
-      "monthly_instalment": 310.0,
-      "apr": 5.9,
-      "remaining_months": 26,
-      "currency": "EUR",
-      "status": "active",
-      "started": "{{today-22m}}"
-    }
-  },
-  "rules": {
-    "R-LOWBAL": {
-      "name": "Low average balance",
-      "description": "Average balance of the current account below the threshold over the period: the assistant contacts the customer proactively and offers help with liquidity.",
-      "threshold": 300,
-      "currency": "EUR",
-      "period_months": 3,
-      "action": "Proactive contact, then offer a personal loan",
-      "requires": "loan_eligible = true in the customer's credit profile",
-      "status": "active"
-    },
-    "R-DOCLINKS": {
-      "name": "Document links in chat",
-      "description": "When a customer asks for documents (e.g. transfer receipts), list the links in the chat as long as there are no more than max_links_in_chat of them. Above that, send the link to the documents page instead.",
-      "max_links_in_chat": 5,
-      "documents_page_field": "documents_page_url",
-      "action": "Send the links, or the link in the customer's documents_page_url when there are too many",
-      "status": "active"
-    }
-  },
-  "alerts": {
-    "AL4001": {
-      "customer_id": "C001",
-      "account_id": "A1001",
-      "type": "Low average balance",
-      "average_balance_3m": 212.4,
-      "threshold": 300,
-      "currency": "EUR",
-      "period": "last 3 months",
-      "detected": "{{today}}",
-      "status": "new",
-      "suggested_action": "Offer a personal loan (up to the pre-approved limit)"
-    },
-    "AL4002": {
-      "customer_id": "C003",
-      "account_id": "A1003",
-      "type": "Low average balance",
-      "average_balance_3m": 289.9,
-      "threshold": 300,
-      "currency": "EUR",
-      "period": "last 3 months",
-      "detected": "{{today}}",
-      "status": "no offer",
-      "suggested_action": "Do not offer a loan: not eligible",
-      "reason": "KYC pending, account under 3 months old"
-    },
-    "AL4003": {
-      "customer_id": "C005",
-      "account_id": "A1005",
-      "type": "Low average balance",
-      "average_balance_3m": 120.0,
-      "threshold": 300,
-      "currency": "EUR",
-      "period": "last 3 months",
-      "detected": "{{today-14d}}",
-      "status": "declined",
-      "suggested_action": "Offer a personal loan",
-      "reason": "Customer said no thanks; has a loan running"
-    }
-  },
-  "loan_offers": {
-    "LO-5000-24": {
-      "product": "Personal loan",
-      "amount": 5000,
-      "duration_months": 24,
-      "monthly_instalment": 221.6,
-      "apr": 6.0,
-      "total_repayable": 5318.4,
-      "total_interest": 318.4,
-      "currency": "EUR"
-    },
-    "LO-5000-36": {
-      "product": "Personal loan",
-      "amount": 5000,
-      "duration_months": 36,
-      "monthly_instalment": 152.11,
-      "apr": 6.0,
-      "total_repayable": 5475.96,
-      "total_interest": 475.96,
-      "currency": "EUR"
-    },
-    "LO-7500-24": {
-      "product": "Personal loan",
-      "amount": 7500,
-      "duration_months": 24,
-      "monthly_instalment": 332.4,
-      "apr": 6.0,
-      "total_repayable": 7977.6,
-      "total_interest": 477.6,
-      "currency": "EUR"
-    },
-    "LO-7500-36": {
-      "product": "Personal loan",
-      "amount": 7500,
-      "duration_months": 36,
-      "monthly_instalment": 228.16,
-      "apr": 6.0,
-      "total_repayable": 8213.76,
-      "total_interest": 713.76,
-      "currency": "EUR"
-    },
-    "LO-10000-24": {
-      "product": "Personal loan",
-      "amount": 10000,
-      "duration_months": 24,
-      "monthly_instalment": 443.21,
-      "apr": 6.0,
-      "total_repayable": 10637.04,
-      "total_interest": 637.04,
-      "currency": "EUR"
-    },
-    "LO-10000-36": {
-      "product": "Personal loan",
-      "amount": 10000,
-      "duration_months": 36,
-      "monthly_instalment": 304.22,
-      "apr": 6.0,
-      "total_repayable": 10951.92,
-      "total_interest": 951.92,
-      "currency": "EUR"
-    }
-  },
-  "loan_requests": {
-    "LRQ5001": {
-      "customer_id": "C002",
-      "purpose": "Buying a used car",
-      "amount_min": 8000,
-      "amount_max": 10000,
-      "currency": "EUR",
-      "preferred_duration_months": 36,
-      "status": "under review",
-      "requested": "{{today-3d}}",
-      "channel": "Chat"
     }
   }
 }
