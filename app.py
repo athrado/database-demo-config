@@ -118,7 +118,16 @@ st.session_state.setdefault("version", 0)
 
 # ---------------------------------------------------------------- which dataset, and so which table
 datasets.tidy_empty_folders()                                         # folders left behind by an earlier delete
-all_datasets = {d.name: d for d in datasets.list_datasets()}
+if not st.session_state.get("github_pulled"):                         # at the start and on Refresh: datasets that are on GitHub but not here yet
+    st.session_state["github_pulled"] = True
+    st.session_state.pop("github_pull_error", None)
+    try:
+        pulled = datasets.pull_from_github()
+        if pulled:
+            st.session_state["flash"] = f"Loaded from GitHub: {', '.join(pulled)}"
+    except StoreError as exc:
+        st.session_state["github_pull_error"] = f"Could not read the datasets on GitHub: {exc}"
+all_datasets ={d.name: d for d in datasets.list_datasets()}
 if "_pick_next" in st.session_state:                                  # a dataset was just created: select it
     st.session_state["config_pick"] = st.session_state.pop("_pick_next")
 if "config_pick" not in st.session_state and st.query_params.get("config") in all_datasets:
@@ -418,7 +427,9 @@ with st.sidebar:
                 to_error(exc)
 
     st.divider()
-    st.subheader("Config")
+    st.subheader("Datasets")
+    if "github_pull_error" in st.session_state:
+        st.warning(st.session_state["github_pull_error"])
     if all_datasets:
         st.selectbox("Config", list(all_datasets), key="config_pick", label_visibility="collapsed",
                      format_func=lambda n: f"{all_datasets[n].icon} {all_datasets[n].title}")
@@ -450,8 +461,10 @@ with st.sidebar:
             reset_dialog()
         if st.button("🗑️ Delete config", width="stretch", disabled=bool(load_error), help="Removes the config. Asks first."):
             delete_dialog()
-        if st.button("🔄 Refresh database", width="stretch", help="Read the table again."):
+        if st.button("🔄 Refresh database", width="stretch",
+                     help="Read the table again, and load the datasets that are on GitHub but not here yet (existing ones are not changed)."):
             st.session_state["version"] += 1
+            st.session_state["github_pulled"] = False
             st.rerun()
     else:
         st.info("There are no configs yet. Add one below.")

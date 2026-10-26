@@ -114,15 +114,29 @@ def _moved(cfg: GitHubConfig, parent: str) -> bool:
     return _call(cfg, "GET", f"git/ref/heads/{cfg.branch}")["object"]["sha"] != parent
 
 
-def files_under(cfg: GitHubConfig, folder: str) -> list[str]:
-    """Every file path in the branch below `folder` (for example "datasets/retail")."""
+def list_files(cfg: GitHubConfig) -> list[dict]:
+    """Every file of the branch: [{"path", "sha", "size"}, ...]."""
     parent = _call(cfg, "GET", f"git/ref/heads/{cfg.branch}")["object"]["sha"]
     tree = _call(cfg, "GET", f"git/commits/{parent}")["tree"]["sha"]
     listing = _call(cfg, "GET", f"git/trees/{tree}?recursive=1")
     if listing.get("truncated"):
         raise StoreError("The repository is too large to list through the API")
+    return [{"path": e["path"], "sha": e["sha"], "size": e.get("size", 0)} for e in listing.get("tree", []) if e.get("type") == "blob"]
+
+
+def files_under(cfg: GitHubConfig, folder: str) -> list[str]:
+    """Every file path in the branch below `folder` (for example "datasets/retail")."""
     prefix = folder.strip("/") + "/"
-    return [e["path"] for e in listing.get("tree", []) if e.get("type") == "blob" and e["path"].startswith(prefix)]
+    return [f["path"] for f in list_files(cfg) if f["path"].startswith(prefix)]
+
+
+def read_file(cfg: GitHubConfig, sha: str) -> bytes:
+    """The content of a file (a blob of the repository)."""
+    import base64
+    blob = _call(cfg, "GET", f"git/blobs/{sha}")
+    if blob.get("encoding") != "base64":
+        raise StoreError("GitHub returned a file in an unexpected format")
+    return base64.b64decode(blob["content"])
 
 
 def delete_folder(cfg: GitHubConfig, folder: str, message: str) -> dict | None:

@@ -437,6 +437,8 @@ GITHUB_BRANCH = "main"
 
 ### What is and is not committed
 
+**Datasets from GitHub:** when the app starts, and on **Refresh database**, it also downloads the datasets that are in the repository but not in the app's `datasets/` folder yet (for example one made on another machine). A dataset needs `config.json` and `data.json`. Datasets that already exist are never overwritten and nothing is deleted. Without the GitHub settings this step is skipped.
+
 The sample PDFs and documents pages are never committed: `documents_out/`, `*.pdf` and `documents-*.html` are in `.gitignore`, and the app only ever commits `datasets/<name>/data.json`. Generate them with `make_documents.py` and upload them to Blob Storage (section 7).
 
 **Update seed data** commits `datasets/<name>/data.json`. **Delete config** removes the config's whole folder from the repository (every file in it) in one commit, with a message you can edit; the commit is made first, so if GitHub refuses it nothing is deleted, and the history there lets you get the config back. **Add new config** and the **Edit** tab's `data.json` editor still change local files only: on a hosted app that is lost at the next restart. Do those on your own machine, then `git commit` and `git push`.

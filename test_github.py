@@ -79,7 +79,10 @@ class FakeGitHub:
             return 200, {"tree": {"sha": self.commits[rest.split("/")[-1]]["tree"]}}
         if rest.startswith("git/trees/") and method == "GET":
             tree = self.trees[rest.split("/")[2]]
-            return 200, {"truncated": False, "tree": [{"path": p, "type": "blob", "sha": b} for p, b in tree.items()]}
+            return 200, {"truncated": False, "tree": [{"path": p, "type": "blob", "sha": b, "size": len(self.blobs[b].encode())} for p, b in tree.items()]}
+        if rest.startswith("git/blobs/") and method == "GET":
+            import base64
+            return 200, {"encoding": "base64", "content": base64.b64encode(self.blobs[rest.split("/")[2]].encode()).decode()}
         if rest == "git/blobs" and method == "POST":
             return 201, {"sha": self._blob(body["content"])}
         if rest == "git/trees" and method == "POST":
@@ -279,6 +282,43 @@ def test_commit_delete_is_skipped_without_github_and_checks_the_name():
     finally:
         for k, v in saved.items():
             os.environ.pop(k, None) if v is None else os.environ.__setitem__(k, v)
+
+
+def test_datasets_on_github_are_loaded_when_missing_here():
+    fake = FakeGitHub()
+    server = serve(fake)
+    cfg = config(server)
+    github_sync.commit_files(cfg, {
+        "datasets/remote1/config.json": '{"title": "Remote"}', "datasets/remote1/data.json": '{"customers": {}}', "datasets/remote1/view.json": "{}",
+        "datasets/remote1/data.backup.json": "old",                                           # a backup file is not part of a dataset
+        "datasets/local1/config.json": '{"title": "FROM GITHUB"}', "datasets/local1/data.json": "{}",
+        "datasets/half/data.json": "{}",                                                      # no config.json: not a dataset
+        "datasets/.hidden/config.json": "{}", "datasets/.hidden/data.json": "{}",             # not a valid name
+        "datasets/deep/inner/config.json": "{}",                                              # nested: ignored
+        "other/config.json": "{}"}, "Add remote datasets")
+    saved = {k: os.environ.get(k) for k in ("GITHUB_TOKEN", "GITHUB_REPO", "GITHUB_API_URL")}
+    original = datasets.DATASET_DIR
+    with tempfile.TemporaryDirectory() as tmp:
+        datasets.DATASET_DIR = Path(tmp)
+        try:
+            Path(tmp, "local1").mkdir()
+            Path(tmp, "local1", "config.json").write_text('{"title": "MY LOCAL EDIT"}', encoding="utf-8")
+            Path(tmp, "local1", "data.json").write_text("{}", encoding="utf-8")
+            os.environ.update(GITHUB_TOKEN="", GITHUB_REPO="")
+            assert datasets.pull_from_github() == []                                          # GitHub not set up: nothing happens
+            os.environ.update(GITHUB_TOKEN="good-token", GITHUB_REPO=REPO, GITHUB_API_URL=f"http://127.0.0.1:{server.server_port}")
+            assert datasets.pull_from_github() == ["remote1"]
+            assert sorted(p.name for p in Path(tmp, "remote1").iterdir()) == ["config.json", "data.json", "view.json"]
+            assert json.loads(Path(tmp, "remote1", "config.json").read_text(encoding="utf-8")) == {"title": "Remote"}
+            assert "MY LOCAL EDIT" in Path(tmp, "local1", "config.json").read_text(encoding="utf-8")      # an existing dataset is not overwritten
+            assert sorted(p.name for p in Path(tmp).iterdir()) == ["local1", "remote1"]
+            assert datasets.pull_from_github() == []                                          # the second time there is nothing new
+            os.environ["GITHUB_TOKEN"] = "wrong"
+            expect_error(datasets.pull_from_github, "HTTP 401")
+        finally:
+            datasets.DATASET_DIR = original
+            for k, v in saved.items():
+                os.environ.pop(k, None) if v is None else os.environ.__setitem__(k, v)
 
 
 if __name__ == "__main__":

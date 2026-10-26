@@ -283,6 +283,39 @@ def delete_dataset(name: str, wait: float = 5.0) -> bool:
     return True
 
 
+MAX_FILE_BYTES = 5_000_000
+
+
+def pull_from_github() -> list[str]:
+    """Download the datasets that are in the GitHub repository but not here yet (a dataset made on another machine, say).
+    A dataset needs config.json and data.json in datasets/<name>/. Datasets that already exist here are never touched, so
+    nothing you changed locally is overwritten, and nothing is deleted. Returns the names that were added; [] when GitHub
+    is not set up."""
+    cfg = github_sync.get_config()
+    if not cfg:
+        return []
+    folders: dict[str, dict[str, dict]] = {}
+    for f in github_sync.list_files(cfg):
+        parts = f["path"].split("/")
+        if len(parts) == 3 and parts[0] == "datasets" and re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", parts[1]) and f["size"] <= MAX_FILE_BYTES:
+            folders.setdefault(parts[1], {})[parts[2]] = f
+    added = []
+    for name, files in sorted(folders.items()):
+        target = DATASET_DIR / name
+        if (target / "config.json").exists() or "config.json" not in files or "data.json" not in files:
+            continue
+        try:
+            target.mkdir(parents=True, exist_ok=True)
+            for filename, f in files.items():
+                if filename.endswith(".backup.json"):
+                    continue
+                (target / filename).write_bytes(github_sync.read_file(cfg, f["sha"]))
+        except OSError as exc:
+            raise StoreError(f"Could not save the dataset {name!r} from GitHub: {exc}") from exc
+        added.append(name)
+    return added
+
+
 def default_delete_message(dataset: Dataset) -> str:
     return f"Delete config: {dataset.title}\n\nRemoves datasets/{dataset.name}/"
 
