@@ -9,6 +9,7 @@ Each config has its own table (its `default_table`): pick the config in the side
 import json
 import re
 from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
@@ -16,7 +17,8 @@ import streamlit as st
 import datasets
 import github_sync
 import render
-from store import META_COLLECTION, META_ID, AzureTableStore, StoreError, check_table, get_store
+import store as storage
+from store import META_COLLECTION, META_ID, StoreError, check_table, get_store
 
 st.set_page_config(page_title="Database demo config", page_icon="🗄️", layout="wide")
 st.markdown(render.CSS, unsafe_allow_html=True)
@@ -50,18 +52,35 @@ def html(markup: str) -> None:
 
 
 # ---------------------------------------------------------------- storage
+def _code_stamp() -> float:
+    """Changes when store.py changes. A redeploy keeps the running process, so connections cached from the OLD code must not be reused."""
+    return Path(storage.__file__).stat().st_mtime
+
+
 @st.cache_resource
-def base_store():
+def _base_store(stamp: float):
     return get_store()
 
 
 @st.cache_resource
+def _store_for(table: str, stamp: float):
+    return _base_store(stamp).with_table(table)
+
+
+def base_store():
+    return _base_store(_code_stamp())
+
+
 def store_for(table: str):
-    return base_store().with_table(table)
+    return _store_for(table, _code_stamp())
+
+
+def is_azure(store) -> bool:
+    return hasattr(store, "account_url")                              # not isinstance(): the class can be a reloaded copy
 
 
 def table_of(store) -> str:
-    return store.table if isinstance(store, AzureTableStore) else store.path.stem
+    return store.table if is_azure(store) else store.path.stem
 
 
 @st.cache_data(ttl=60, show_spinner=False)
@@ -415,7 +434,7 @@ def add_dialog():
 # ---------------------------------------------------------------- sidebar
 with st.sidebar:
     st.title("🗄️ Database demo config")
-    kind = "azure" if isinstance(base, AzureTableStore) else "local"
+    kind = "azure" if is_azure(base) else "local"
     label = "Azure Table Storage" if kind == "azure" else "Local files (no Azure configured)"
     html(f'<span class="backend-pill backend-{kind}">{label}</span>')
     if kind == "azure":
