@@ -112,3 +112,20 @@ def commit_files(cfg: GitHubConfig, changes: dict[str, str | None], message: str
 
 def _moved(cfg: GitHubConfig, parent: str) -> bool:
     return _call(cfg, "GET", f"git/ref/heads/{cfg.branch}")["object"]["sha"] != parent
+
+
+def files_under(cfg: GitHubConfig, folder: str) -> list[str]:
+    """Every file path in the branch below `folder` (for example "datasets/retail")."""
+    parent = _call(cfg, "GET", f"git/ref/heads/{cfg.branch}")["object"]["sha"]
+    tree = _call(cfg, "GET", f"git/commits/{parent}")["tree"]["sha"]
+    listing = _call(cfg, "GET", f"git/trees/{tree}?recursive=1")
+    if listing.get("truncated"):
+        raise StoreError("The repository is too large to list through the API")
+    prefix = folder.strip("/") + "/"
+    return [e["path"] for e in listing.get("tree", []) if e.get("type") == "blob" and e["path"].startswith(prefix)]
+
+
+def delete_folder(cfg: GitHubConfig, folder: str, message: str) -> dict | None:
+    """Delete everything below `folder` in one commit. None when the repository has nothing there."""
+    paths = files_under(cfg, folder)
+    return commit_files(cfg, {path: None for path in paths}, message) if paths else None

@@ -283,6 +283,21 @@ def delete_dataset(name: str, wait: float = 5.0) -> bool:
     return True
 
 
+def default_delete_message(dataset: Dataset) -> str:
+    return f"Delete config: {dataset.title}\n\nRemoves datasets/{dataset.name}/"
+
+
+def commit_delete(name: str, message: str) -> dict | None:
+    """Delete the config's whole folder (every file in it) from the GitHub repository, in one commit. Does nothing
+    when GitHub is not set up or the repository has no such folder. Returns {"sha", "url"} or None."""
+    cfg = github_sync.get_config()
+    if not cfg:
+        return None
+    if not name or "/" in name or name.startswith("."):
+        raise StoreError(f"{name!r} is not a config name")
+    return github_sync.delete_folder(cfg, f"datasets/{name}", message)
+
+
 def tidy_empty_folders() -> list[str]:
     """Remove empty folders left in datasets/ (for example by a delete that could not remove its folder).
     Folders that are still locked are left alone and tried again next time. Returns the names removed."""

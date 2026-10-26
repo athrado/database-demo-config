@@ -240,32 +240,53 @@ def delete_dialog():
                 f"That is what you see in the app and what Teneo reads.")
     if sharing:
         st.caption(f"The table {table} is also used by: {', '.join(sharing)}. Only the collections of {picked.title} are ever removed.")
+    try:
+        github = github_sync.get_config()
+    except StoreError as exc:
+        st.error(str(exc))
+        return
+    message = None
+    if github:
+        message = st.text_input("Commit message for GitHub", value=datasets.default_delete_message(picked).splitlines()[0],
+                                help=f"The whole folder datasets/{picked.name} is deleted from {github.describe()} in one commit, before anything else is deleted. "
+                                     "The history there lets you get it back.")
+        git_note = f" and from GitHub ({github.repo})"
+    else:
+        git_note = ""
+
+    def delete_in_github():
+        """The folder goes from the repository first: that can be undone from the history, deleting data in Azure cannot."""
+        commit = datasets.commit_delete(picked.name, message or datasets.default_delete_message(picked)) if github else None
+        return f" Removed from GitHub: {commit['url']}" if commit else ""
 
     with st.container(border=True):
         st.markdown("**Delete the config, keep the data**")
-        st.caption(f"Removes the folder `datasets/{picked.name}`. The {counted(in_table, 'record')} in {table} stay, and Teneo keeps working with them. "
+        st.caption(f"Removes the folder `datasets/{picked.name}`{git_note}. The {counted(in_table, 'record')} in {table} stay, and Teneo keeps working with them. "
                    "You can no longer Update or Reset them from here.")
         if st.button("Delete config, keep the data", width="stretch"):
             try:
+                git_text = delete_in_github()
                 folder_gone = datasets.delete_dataset(picked.name)
             except StoreError as exc:
                 to_error(exc)
             else:
                 st.session_state.pop("config_pick", None)
-                done(f"Deleted the config “{picked.title}”. The data in {table} was kept." + ("" if folder_gone else stuck_folder_note(picked.name)))
+                done(f"Deleted the config “{picked.title}”. The data in {table} was kept.{git_text}" + ("" if folder_gone else stuck_folder_note(picked.name)))
     with st.container(border=True):
         st.markdown("**Delete the config and the data**")
         owns_table = bool(picked.default_table) and picked.default_table == table and not sharing     # only then may the table itself go
         if owns_table:
-            st.caption(f"Removes the folder `datasets/{picked.name}` and the table **{table}** itself, with its {counted(in_table, 'record')}. "
+            st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and the table **{table}** itself, with its {counted(in_table, 'record')}. "
                        "Teneo will find nothing there until you load other data.")
         else:
             why = f"because {', '.join(sharing)} uses it too" if sharing else "because it is not this config's own table"
-            st.caption(f"Removes the folder `datasets/{picked.name}` and the {counted(in_table, 'record')} of this config in {table}. "
+            st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and the {counted(in_table, 'record')} of this config in {table}. "
                        f"The table itself stays, {why}.")
         if st.button("Delete config and the data", type="primary", width="stretch"):
-            step = "the data"
+            step = "GitHub"
             try:
+                git_text = delete_in_github()
+                step = "the data"
                 if owns_table:
                     store.delete_table()                                               # the whole table, not only its records
                 else:
@@ -274,13 +295,16 @@ def delete_dialog():
                 step = "the config folder"
                 folder_gone = datasets.delete_dataset(picked.name)
             except StoreError as exc:
-                if step == "the data":
-                    st.error(f"The data in {table} could not be deleted, so the config was NOT deleted: {exc}")
+                if step == "GitHub":
+                    st.error(f"The folder could not be deleted from GitHub, so nothing was deleted: {exc}")
+                elif step == "the data":
+                    st.error(f"The data in {table} could not be deleted. The config was already removed from GitHub (get it back from the history there) "
+                             f"but is still here; nothing else was deleted: {exc}")
                 else:
                     st.error(f"The data was deleted, but the config folder could not be removed: {exc}")
             else:
                 st.session_state.pop("config_pick", None)
-                note = "" if folder_gone else stuck_folder_note(picked.name)
+                note = git_text + ("" if folder_gone else stuck_folder_note(picked.name))
                 if owns_table:
                     done(f"Deleted the config “{picked.title}” and the table {table} with its {counted(in_table, 'record')}." + note)
                 else:

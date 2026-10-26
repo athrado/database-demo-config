@@ -60,6 +60,7 @@ class FakeGitHub:
 
     def handle(self, method, path, body, auth):
         self.requests.append((method, path))
+        path = path.split("?")[0]
         if auth != f"Bearer {self.token}":
             return 401, {"message": "Bad credentials"}
         if path.endswith("/"):
@@ -76,6 +77,9 @@ class FakeGitHub:
             return 404, {"message": "Not Found"}
         if rest.startswith("git/commits/") and method == "GET":
             return 200, {"tree": {"sha": self.commits[rest.split("/")[-1]]["tree"]}}
+        if rest.startswith("git/trees/") and method == "GET":
+            tree = self.trees[rest.split("/")[2]]
+            return 200, {"truncated": False, "tree": [{"path": p, "type": "blob", "sha": b} for p, b in tree.items()]}
         if rest == "git/blobs" and method == "POST":
             return 201, {"sha": self._blob(body["content"])}
         if rest == "git/trees" and method == "POST":
@@ -243,6 +247,38 @@ def test_update_seed_data_commits_first_then_writes_the_local_file():
             datasets.DATASET_DIR = original
             for k, v in saved.items():
                 os.environ.pop(k, None) if v is None else os.environ.__setitem__(k, v)
+
+
+def test_deleting_a_config_removes_its_whole_folder_in_one_commit():
+    fake = FakeGitHub()
+    server = serve(fake)
+    cfg = config(server)
+    github_sync.commit_files(cfg, {"datasets/pilot/config.json": "{}\n", "datasets/pilot/data.json": "{}\n", "datasets/pilot/view.json": "{}\n",
+                                   "datasets/pilot/notes.md": "n\n", "datasets/pilot2/data.json": "keep\n"}, "Add pilot")
+    assert sorted(github_sync.files_under(cfg, "datasets/pilot")) == [f"datasets/pilot/{n}" for n in ("config.json", "data.json", "notes.md", "view.json")]
+    before = fake.head
+    result = github_sync.delete_folder(cfg, "datasets/pilot", "Delete config: Pilot")
+    assert result and fake.head != before and fake.commits[fake.head]["parents"] == [before]
+    assert [p for p in fake.files() if p.startswith("datasets/pilot/")] == []                  # every file of the folder, not just config.json
+    assert fake.files()["datasets/pilot2/data.json"] == "keep\n" and fake.files()["README.md"] == "hello\n"   # a similar name is left alone
+    assert github_sync.delete_folder(cfg, "datasets/pilot", "again") is None                    # nothing left: no empty commit
+
+
+def test_commit_delete_is_skipped_without_github_and_checks_the_name():
+    fake = FakeGitHub()
+    server = serve(fake)
+    saved = {k: os.environ.get(k) for k in ("GITHUB_TOKEN", "GITHUB_REPO", "GITHUB_API_URL")}
+    try:
+        os.environ.update(GITHUB_TOKEN="", GITHUB_REPO="")
+        assert datasets.commit_delete("demo", "x") is None                                      # not set up: nothing to do
+        os.environ.update(GITHUB_TOKEN="good-token", GITHUB_REPO=REPO, GITHUB_API_URL=f"http://127.0.0.1:{server.server_port}")
+        expect_error(lambda: datasets.commit_delete("../x", "m"), "not a config name")
+        result = datasets.commit_delete("demo", "Delete config: Demo")
+        assert result and "datasets/demo/data.json" not in fake.files()
+        assert fake.commits[fake.head]["message"] == "Delete config: Demo"
+    finally:
+        for k, v in saved.items():
+            os.environ.pop(k, None) if v is None else os.environ.__setitem__(k, v)
 
 
 if __name__ == "__main__":

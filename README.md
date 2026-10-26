@@ -439,7 +439,7 @@ GITHUB_BRANCH = "main"
 
 The sample PDFs and documents pages are never committed: `documents_out/`, `*.pdf` and `documents-*.html` are in `.gitignore`, and the app only ever commits `datasets/<name>/data.json`. Generate them with `make_documents.py` and upload them to Blob Storage (section 7).
 
-Only **Update seed data** commits. **Add new config**, **Delete config** and the **Edit** tab's `data.json` editor still change local files only: on a hosted app that is lost at the next restart. Do those on your own machine, then `git commit` and `git push`.
+**Update seed data** commits `datasets/<name>/data.json`. **Delete config** removes the config's whole folder from the repository (every file in it) in one commit, with a message you can edit; the commit is made first, so if GitHub refuses it nothing is deleted, and the history there lets you get the config back. **Add new config** and the **Edit** tab's `data.json` editor still change local files only: on a hosted app that is lost at the next restart. Do those on your own machine, then `git commit` and `git push`.
 
 ## Troubleshooting
 
