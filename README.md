@@ -1,5 +1,44 @@
 # Database demo config
 
+## In a Nutshell
+
+**What it is.** A shared demo database with a small web app to look at it and change it. Every demo (banking, insurance, retail, telco, medical, IT, starter) has its own set of
+data: customers and the records that belong to them (accounts, orders, claims, cases...). Teneo solutions read and write the same data during a conversation, so **what you change in the app is
+what the Teneo solution sees**, and the other way round.
+
+**In the app** (Streamlit)
+- Pick a **dataset** in the sidebar, for example *Banking*. **Browse** shows a customer with everything linked to them; **Tables** shows the raw records; **Edit records** lets you change, add or delete a record.
+- Each dataset is saved as a **template**: its **seed data** (the starting records) plus its **config** (title, icon, which table it uses, how it is shown). The sidebar buttons move data between the template and the **database** (the table Teneo reads):
+  - **Update database**: template → database (adds the template's records).
+  - **Reset database**: back to the seed data. Use it after a demo to undo the changes made during it so you replay the same scenario/use case.
+  - **Update seed data**: database → template. Saves what is in the database now as the new starting point (and commits it to GitHub).
+  - **Refresh database**: reads the database again (and picks up templates that are on GitHub but not here yet).
+  - **Add New Dataset** / **Delete template**: make a new demo dataset, or remove one (it asks first).
+- **Storage Connections** shows where the data lives (Azure) and the GitHub repository the templates are saved in.
+
+**In Teneo** (through MCP). The data is served by an MCP server with 17 tools: find a customer, read or change a record or a single field, add or remove list entries,
+change or delete several records at once, replace or clear a collection, and **reset** to the template. Delete-type tools only show a preview until you pass `confirm = true`.
+To use them in a Teneo solution, add an **MCP toolkit**:
+
+| Setting | Value |
+|---|---|
+| Server URL | `https://teneo-mcp-server.blackisland-1f803fbc.westeurope.azurecontainerapps.io/mcp` |
+| Auth header name | `X-API-Key` |
+| Auth header value | `<key>:<dataset>`, for example `<key>:banking` |
+
+- The **key** is a shared secret: **ask Julia** for it, and enter it only in the toolkit's connection settings, never in a flow or a document.
+- The part **after the colon** is the name of the dataset (the database), e.g. `banking`, `retail`, `insurance`. It decides which demo's data the tools work on, so use one toolkit per demo and the tools can't touch another demo by mistake.
+- **Example:** the Teneo solution **MCP Demo** has such a toolkit (*Banking Database*) and two small flows that use it. Say `test database contact` (look up a customer and change their contact preference) or `test database payments` (find payments, flag them, and get the receipts) in its live test. Open the flows to see how the tools are called from *Use tool* nodes.
+- All tools and their inputs are described in the README of the `teneo-mcp-server` project.
+
+As long as you are using the Streamlit app, no database can be broken or deleted permanentely as everything is backed up and version-controlled in Github, so feel free to play around.
+
+Access to Azure Tables or Github repo can be granted by Julia - but it is generally not required for basic use of this tool.
+
+The rest of this README explains how the entire setup works in more detail. It's not required knowledge when simply using the app and the MCP tool.
+
+## Overview
+
 A small shared database for demos: **one table per demo, ready-made configs to load into it, a Streamlit
 app to look at the data and change it, and a Teneo solution that reads and writes it.** Copy the folder,
 point it at your own storage account, and you have the same setup for a new demo.
@@ -169,12 +208,12 @@ Creating the table up front is optional: loading a config into a table that does
 python seed.py --all
 ```
 
-**Create the table for a new demo** (say one for ACME):
+**Create the table for a new demo** (say one for Exemplario):
 
-1. Pick a name: `demoacme`.
-2. Create it (portal, or `az storage table create --name demoacme ...`), or skip this and let it be created with the data.
-3. In the app: sidebar → **Add New Dataset** → name it, enter the table `demoacme`, start from a copy of `retail` (or paste your own JSON) → **Create config**.
-   (Or from the command line: `python seed.py retail --table demoacme`.)
+1. Pick a name: `demoexemplario`.
+2. Create it (portal, or `az storage table create --name demoexemplario ...`), or skip this and let it be created with the data.
+3. In the app: sidebar → **Add New Dataset** → name it, enter the table `demoexemplario`, start from a copy of `retail` (or paste your own JSON) → **Create config**.
+   (Or from the command line: `python seed.py retail --table demoexemplario`.)
 4. Connect Teneo to it (below).
 
 **Connect a Teneo solution to a table.** The solution's engine script reads a solution secret:
@@ -183,7 +222,7 @@ python seed.py --all
 |---|---|
 | `ext_data_account_url` | `https://<account>.table.core.windows.net` |
 | `ext_data_sas_token` | the SAS token |
-| `ext_data_table` | the table of this demo, e.g. `demoacme` (default if missing: `extdata`) |
+| `ext_data_table` | the table of this demo, e.g. `demoexemplario` (default if missing: `extdata`) |
 
 Secret names are **case-sensitive**: use lowercase, as above. After changing secrets, restart the live test.
 The same account and token can be shared by all solutions; only `ext_data_table` differs per demo.

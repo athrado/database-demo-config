@@ -19,7 +19,7 @@ import datasets
 import github_sync
 from store import LocalStore, StoreError
 
-REPO = "acme/demo"
+REPO = "exemplario/demo"
 
 
 def sha(text: str) -> str:
@@ -155,10 +155,10 @@ def test_settings_come_from_the_environment():
         expect_error(github_sync.get_config, "half set up")
         os.environ["GITHUB_REPO"] = "not a repo"
         expect_error(github_sync.get_config, "owner/name")
-        os.environ["GITHUB_REPO"] = "/acme/demo/"
+        os.environ["GITHUB_REPO"] = "/exemplario/demo/"
         os.environ["GITHUB_BRANCH"] = ""
         cfg = github_sync.get_config()
-        assert (cfg.repo, cfg.branch, cfg.api_url) == ("acme/demo", "main", "https://api.github.com")
+        assert (cfg.repo, cfg.branch, cfg.api_url) == ("exemplario/demo", "main", "https://api.github.com")
     finally:
         for k, v in saved.items():
             os.environ.pop(k, None) if v is None else os.environ.__setitem__(k, v)
@@ -197,13 +197,13 @@ def test_errors_say_what_to_do():
     fake = FakeGitHub()
     server = serve(fake)
     expect_error(lambda: github_sync.commit_files(config(server, token="bad"), {"a": "b"}, "m"), "HTTP 401", "token is wrong")
-    expect_error(lambda: github_sync.commit_files(config(server, repo="acme/other"), {"a": "b"}, "m"), "HTTP 404", "acme/other")
+    expect_error(lambda: github_sync.commit_files(config(server, repo="exemplario/other"), {"a": "b"}, "m"), "HTTP 404", "exemplario/other")
     cfg = config(server)
     cfg.branch = "nope"
     expect_error(lambda: github_sync.commit_files(cfg, {"a": "b"}, "m"), "HTTP 404", "nope")
     expect_error(lambda: github_sync.commit_files(github_sync.GitHubConfig("t", REPO, "main", "http://127.0.0.1:9"), {"a": "b"}, "m"), "Cannot reach GitHub")
     assert "good-token" not in "".join(str(r) for r in fake.requests)               # the token is only ever in the header
-    assert github_sync.check_access(config(server)).startswith("Connected to acme/demo (main)")
+    assert github_sync.check_access(config(server)).startswith("Connected to exemplario/demo (main)")
 
 
 # ---------------------------------------------------------------- "Update seed data"

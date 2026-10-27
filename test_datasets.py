@@ -111,14 +111,14 @@ def test_snapshot():
             store = LocalStore(Path(tmp) / "t.json")
             datasets.load_into(store, base)
             store.put("customers", "C001", {**store.get("customers", "C001"), "name": "Sophie Renamed"})
-            snap = datasets.save_snapshot(store, "ACME demo 1", "my tweaks", base, "demoacme")
-            assert snap.name == "acme-demo-1" and snap.default_table == "demoacme"
+            snap = datasets.save_snapshot(store, "Exemplario demo 1", "my tweaks", base, "demoexemplario")
+            assert snap.name == "exemplario-demo-1" and snap.default_table == "demoexemplario"
             assert snap.data["customers"]["C001"]["name"] == "Sophie Renamed"
             assert "_meta" not in snap.data
             assert snap.view == base.view
             assert datasets.validate_dataset(snap) == []
             try:
-                datasets.save_snapshot(store, "ACME demo 1")
+                datasets.save_snapshot(store, "Exemplario demo 1")
                 raise AssertionError("duplicate name must fail")
             except StoreError:
                 pass

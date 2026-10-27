@@ -134,7 +134,7 @@ def stuck_folder_note(name: str) -> str:
 
 
 def suggest_table(name: str) -> str:
-    """A valid table name for a new config, e.g. "ACME retail demo" -> demoacmeretaildemo."""
+    """A valid table name for a new config, e.g. "Exemplario retail demo" -> demoexemplarioretaildemo."""
     return ("demo" + re.sub(r"[^a-z0-9]", "", name.lower()))[:40]
 
 
@@ -392,12 +392,12 @@ def add_dialog():
     st.caption("Create a config from JSON: write or paste your own, or start from a copy of an existing one. "
                "It gets its own table, which is created when the data is written.")
     st.session_state.setdefault("new_ds_json", NEW_DATASET_TEMPLATE)
-    name = st.text_input("Name", placeholder="e.g. ACME retail demo", key="new_ds_name")
+    name = st.text_input("Name", placeholder="e.g. Exemplario retail demo", key="new_ds_name")
     description = st.text_input("Description (optional)", key="new_ds_description")
     st.selectbox("Start from", ["__empty__"] + list(all_datasets), key="new_ds_source", on_change=fill_new_json,
                  format_func=lambda n: "An empty template" if n == "__empty__" else f"A copy of {all_datasets[n].icon} {all_datasets[n].title}")
     table_name = st.text_input("Table", value=suggest_table(name) if name.strip() else "", key=f"new_ds_table_{datasets.slugify(name) if name.strip() else ''}",
-                               placeholder="e.g. demoacme", help="3-63 letters and digits, starting with a letter.")
+                               placeholder="e.g. demoexemplario", help="3-63 letters and digits, starting with a letter.")
     text = st.text_area("Data (JSON): {collection: {record id: record}}", height=320, key="new_ds_json")
 
     problems = []
@@ -714,7 +714,7 @@ with tab_datasets:
 
     st.subheader("Save this table as a new config")
     st.caption(f"Takes a snapshot of everything currently in **{table}** (your tweaks included) so you can reload it later, e.g. one per customer demo.")
-    snap_title = st.text_input("Name of the new config", placeholder="e.g. ACME retail demo", key="snap_title")
+    snap_title = st.text_input("Name of the new config", placeholder="e.g. Exemplario retail demo", key="snap_title")
     snap_desc = st.text_input("Description (optional)", key="snap_desc")
     if st.button("📸 Save snapshot", disabled=not (snap_title.strip() and data)):
         try:
