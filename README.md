@@ -66,7 +66,7 @@ A config is a folder in `datasets/`:
 | 🛡️ `insurance` | `demoinsurance` | Policy holders and families (Sophie Berthier, Sophie Bertram, ...), claims, requests, quotes. |
 | 🛒 `retail` | `demoretail` | Customers with loyalty tiers, orders with items and tracking, returns, delivery issues. |
 | 📶 `telco` | `demotelco` | Customers, tariffs and lines, invoices (one overdue), network issues, tariff requests. |
-| 🏦 `banking` | `demobanking` | Two use cases. (1) Proactive loan offer: accounts with a 3-month average balance (below 300 EUR for Elena Bianchi), the low-balance rule, alerts, ready-made loan offers (5,000 / 7,500 / 10,000 EUR over 24 or 36 months at 6% APR), loan requests, and customers who must not get an offer. (2) Finding documents: 29 `transactions` for three customers, each with its own receipt link, built to test 1 result, 2 to 5 results and more than 5, with older and messy ones (see below). Italian names, addresses, phone numbers and IBANs. |
+| 🏦 `banking` | `demobanking` | Three use cases. (1) Proactive loan offer: accounts with a 3-month average balance (below 300 EUR for Elena Bianchi), the low-balance rule, alerts, ready-made loan offers (5,000 / 7,500 / 10,000 EUR over 24 or 36 months at 6% APR), loan requests, and customers who must not get an offer. (2) Finding documents: 29 `transactions` for three customers, each with its own receipt link, built to test 1 result, 2 to 5 results and more than 5, with older and messy ones (see below). (3) Password reset by phone: customers with a blocked or active online banking password, masked identity data for the security interview, an interview log and the backend reset history (see below). Italian names, addresses, phone numbers and IBANs. |
 | 🩺 `medical` | `demomedical` | Patients, appointments, prescriptions, reimbursement claims, lab results. Fictional. |
 | 💻 `it` | `demoit` | Employees, tickets, laptops and phones, access and hardware requests. |
 
@@ -233,7 +233,7 @@ EXT_DATA_TABLE=demoretail          # only used for a config that names no table;
 
 Then `streamlit run app.py`. In the app:
 
-- **Sidebar:** the dataset with **Refresh database**, **Update database**, **Update seed data**, **Reset database** and **Delete config**; **Add New Dataset**; **Storage Connections** (where the data is stored, Azure and GitHub, each with a test button); and the dark mode switch at the very end. There is no table picker: the table comes with the config.
+- **Sidebar:** the dataset with **Refresh database**, **Update database**, **Update seed data**, **Reset database** and **Delete config**; **Add New Dataset**; **Storage Connections** (Azure and GitHub, each with a rounded name label, the address and a test button; GitHub shows the repository link with the branch in brackets); and the dark mode switch at the very end. There is no table picker: the table comes with the config.
 - **Browse:** pick a collection, search, and see a customer with all their records; or browse any other collection as cards. Links show as a short label (for a receipt: "Receipt DOC8001") instead of the whole address.
 - **Tables:** every collection as a plain table.
 - **Edit records:** change a record's JSON, add one, or delete one. Teneo sees it on its next read.
@@ -294,6 +294,33 @@ The call is triggered by the customer's open alert (status `new`), the way a rea
 
 Duplicate **Ext Data Demo** in Teneo, add the three secrets (same account and token, a different `ext_data_table`),
 and build your flows on the toolkit.
+
+### The banking password reset (by phone)
+
+Use case 3 of the `banking` config: a customer calls the helpline, is recognised by the phone number and told the online banking password is blocked, answers a security interview,
+and the assistant either hands over to an operator (case 3A) or asks the backend for a reset and tells the customer the result (case 3B, OK or KO).
+
+| Where | What it holds |
+|---|---|
+| `customers.online_banking` | `password_status` (active / blocked), `blocked_since`, `failed_attempts`, `blocked_reason`, `last_login`, a masked `username_masked` |
+| `customers.identity` | `id_card_masked` (e.g. `CA***71AB`) and `tax_code_masked` (e.g. `BNC***84B**F205*`) |
+| `accounts.iban` | the existing IBAN: the interview asks for its **last three digits** |
+| `identity_checks` | the interview log: one row per attempt (`attempt`, `result` passed/failed, `failed_fields`, the answers, masked) |
+| `password_requests` | what the backend banking service answered: `result` OK/KO, `reason_code`, `detail`, `status`, `delivery` |
+| rule `R-IDENTITY` | the three questions, where the expected answer comes from, pass rule, max 3 attempts a day |
+| rule `R-PWRESET` | the process, the operator hand-over (queue and note) for 3A, the backend request for 3B, and a sentence for every KO reason (`ko_reasons`) |
+
+**Critical data is masked.** Full ID card numbers and tax codes are never stored: a `*` stands for a hidden character, so an answer is compared with the **visible** characters only
+(ignoring case and spaces). The same goes for the answers logged in `identity_checks`.
+
+| Customer | Phone | Situation |
+|---|---|---|
+| Marco Rossi (C002) | +39 333 000 0302 | blocked, no history: the clean case. 3A or 3B ends OK |
+| Chiara Esposito (C003) | +39 349 000 0303 | blocked, three failed interviews today (the maximum) and KYC pending: no self-service, hand over to an operator. Yesterday's reset was refused (`KYC_PENDING`) |
+| Alessandro Conti (C004) | +39 335 000 0304 | blocked; passed the interview this morning and already got a temporary password: a new request is refused (KO, `ALREADY_REQUESTED`) |
+| Elena Bianchi (C001), Francesca Romano (C005) | | password active: nothing to reset |
+
+The dates are placeholders (`{{today}}`, `{{today-1d}}`...), so "blocked since today" is true whenever the config is loaded.
 
 ### The banking transactions (finding documents)
 

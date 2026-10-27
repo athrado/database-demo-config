@@ -11,6 +11,8 @@
         "address",
         "date_of_birth",
         "kyc_status",
+        "online_banking",
+        "identity",
         "credit_profile"
       ]
     },
@@ -113,6 +115,38 @@
         "monthly_instalment",
         "apr",
         "total_repayable"
+      ]
+    },
+    "identity_checks": {
+      "link": "customer_id",
+      "title": "result",
+      "label": "Security interviews",
+      "label_one": "Security interview",
+      "icon": "🛡️",
+      "accent": "teal",
+      "first": [
+        "started",
+        "time",
+        "attempt",
+        "failed_fields",
+        "answers_given_masked",
+        "channel"
+      ]
+    },
+    "password_requests": {
+      "link": "customer_id",
+      "title": "result",
+      "label": "Password requests",
+      "label_one": "Password request",
+      "icon": "🔑",
+      "accent": "orange",
+      "first": [
+        "requested",
+        "time",
+        "status",
+        "reason_code",
+        "detail",
+        "delivery"
       ]
     }
   }

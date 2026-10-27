@@ -222,7 +222,16 @@
         "risk_band": "B",
         "note": "Salary paid in regularly; no other credit."
       },
-      "documents_page_url": "{{docs:documents-C001.html}}"
+      "documents_page_url": "{{docs:documents-C001.html}}",
+      "identity": {
+        "id_card_masked": "CA***71AB",
+        "tax_code_masked": "BNC***84B**F205*"
+      },
+      "online_banking": {
+        "username_masked": "e.bi****i",
+        "password_status": "active",
+        "last_login": "{{today-2d}}"
+      }
     },
     "C002": {
       "name": "Marco Rossi",
@@ -245,7 +254,19 @@
         "risk_band": "A",
         "note": "Healthy balance; no proactive offer needed."
       },
-      "documents_page_url": "{{docs:documents-C002.html}}"
+      "documents_page_url": "{{docs:documents-C002.html}}",
+      "identity": {
+        "id_card_masked": "CA***42RM",
+        "tax_code_masked": "RSS***91L**H501*"
+      },
+      "online_banking": {
+        "username_masked": "m.ro***i",
+        "password_status": "blocked",
+        "blocked_since": "{{today}}",
+        "failed_attempts": 3,
+        "blocked_reason": "3 wrong password attempts in the mobile app",
+        "last_login": "{{today-9d}}"
+      }
     },
     "C003": {
       "name": "Chiara Esposito",
@@ -268,7 +289,19 @@
         "risk_band": "n/a",
         "note": "Not eligible: identity check (KYC) still pending and account under 3 months old."
       },
-      "documents_page_url": "{{docs:documents-C003.html}}"
+      "documents_page_url": "{{docs:documents-C003.html}}",
+      "identity": {
+        "id_card_masked": "CA***18CE",
+        "tax_code_masked": "SPS***03S**F839*"
+      },
+      "online_banking": {
+        "username_masked": "c.es*****o",
+        "password_status": "blocked",
+        "blocked_since": "{{today-1d}}",
+        "failed_attempts": 3,
+        "blocked_reason": "3 wrong password attempts on the website",
+        "last_login": "{{today-15d}}"
+      }
     },
     "C004": {
       "name": "Alessandro Conti",
@@ -291,7 +324,19 @@
         "risk_band": "A",
         "note": "Average balance just above the threshold: no alert."
       },
-      "documents_page_url": "{{docs:documents-C004.html}}"
+      "documents_page_url": "{{docs:documents-C004.html}}",
+      "identity": {
+        "id_card_masked": "CA***63AC",
+        "tax_code_masked": "CNT***77D**L219*"
+      },
+      "online_banking": {
+        "username_masked": "a.co***i",
+        "password_status": "blocked",
+        "blocked_since": "{{today}}",
+        "failed_attempts": 3,
+        "blocked_reason": "Temporary password not changed in time",
+        "last_login": "{{today-3d}}"
+      }
     },
     "C005": {
       "name": "Francesca Romano",
@@ -314,7 +359,16 @@
         "risk_band": "C",
         "note": "Not eligible for a new loan: an existing loan is still running (see Loans)."
       },
-      "documents_page_url": "{{docs:documents-C005.html}}"
+      "documents_page_url": "{{docs:documents-C005.html}}",
+      "identity": {
+        "id_card_masked": "CA***55FR",
+        "tax_code_masked": "RMN***89E**A944*"
+      },
+      "online_banking": {
+        "username_masked": "f.ro*****o",
+        "password_status": "active",
+        "last_login": "{{today-1d}}"
+      }
     }
   },
   "loan_offers": {
@@ -423,6 +477,69 @@
       "period_months": 3,
       "action": "Proactive contact, then offer a personal loan",
       "requires": "loan_eligible = true in the customer's credit profile",
+      "status": "active"
+    },
+    "R-IDENTITY": {
+      "name": "Security interview (password reset)",
+      "description": "Before a password is reset the assistant asks three questions and sends the answers to the bank service, which says whether they are correct. The stored values are masked (* = a hidden character, the full numbers are never kept), so the answer is compared with the visible characters only, ignoring case and spaces.",
+      "questions": [
+        {
+          "id": "id_card",
+          "ask": "Please tell me your ID card number.",
+          "expected_from": "customers.identity.id_card_masked",
+          "compare": "visible characters"
+        },
+        {
+          "id": "account_last3",
+          "ask": "What are the last three digits of your current account?",
+          "expected_from": "the last 3 digits of the IBAN of the caller's current account (accounts.iban)",
+          "compare": "exact"
+        },
+        {
+          "id": "tax_code",
+          "ask": "And your tax code, please.",
+          "expected_from": "customers.identity.tax_code_masked",
+          "compare": "visible characters"
+        }
+      ],
+      "pass_when": "all three answers are correct",
+      "max_attempts_per_day": 3,
+      "attempts_logged_in": "identity_checks",
+      "when_locked": "Do not try again: hand over to an operator",
+      "result_fields": {
+        "valid": "true when all three are correct",
+        "failed_fields": "the questions that did not match"
+      },
+      "status": "active"
+    },
+    "R-PWRESET": {
+      "name": "Password reset by phone",
+      "description": "The caller is recognised by the phone number (customers.phone). If customers.online_banking.password_status is blocked the assistant says so and offers a reset. After a successful security interview (R-IDENTITY) there are two ways to finish.",
+      "precondition": "online_banking.password_status = blocked",
+      "case_3a": {
+        "name": "Hand over to an operator",
+        "queue": "Online banking support",
+        "note_for_operator": "Security interview passed on the call (<started>); caller <name> (<customer_id>). The online banking password is blocked since <blocked_since>. Please reset it.",
+        "tell_the_customer": "A colleague will take the call and complete the reset."
+      },
+      "case_3b": {
+        "name": "Reset through the backend banking service",
+        "request": {
+          "customer_id": "the customer",
+          "identity_verified": true,
+          "channel": "Phone",
+          "delivery": "SMS to the phone number on file"
+        },
+        "result": "OK or KO, with reason_code and detail",
+        "formulate_from": "detail (OK) or ko_reasons[reason_code] (KO): never read internal codes out loud",
+        "logged_in": "password_requests"
+      },
+      "rate_limit": "one reset per customer per 24 hours; a second request is refused with ALREADY_REQUESTED",
+      "ko_reasons": {
+        "ALREADY_REQUESTED": "A temporary password was already sent today. Please check your SMS; if it does not arrive, a colleague can help.",
+        "KYC_PENDING": "Your identity check is not complete yet, so I cannot reset it automatically. I will transfer you to a colleague.",
+        "INTERVIEW_FAILED": "I could not confirm your identity. For your security I will transfer you to a colleague."
+      },
       "status": "active"
     }
   },
@@ -941,6 +1058,149 @@
       "doc_category": "Transfer receipt",
       "doc_title": "Transfer receipt - Universita di Roma La Sapienza, {{monthago:9:15}}",
       "doc_url": "{{docs:DOC8029.pdf}}"
+    }
+  },
+  "identity_checks": {
+    "IC7001": {
+      "customer_id": "C003",
+      "attempt": 1,
+      "started": "{{today}}",
+      "time": "08:12",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***07XX",
+        "account_last3": "***",
+        "tax_code": "SPS***03S**F839*"
+      },
+      "result": "failed",
+      "failed_fields": [
+        "id_card"
+      ]
+    },
+    "IC7002": {
+      "customer_id": "C003",
+      "attempt": 2,
+      "started": "{{today}}",
+      "time": "08:15",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***18CE",
+        "account_last3": "***",
+        "tax_code": "SPS***03S**F839*"
+      },
+      "result": "failed",
+      "failed_fields": [
+        "account_last3"
+      ]
+    },
+    "IC7003": {
+      "customer_id": "C003",
+      "attempt": 3,
+      "started": "{{today}}",
+      "time": "08:19",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***18CE",
+        "account_last3": "***",
+        "tax_code": "SPS***99X**F839*"
+      },
+      "result": "failed",
+      "failed_fields": [
+        "account_last3",
+        "tax_code"
+      ]
+    },
+    "IC7004": {
+      "customer_id": "C005",
+      "attempt": 1,
+      "started": "{{today-62d}}",
+      "time": "17:40",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***55FR",
+        "account_last3": "***",
+        "tax_code": "RMN***89E**A944*"
+      },
+      "result": "passed",
+      "failed_fields": []
+    },
+    "IC7005": {
+      "customer_id": "C004",
+      "attempt": 1,
+      "started": "{{today}}",
+      "time": "08:37",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***63AC",
+        "account_last3": "***",
+        "tax_code": "CNT***77D**L219*"
+      },
+      "result": "passed",
+      "failed_fields": []
+    }
+  },
+  "password_requests": {
+    "PR6001": {
+      "customer_id": "C005",
+      "requested": "{{today-62d}}",
+      "time": "17:42",
+      "channel": "Phone",
+      "identity_check": "IC7004",
+      "result": "OK",
+      "reason_code": "",
+      "status": "completed",
+      "delivery": "SMS",
+      "detail": "Password reset. A temporary password was sent by SMS to the phone number on file."
+    },
+    "PR6002": {
+      "customer_id": "C004",
+      "requested": "{{today}}",
+      "time": "08:40",
+      "channel": "Phone",
+      "identity_check": "IC7005",
+      "result": "OK",
+      "reason_code": "",
+      "status": "temporary password not yet changed",
+      "delivery": "SMS",
+      "valid_until": "{{today+1d}}",
+      "detail": "Password reset. A temporary password was sent by SMS to the phone number on file."
+    },
+    "PR6003": {
+      "customer_id": "C003",
+      "requested": "{{today-1d}}",
+      "time": "16:05",
+      "channel": "Phone",
+      "identity_check": "",
+      "result": "KO",
+      "reason_code": "KYC_PENDING",
+      "status": "refused",
+      "delivery": "",
+      "detail": "Automatic reset refused: the identity check (KYC) of this customer is still pending."
     }
   }
 }

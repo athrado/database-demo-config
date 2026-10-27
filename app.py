@@ -29,6 +29,7 @@ st.markdown(
     .backend-pill { display:inline-block; padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600; }
     .backend-azure { background:#dbeafe; color:#1e40af; }
     .backend-local { background:#fef3c7; color:#92400e; }
+    .backend-github { background:#e5e7eb; color:#1f2937; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -76,6 +77,13 @@ def base_store():
 
 def store_for(table: str):
     return _store_for(table, _code_stamp())
+
+
+def repo_web_url(cfg) -> str:
+    """The repository's address in the browser (github.com, or the web host of a GitHub Enterprise server)."""
+    if cfg.api_url == github_sync.DEFAULT_API:
+        return f"https://github.com/{cfg.repo}"
+    return f"{cfg.api_url.removesuffix('/api/v3')}/{cfg.repo}"
 
 
 def is_azure(store) -> bool:
@@ -502,14 +510,21 @@ with st.sidebar:
         gh_config = github_sync.get_config()
     except StoreError as exc:
         gh_config = None
+        st.session_state["_gh_error"] = True
         st.warning(str(exc))
+    else:
+        st.session_state["_gh_error"] = False
     if gh_config:
-        st.caption(f"**GitHub:** Update seed data commits to {gh_config.describe()}")
+        html('<span class="backend-pill backend-github">GitHub</span>')
+        link = repo_web_url(gh_config)
+        st.caption(f"[{link}]({link}) ({gh_config.branch})")
         if st.button("Test GitHub connection", width="stretch"):
             try:
                 st.success(github_sync.check_access(gh_config))
             except StoreError as exc:
                 to_error(exc)
+    elif not st.session_state.get("_gh_error"):
+        html('<span class="backend-pill backend-local">GitHub not set up</span>')
 
     st.divider()
     if "dark_mode" not in st.session_state:                           # start from what the page shows now
