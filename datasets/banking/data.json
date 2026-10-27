@@ -213,7 +213,7 @@
         "contact_by": "phone"
       },
       "notes": [],
-      "date_of_birth": "14 February 1984",
+      "date_of_birth": "15 February 1984",
       "kyc_status": "verified",
       "customer_since": "21 June 2016",
       "credit_profile": {
@@ -404,6 +404,110 @@
       }
     }
   },
+  "identity_checks": {
+    "IC7001": {
+      "customer_id": "C003",
+      "attempt": 1,
+      "started": "{{today}}",
+      "time": "08:12",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***07XX",
+        "account_last3": "***",
+        "tax_code": "SPS***03S**F839*"
+      },
+      "result": "failed",
+      "failed_fields": [
+        "id_card"
+      ]
+    },
+    "IC7002": {
+      "customer_id": "C003",
+      "attempt": 2,
+      "started": "{{today}}",
+      "time": "08:15",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***18CE",
+        "account_last3": "***",
+        "tax_code": "SPS***03S**F839*"
+      },
+      "result": "failed",
+      "failed_fields": [
+        "account_last3"
+      ]
+    },
+    "IC7003": {
+      "customer_id": "C003",
+      "attempt": 3,
+      "started": "{{today}}",
+      "time": "08:19",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***18CE",
+        "account_last3": "***",
+        "tax_code": "SPS***99X**F839*"
+      },
+      "result": "failed",
+      "failed_fields": [
+        "account_last3",
+        "tax_code"
+      ]
+    },
+    "IC7004": {
+      "customer_id": "C005",
+      "attempt": 1,
+      "started": "{{today-62d}}",
+      "time": "17:40",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***55FR",
+        "account_last3": "***",
+        "tax_code": "RMN***89E**A944*"
+      },
+      "result": "passed",
+      "failed_fields": []
+    },
+    "IC7005": {
+      "customer_id": "C004",
+      "attempt": 1,
+      "started": "{{today}}",
+      "time": "08:37",
+      "channel": "Phone",
+      "questions_asked": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
+      "answers_given_masked": {
+        "id_card": "CA***63AC",
+        "account_last3": "***",
+        "tax_code": "CNT***77D**L219*"
+      },
+      "result": "passed",
+      "failed_fields": []
+    }
+  },
   "loan_offers": {
     "LO-10000-24": {
       "product": "Personal loan",
@@ -493,6 +597,45 @@
       "started": "{{today-22m}}"
     }
   },
+  "password_requests": {
+    "PR6001": {
+      "customer_id": "C005",
+      "requested": "{{today-62d}}",
+      "time": "17:42",
+      "channel": "Phone",
+      "identity_check": "IC7004",
+      "result": "OK",
+      "reason_code": "",
+      "status": "completed",
+      "delivery": "SMS",
+      "detail": "Password reset. A temporary password was sent by SMS to the phone number on file."
+    },
+    "PR6002": {
+      "customer_id": "C004",
+      "requested": "{{today}}",
+      "time": "08:40",
+      "channel": "Phone",
+      "identity_check": "IC7005",
+      "result": "OK",
+      "reason_code": "",
+      "status": "temporary password not yet changed",
+      "delivery": "SMS",
+      "valid_until": "{{today+1d}}",
+      "detail": "Password reset. A temporary password was sent by SMS to the phone number on file."
+    },
+    "PR6003": {
+      "customer_id": "C003",
+      "requested": "{{today-1d}}",
+      "time": "16:05",
+      "channel": "Phone",
+      "identity_check": "",
+      "result": "KO",
+      "reason_code": "KYC_PENDING",
+      "status": "refused",
+      "delivery": "",
+      "detail": "Automatic reset refused: the identity check (KYC) of this customer is still pending."
+    }
+  },
   "rules": {
     "R-DOCLINKS": {
       "name": "Document links in chat",
@@ -500,16 +643,6 @@
       "max_links_in_chat": 5,
       "documents_page_field": "documents_page_url",
       "action": "Send the links, or the link in the customer's documents_page_url when there are too many",
-      "status": "active"
-    },
-    "R-LOWBAL": {
-      "name": "Low average balance",
-      "description": "Average balance of the current account below the threshold over the period: the assistant contacts the customer proactively and offers help with liquidity.",
-      "threshold": 300,
-      "currency": "EUR",
-      "period_months": 3,
-      "action": "Proactive contact, then offer a personal loan",
-      "requires": "loan_eligible = true in the customer's credit profile",
       "status": "active"
     },
     "R-IDENTITY": {
@@ -543,6 +676,16 @@
         "valid": "true when all three are correct",
         "failed_fields": "the questions that did not match"
       },
+      "status": "active"
+    },
+    "R-LOWBAL": {
+      "name": "Low average balance",
+      "description": "Average balance of the current account below the threshold over the period: the assistant contacts the customer proactively and offers help with liquidity.",
+      "threshold": 300,
+      "currency": "EUR",
+      "period_months": 3,
+      "action": "Proactive contact, then offer a personal loan",
+      "requires": "loan_eligible = true in the customer's credit profile",
       "status": "active"
     },
     "R-PWRESET": {
@@ -1092,149 +1235,6 @@
       "doc_category": "Transfer receipt",
       "doc_title": "Transfer receipt - Universita di Roma La Sapienza, {{monthago:9:15}}",
       "doc_url": "{{docs:DOC8029.pdf}}"
-    }
-  },
-  "identity_checks": {
-    "IC7001": {
-      "customer_id": "C003",
-      "attempt": 1,
-      "started": "{{today}}",
-      "time": "08:12",
-      "channel": "Phone",
-      "questions_asked": [
-        "id_card",
-        "account_last3",
-        "tax_code"
-      ],
-      "answers_given_masked": {
-        "id_card": "CA***07XX",
-        "account_last3": "***",
-        "tax_code": "SPS***03S**F839*"
-      },
-      "result": "failed",
-      "failed_fields": [
-        "id_card"
-      ]
-    },
-    "IC7002": {
-      "customer_id": "C003",
-      "attempt": 2,
-      "started": "{{today}}",
-      "time": "08:15",
-      "channel": "Phone",
-      "questions_asked": [
-        "id_card",
-        "account_last3",
-        "tax_code"
-      ],
-      "answers_given_masked": {
-        "id_card": "CA***18CE",
-        "account_last3": "***",
-        "tax_code": "SPS***03S**F839*"
-      },
-      "result": "failed",
-      "failed_fields": [
-        "account_last3"
-      ]
-    },
-    "IC7003": {
-      "customer_id": "C003",
-      "attempt": 3,
-      "started": "{{today}}",
-      "time": "08:19",
-      "channel": "Phone",
-      "questions_asked": [
-        "id_card",
-        "account_last3",
-        "tax_code"
-      ],
-      "answers_given_masked": {
-        "id_card": "CA***18CE",
-        "account_last3": "***",
-        "tax_code": "SPS***99X**F839*"
-      },
-      "result": "failed",
-      "failed_fields": [
-        "account_last3",
-        "tax_code"
-      ]
-    },
-    "IC7004": {
-      "customer_id": "C005",
-      "attempt": 1,
-      "started": "{{today-62d}}",
-      "time": "17:40",
-      "channel": "Phone",
-      "questions_asked": [
-        "id_card",
-        "account_last3",
-        "tax_code"
-      ],
-      "answers_given_masked": {
-        "id_card": "CA***55FR",
-        "account_last3": "***",
-        "tax_code": "RMN***89E**A944*"
-      },
-      "result": "passed",
-      "failed_fields": []
-    },
-    "IC7005": {
-      "customer_id": "C004",
-      "attempt": 1,
-      "started": "{{today}}",
-      "time": "08:37",
-      "channel": "Phone",
-      "questions_asked": [
-        "id_card",
-        "account_last3",
-        "tax_code"
-      ],
-      "answers_given_masked": {
-        "id_card": "CA***63AC",
-        "account_last3": "***",
-        "tax_code": "CNT***77D**L219*"
-      },
-      "result": "passed",
-      "failed_fields": []
-    }
-  },
-  "password_requests": {
-    "PR6001": {
-      "customer_id": "C005",
-      "requested": "{{today-62d}}",
-      "time": "17:42",
-      "channel": "Phone",
-      "identity_check": "IC7004",
-      "result": "OK",
-      "reason_code": "",
-      "status": "completed",
-      "delivery": "SMS",
-      "detail": "Password reset. A temporary password was sent by SMS to the phone number on file."
-    },
-    "PR6002": {
-      "customer_id": "C004",
-      "requested": "{{today}}",
-      "time": "08:40",
-      "channel": "Phone",
-      "identity_check": "IC7005",
-      "result": "OK",
-      "reason_code": "",
-      "status": "temporary password not yet changed",
-      "delivery": "SMS",
-      "valid_until": "{{today+1d}}",
-      "detail": "Password reset. A temporary password was sent by SMS to the phone number on file."
-    },
-    "PR6003": {
-      "customer_id": "C003",
-      "requested": "{{today-1d}}",
-      "time": "16:05",
-      "channel": "Phone",
-      "identity_check": "",
-      "result": "KO",
-      "reason_code": "KYC_PENDING",
-      "status": "refused",
-      "delivery": "",
-      "detail": "Automatic reset refused: the identity check (KYC) of this customer is still pending."
     }
   }
 }
