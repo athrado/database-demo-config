@@ -1,0 +1,17 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Alex Example",
+      "email": "alex.example@example.com",
+      "phone": "+441234567001",
+      "plan": "Standard",
+      "preferences": {
+        "language": "jp",
+        "contact_by": "email"
+      }
+    },
+    "C002": {
+      "name": "Max Power"
+    }
+  }
+}
