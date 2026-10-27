@@ -25,4 +25,5 @@ jobs:
       - run: python test_datasets.py
       - run: python test_documents.py
       - run: python test_github.py
+      - run: python test_app_links.py
       - run: python test_store.py          # the Azurite part is skipped when no emulator runs

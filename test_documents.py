@@ -231,6 +231,23 @@ def test_generator_writes_a_pdf_per_receipt_and_a_page_per_customer():
         assert "https://acct.blob.core.windows.net/documents/DOC8001.pdf" in Path(tmp, "banking", "documents-C004.html").read_text(encoding="utf-8")
 
 
+def test_a_warning_when_document_links_would_point_to_the_placeholder_address():
+    raw, _ = banking()
+    saved = os.environ.get("EXT_DATA_DOCS_URL")
+    try:
+        os.environ["EXT_DATA_DOCS_URL"] = ""
+        warning = datasets.docs_placeholder_warning(raw)
+        assert "EXT_DATA_DOCS_URL" in warning and datasets.DEFAULT_DOCS_URL in warning
+        assert datasets.docs_placeholder_warning({"customers": {"C1": {"name": "No documents here"}}}) == ""     # nothing to warn about
+        os.environ["EXT_DATA_DOCS_URL"] = "https://acct.blob.core.windows.net/documents"
+        assert datasets.docs_placeholder_warning(raw) == ""                                                   # the address is set
+    finally:
+        if saved is None:
+            os.environ.pop("EXT_DATA_DOCS_URL", None)
+        else:
+            os.environ["EXT_DATA_DOCS_URL"] = saved
+
+
 def test_docs_placeholder_uses_the_container_url_and_sas():
     saved = {k: os.environ.get(k) for k in ("EXT_DATA_DOCS_URL", "EXT_DATA_DOCS_SAS")}
     try:

@@ -126,6 +126,16 @@ def resolve_placeholders(value, today: date | None = None):
     return value
 
 
+def docs_placeholder_warning(raw_data) -> str:
+    """Words of warning when the data has {{docs:...}} links but EXT_DATA_DOCS_URL is not set: the links would then point to a
+    placeholder address and never open. Empty text when everything is fine (or the data has no document links)."""
+    load_dotenv()
+    if os.environ.get("EXT_DATA_DOCS_URL", "").strip() or "{{docs:" not in json.dumps(raw_data):
+        return ""
+    return (f"These records have links to documents, but EXT_DATA_DOCS_URL is not set here, so the links point to the placeholder address {DEFAULT_DOCS_URL} "
+            "and will not open. Set EXT_DATA_DOCS_URL to the address of the documents container (and EXT_DATA_DOCS_SAS if the container is private), then load the data again.")
+
+
 # ---------------------------------------------------------------- reading datasets
 def _read_json(path: Path) -> dict:
     try:

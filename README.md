@@ -15,6 +15,7 @@ what the Teneo solution sees**, and the other way round.
   - **Refresh database**: reads the database again (and picks up templates that are on GitHub but not here yet).
   - **Add New Dataset** / **Delete template**: make a new demo dataset, or remove one (it asks first).
 - **Storage Connections** shows where the data lives (Azure) and the GitHub repository the templates are saved in.
+- **Links into the app.** Opening `<app address>/?config=banking&collection=transactions&ids=TX1001,TX1002` shows just those records (here two payments with their receipts) on that dataset's page, with the sidebar collapsed and a **Show all** button. A chat assistant can use such a link to point a customer at exactly the relevant records. Without `collection` and `ids` the app opens as usual; `config=` alone picks the dataset.
 
 **In Teneo** (through MCP). The data is served by an MCP server with 17 tools: find a customer, read or change a record or a single field, add or remove list entries,
 change or delete several records at once, replace or clear a collection, and **reset** to the template. Delete-type tools only show a preview until you pass `confirm = true`.
@@ -387,6 +388,35 @@ In the banking config every transaction carries its own receipt link (`doc_url`)
 
 > These steps create things in Azure. Run them yourself.
 
+### Option: a public container (links without a token)
+
+If the receipts are only made-up demo files, the simplest setup is a container that anyone with the link can read. Then the links are plain addresses
+(`https://<account>.blob.core.windows.net/documents/DOC8001.pdf`), they never expire, and you need **no SAS token at all** (leave `EXT_DATA_DOCS_SAS` empty everywhere).
+Never do this with real customer documents: everyone who has the link can read the file.
+
+Run these yourself (they change your Azure account):
+
+1. **Allow public access on the storage account.** Portal: storage account, *Settings, Configuration*, **Allow Blob anonymous access: Enabled**, *Save*. Or:
+   ```bash
+   az storage account update -g <resource group> -n <account> --allow-blob-public-access true
+   ```
+   If the switch is greyed out or flips back, an Azure policy of your organisation forbids it: ask an Azure admin, or use one of the alternatives below.
+2. **Make the container public.** Portal: *Containers*, `documents`, *Change access level*, choose **Blob (anonymous read access for blobs only)**. Not *Container*: that also lets anyone list every file. Or:
+   ```bash
+   az storage container set-permission --account-name <account> --name documents --public-access blob --auth-mode login
+   ```
+3. **Test it** in a private browser window: `https://<account>.blob.core.windows.net/documents/DOC8001.pdf` must open the PDF without any sign-in or token.
+4. **Point the data at it:** `EXT_DATA_DOCS_URL=https://<account>.blob.core.windows.net/documents` and **no** `EXT_DATA_DOCS_SAS`, in `.env`, in the Streamlit secrets, and in the MCP server's settings,
+   then load the data again (**Update database** / **Reset database**, or the `reset` tool). The links in the table change when the data is loaded, so old links stay wrong until you do.
+
+**Alternatives if public access is not allowed**
+- **Keep the container private** and put a long-lived, read-only SAS token in `EXT_DATA_DOCS_SAS` (steps 1 to 6 below). The links then carry the token and work until it expires.
+- **Static website:** enable *Static website* on the storage account (*Data management, Static website*) and upload the files to the `$web` container. They are served at
+  `https://<account>.z<n>.web.core.windows.net/DOC8001.pdf` without turning on anonymous blob access (Microsoft's documentation says the account-level setting does not affect static websites, see
+  [Static website hosting](https://learn.microsoft.com/azure/storage/blobs/storage-blob-static-website)). Then `EXT_DATA_DOCS_URL` is that web address, without `/documents`.
+
+The steps below describe the private-container variant with a SAS link.
+
 **1. Create a private container** named `documents` (portal: your storage account → *Data storage → Containers → + Container*, *Public access level: Private*), or:
 
 ```bash
@@ -535,6 +565,7 @@ python test_documents.py     # sample PDFs, documents pages, document links
 python test_github.py        # commits to GitHub (against a fake GitHub on localhost), Update seed data
 python test_store.py         # storage layer
 python check_datasets.py     # every config loads and validates
+python test_app_links.py     # the app opened through a ?collection=...&ids=... link
 ```
 
 `test_store.py` always tests the local backend. For the Azure backend, start the Azurite emulator first

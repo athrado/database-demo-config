@@ -20,7 +20,11 @@ import render
 import store as storage
 from store import META_COLLECTION, META_ID, StoreError, check_table, get_store
 
-st.set_page_config(page_title="Database demo config", page_icon="🗄️", layout="wide")
+# A link such as ?config=banking&collection=transactions&ids=TX1001,TX1002 shows just those records (for example the receipts a chat assistant refers to).
+FOCUS_COLLECTION = (st.query_params.get("collection", "") or "").strip()
+FOCUS_IDS = [i.strip() for i in (st.query_params.get("ids", "") or "").split(",") if i.strip()]
+st.set_page_config(page_title="Database demo config", page_icon="🗄️", layout="wide",
+                   initial_sidebar_state="collapsed" if FOCUS_COLLECTION and FOCUS_IDS else "auto")
 st.markdown(render.CSS, unsafe_allow_html=True)
 st.markdown(
     """
@@ -462,6 +466,9 @@ with st.sidebar:
             st.caption(f"**Database:** table {table}, holds data that was not loaded from a config here")
         else:
             st.caption(f"**Database:** table {table}, empty")
+        docs_warning = datasets.docs_placeholder_warning(picked.data)
+        if docs_warning:
+            st.warning(docs_warning)
         if leftovers:
             st.warning(f"The table also holds collections that are not part of this config any more: {', '.join(leftovers)}. "
                        "**Reset database** removes them.")
@@ -560,12 +567,23 @@ with tab_browse:
         primary = render.primary_of(data, view)
         order = [primary] + [c for c in data if c != primary]
         cfgs = {c: render.collection_config(c, view) for c in order}
+        if "browse_collection" not in st.session_state and FOCUS_COLLECTION in order:      # arrived through a link: open on its collection
+            st.session_state["browse_collection"] = FOCUS_COLLECTION
         if st.session_state.get("browse_collection") not in order:
             st.session_state["browse_collection"] = primary
         selected = st.pills("Collection", order, selection_mode="single", key="browse_collection",
                             format_func=lambda c: f"{cfgs[c]['icon']} {cfgs[c]['label']} ({len(data[c])})", label_visibility="collapsed")
         if selected is None:                                          # a click on the chosen button un-chooses it: choose the main one again
             st.rerun()
+        restricted = bool(selected == st.query_params.get("collection") and st.query_params.get("ids"))       # a link narrowed this collection down
+        focus = [i for i in FOCUS_IDS if i in data[selected]] if restricted else []
+        if restricted:
+            shown = f"{len(focus)} of the {cfgs[selected]['label'].lower()}" if focus else f"none of the {cfgs[selected]['label'].lower()}"
+            st.info(f"Showing {shown} selected by the link you followed.")
+            if st.button(f"Show all {cfgs[selected]['label'].lower()}"):
+                for key in ("ids", "collection"):
+                    st.query_params.pop(key, None)
+                st.rerun()
         query = st.text_input("Search", placeholder="🔍 Search names, ids, anything…", key="browse_search", label_visibility="collapsed").strip().lower()
         links = {c: render.link_field(c, data[c], primary, view) for c in order if c != primary}
 
@@ -575,7 +593,7 @@ with tab_browse:
 
         if selected == primary:
             matches = {rid: rec for rid, rec in data[primary].items()
-                       if not query or query in render.record_text(rid, rec) or query in related_text(rid)}
+                       if (not query or query in render.record_text(rid, rec) or query in related_text(rid)) and (not restricted or rid in focus)}
             if not matches:
                 st.info("Nothing matches your search.")
             else:
@@ -586,7 +604,7 @@ with tab_browse:
         else:
             link = links.get(selected)
             owners = {rid: f"{cfgs[primary]['icon']} {render.title_of(rid, rec, cfgs[primary])[0]}" for rid, rec in data[primary].items()}
-            matches = {rid: rec for rid, rec in data[selected].items() if not query or query in render.record_text(rid, rec)}
+            matches = {rid: rec for rid, rec in data[selected].items() if (not query or query in render.record_text(rid, rec)) and (not restricted or rid in focus)}
             if not matches:
                 st.info("Nothing matches your search.")
             for rid, rec in list(matches.items())[:60]:
