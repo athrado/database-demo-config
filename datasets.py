@@ -317,11 +317,11 @@ def pull_from_github() -> list[str]:
 
 
 def default_delete_message(dataset: Dataset) -> str:
-    return f"Delete config: {dataset.title}\n\nRemoves datasets/{dataset.name}/"
+    return f"Delete template: {dataset.title}\n\nRemoves datasets/{dataset.name}/"
 
 
 def commit_delete(name: str, message: str) -> dict | None:
-    """Delete the config's whole folder (every file in it) from the GitHub repository, in one commit. Does nothing
+    """Delete the template's whole folder (seed data, config and every other file in it) from the GitHub repository, in one commit. Does nothing
     when GitHub is not set up or the repository has no such folder. Returns {"sha", "url"} or None."""
     cfg = github_sync.get_config()
     if not cfg:

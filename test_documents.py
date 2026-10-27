@@ -122,6 +122,19 @@ def test_dates_follow_the_day_the_dataset_is_loaded():
     assert renovation_years == {2026}                                                              # "last year" moved on
 
 
+def test_a_look_alike_customer_exists_to_test_several_matches():
+    _, data = banking()
+    customers = data["customers"]
+    elena, maria = customers["C001"], customers["C006"]
+    assert elena["name"] == "Elena Bianchi" and maria["name"] == "Elena Maria Bianchi"
+    assert maria["name"].split()[0] == elena["name"].split()[0] and maria["name"].split()[-1] == elena["name"].split()[-1]    # same first and last name
+    for field in ("phone", "email", "date_of_birth", "address"):                                          # but a different person: this is how they are told apart
+        assert elena[field] != maria[field], field
+    assert len({c["phone"] for c in customers.values()}) == len(customers) and len({c["email"] for c in customers.values()}) == len(customers)
+    assert maria["online_banking"]["password_status"] == "active"                                         # not part of the other scenarios
+    assert not [a for a in data["alerts"].values() if a["customer_id"] == "C006"] and not [t for t in data["transactions"].values() if t["customer_id"] == "C006"]
+
+
 def test_password_reset_scenario_data():
     """Password reset by phone: masked identity data, who is blocked, the interview log and the backend history agree with each other."""
     _, data = banking()

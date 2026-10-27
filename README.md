@@ -66,27 +66,29 @@ A config is a folder in `datasets/`:
 | 🛡️ `insurance` | `demoinsurance` | Policy holders and families (Sophie Berthier, Sophie Bertram, ...), claims, requests, quotes. |
 | 🛒 `retail` | `demoretail` | Customers with loyalty tiers, orders with items and tracking, returns, delivery issues. |
 | 📶 `telco` | `demotelco` | Customers, tariffs and lines, invoices (one overdue), network issues, tariff requests. |
-| 🏦 `banking` | `demobanking` | Three use cases. (1) Proactive loan offer: accounts with a 3-month average balance (below 300 EUR for Elena Bianchi), the low-balance rule, alerts, ready-made loan offers (5,000 / 7,500 / 10,000 EUR over 24 or 36 months at 6% APR), loan requests, and customers who must not get an offer. (2) Finding documents: 29 `transactions` for three customers, each with its own receipt link, built to test 1 result, 2 to 5 results and more than 5, with older and messy ones (see below). (3) Password reset by phone: customers with a blocked or active online banking password, masked identity data for the security interview, an interview log and the backend reset history (see below). Italian names, addresses, phone numbers and IBANs. |
+| 🏦 `banking` | `demobanking` | Four use cases. (1) Proactive loan offer: accounts with a 3-month average balance (below 300 EUR for Elena Bianchi), the low-balance rule, alerts, ready-made loan offers (5,000 / 7,500 / 10,000 EUR over 24 or 36 months at 6% APR), loan requests, and customers who must not get an offer. (2) Finding documents: 29 `transactions` for three customers, each with its own receipt link, built to test 1 result, 2 to 5 results and more than 5, with older and messy ones (see below). (3) Password reset by phone: customers with a blocked or active online banking password, masked identity data for the security interview, an interview log and the backend reset history (see below). (4) Several customer matches: Elena Bianchi (C001) and Elena Maria Bianchi (C006) share a first and a last name, so a search for "Elena" or "Bianchi" finds both. Italian names, addresses, phone numbers and IBANs. |
 | 🩺 `medical` | `demomedical` | Patients, appointments, prescriptions, reimbursement claims, lab results. Fictional. |
 | 💻 `it` | `demoit` | Employees, tickets, laptops and phones, access and hardware requests. |
 
 All people, numbers and companies are made up. Every config's `customers` collection has `name`, `email`, `phone`,
 `plan` and `preferences.contact_by`, so the example Teneo flow works on any of them.
 
-**Two things, two directions.** The **seed data** is the template: the files in `datasets/<name>/`. The **database** is the Azure table the app and Teneo read. The sidebar buttons say which one they touch:
+**Template, seed data and config.** A dataset is saved as a **template**: a folder `datasets/<name>/` holding the **seed data** (`data.json`, the records) plus the **config** (`config.json`: title, icon, which table it uses; `view.json`: how the app shows it). The **database** is the Azure table the app and Teneo read.
+
+**Two things, two directions.** The template (its seed data) and the database. The sidebar buttons say which one they touch:
 
 | Button | Direction | What it does |
 |---|---|---|
 | **Update database** | seed data → database | Writes the seed records into the table, adding or overwriting. Records you added yourself stay. Never removes anything. |
 | **Update seed data** | database → seed data | Overwrites the config's `data.json` with what is in the table now (asks first, shows how many records are added, removed or changed). Dates written as `{{today-7d}}` stay that way where nothing changed, links to documents are stored without their access token, and a copy of the old file is kept as `data.backup.json`. Use it to make your tweaks the new starting point. |
 | **Reset database** | seed data → database | Asks "Are you sure you want to reset ... to its seed data?". On Yes it empties the **whole table** and loads the seed data again, so collections left over from an older version of the config are removed too (the pop-up lists them, and the sidebar warns when there are any). If another config uses the same table, only this config's own collections are emptied. The seed data is not changed. |
-| **Delete config** | | Asks first (see below). |
+| **Delete template** | | Asks first (see below): removes the template (seed data + config), and optionally the data in the table. |
 | **Refresh database** | | Reads the table again. |
 | **Add New Dataset** | | Opens a form: a name, a table name, and the data as JSON. Write or paste your own, or start from a copy of an existing config. It creates the config (in `datasets/`) and its table. |
 
 Each config has its own table (its `default_table`), so picking a config also picks the table.
 
-- **Delete config** asks first and explains the difference: *the config* is the template (its seed data and display settings, the folder in `datasets/`); *the data* is the records currently in its table, which Teneo reads. You choose **Delete config, keep the data** (the records stay and Teneo keeps working, but you can no longer Update or Reset them) or **Delete config and the data** (both go: the table itself is deleted too, unless another config uses it, then only this config's records). Neither can be undone. A table that no config points at any more (for example one you kept earlier) can be removed in the **Configs** tab, under *Tables without a config*.
+- **Delete template** asks first and explains the difference: *the template* is the seed data plus the config (the folder in `datasets/`); *the data* is the records currently in its table, which Teneo reads. You choose **Delete template, keep the data** (the records stay and Teneo keeps working, but you can no longer Update or Reset them) or **Delete template and the data** (both go: the table itself is deleted too, unless another config uses it, then only this config's records). Neither can be undone. A table that no config points at any more (for example one you kept earlier) can be removed in the **Configs** tab, under *Tables without a config*.
 - Every load writes a marker (`_meta/seed`), so the app shows which config is in a table and when it was loaded.
 
 **From the command line:**
@@ -233,7 +235,7 @@ EXT_DATA_TABLE=demoretail          # only used for a config that names no table;
 
 Then `streamlit run app.py`. In the app:
 
-- **Sidebar:** the dataset with **Refresh database**, **Update database**, **Update seed data**, **Reset database** and **Delete config**; **Add New Dataset**; **Storage Connections** (Azure and GitHub, each with a rounded name label, the address and a test button; GitHub shows the repository link with the branch in brackets); and the dark mode switch at the very end. There is no table picker: the table comes with the config.
+- **Sidebar:** the dataset with **Refresh database**, **Update database**, **Update seed data**, **Reset database** and **Delete template**; **Add New Dataset**; **Storage Connections** (Azure and GitHub, each with a rounded name label, the address and a test button; GitHub shows the repository link with the branch in brackets); and the dark mode switch at the very end. There is no table picker: the table comes with the config.
 - **Browse:** pick a collection, search, and see a customer with all their records; or browse any other collection as cards. Links show as a short label (for a receipt: "Receipt DOC8001") instead of the whole address.
 - **Tables:** every collection as a plain table.
 - **Edit records:** change a record's JSON, add one, or delete one. Teneo sees it on its next read.
@@ -468,7 +470,7 @@ GITHUB_BRANCH = "main"
 
 The sample PDFs and documents pages are never committed: `documents_out/`, `*.pdf` and `documents-*.html` are in `.gitignore`, and the app only ever commits `datasets/<name>/data.json`. Generate them with `make_documents.py` and upload them to Blob Storage (section 7).
 
-**Update seed data** commits `datasets/<name>/data.json`. **Delete config** removes the config's whole folder from the repository (every file in it) in one commit, with a message you can edit; the commit is made first, so if GitHub refuses it nothing is deleted, and the history there lets you get the config back. **Add New Dataset** and the **Edit** tab's `data.json` editor still change local files only: on a hosted app that is lost at the next restart. Do those on your own machine, then `git commit` and `git push`.
+**Update seed data** commits `datasets/<name>/data.json`. **Delete template** removes the template's whole folder (seed data, config and every other file in it) from the repository in one commit, with a message you can edit; the commit is made first, so if GitHub refuses it nothing is deleted, and the history there lets you get the config back. **Add New Dataset** and the **Edit** tab's `data.json` editor still change local files only: on a hosted app that is lost at the next restart. Do those on your own machine, then `git commit` and `git push`.
 
 ## Troubleshooting
 
@@ -479,7 +481,7 @@ The sample PDFs and documents pages are never committed: `documents_out/`, `*.pd
 | Teneo says a record or customer doesn't exist, but the app shows it | Teneo is reading another table: check the `ext_data_table` secret (lowercase, exact table name). A missing table looks the same as a missing record. The engine also keeps its connection from when it loaded: after changing a secret, **restart the live test** (or reload the solution). |
 | `Cannot reach Azure Table Storage` | Wrong account URL, or a storage firewall that blocks the caller (Networking tab of the storage account). |
 | `The table '...' was deleted a moment ago` | Azure removes a deleted table in the background: the same name can't be created again for about 40 seconds. Try again shortly. |
-| After deleting a config, the empty folder `datasets/<name>` remains | Windows refuses to remove a folder another program has open: usually a File Explorer window showing it, a terminal whose current folder is inside it, or OneDrive syncing. The config itself is gone (the files are deleted); close the window or terminal and the app removes the empty folder at its next start, or delete it by hand. |
+| After deleting a template, the empty folder `datasets/<name>` remains | Windows refuses to remove a folder another program has open: usually a File Explorer window showing it, a terminal whose current folder is inside it, or OneDrive syncing. The config itself is gone (the files are deleted); close the window or terminal and the app removes the empty folder at its next start, or delete it by hand. |
 | `Table name '...' is not valid` | Use 3-63 letters and digits only, starting with a letter. |
 | `Record ... is N characters; the limit is 32000` | Keep records smaller, or split into several records. |
 | `GitHub said HTTP 403/404 ...` | The token lacks *Contents: Read and write* on this repository, is for another repository, or the branch is protected. **Test GitHub connection** in the sidebar tells which. |

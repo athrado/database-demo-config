@@ -260,7 +260,7 @@ def test_deleting_a_config_removes_its_whole_folder_in_one_commit():
                                    "datasets/pilot/notes.md": "n\n", "datasets/pilot2/data.json": "keep\n"}, "Add pilot")
     assert sorted(github_sync.files_under(cfg, "datasets/pilot")) == [f"datasets/pilot/{n}" for n in ("config.json", "data.json", "notes.md", "view.json")]
     before = fake.head
-    result = github_sync.delete_folder(cfg, "datasets/pilot", "Delete config: Pilot")
+    result = github_sync.delete_folder(cfg, "datasets/pilot", "Delete template: Pilot")
     assert result and fake.head != before and fake.commits[fake.head]["parents"] == [before]
     assert [p for p in fake.files() if p.startswith("datasets/pilot/")] == []                  # every file of the folder, not just config.json
     assert fake.files()["datasets/pilot2/data.json"] == "keep\n" and fake.files()["README.md"] == "hello\n"   # a similar name is left alone
@@ -276,9 +276,9 @@ def test_commit_delete_is_skipped_without_github_and_checks_the_name():
         assert datasets.commit_delete("demo", "x") is None                                      # not set up: nothing to do
         os.environ.update(GITHUB_TOKEN="good-token", GITHUB_REPO=REPO, GITHUB_API_URL=f"http://127.0.0.1:{server.server_port}")
         expect_error(lambda: datasets.commit_delete("../x", "m"), "not a config name")
-        result = datasets.commit_delete("demo", "Delete config: Demo")
+        result = datasets.commit_delete("demo", "Delete template: Demo")
         assert result and "datasets/demo/data.json" not in fake.files()
-        assert fake.commits[fake.head]["message"] == "Delete config: Demo"
+        assert fake.commits[fake.head]["message"] == "Delete template: Demo"
     finally:
         for k, v in saved.items():
             os.environ.pop(k, None) if v is None else os.environ.__setitem__(k, v)

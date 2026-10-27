@@ -269,12 +269,12 @@ def seed_dialog():
         st.rerun()
 
 
-@st.dialog("Delete config")
+@st.dialog("Delete template")
 def delete_dialog():
     in_table = sum(len(data.get(c, {})) for c in (picked.data if sharing else data))
     st.write(f"Delete **{picked.title}**? There are two separate things, and you choose what goes:")
-    st.markdown(f"- **The config** is the template: its seed data and display settings, kept in the folder `datasets/{picked.name}`. "
-                f"**Update** and **Reset** load from it.")
+    st.markdown(f"- **The template** is the saved starting point of a dataset: its **seed data** (the records) plus its **config** (title, icon, "
+                f"which table it uses, how the app shows it). It is kept in the folder `datasets/{picked.name}`. **Update database** and **Reset database** load from it.")
     st.markdown(f"- **The data** is what is stored in the Azure table **{table}** right now. "
                 f"That is what you see in the app and what Teneo reads.")
     if sharing:
@@ -299,10 +299,10 @@ def delete_dialog():
         return f" Removed from GitHub: {commit['url']}" if commit else ""
 
     with st.container(border=True):
-        st.markdown("**Delete the config, keep the data**")
+        st.markdown("**Delete the template, keep the data**")
         st.caption(f"Removes the folder `datasets/{picked.name}`{git_note}. The Azure table {table} and its data stay, and Teneo keeps working with it. "
                    "You can no longer Update or Reset them from here.")
-        if st.button("Delete config, keep the data", width="stretch"):
+        if st.button("Delete template, keep the data", width="stretch"):
             try:
                 git_text = delete_in_github()
                 folder_gone = datasets.delete_dataset(picked.name)
@@ -310,18 +310,18 @@ def delete_dialog():
                 to_error(exc)
             else:
                 st.session_state.pop("config_pick", None)
-                done(f"Deleted the config “{picked.title}”. The data in {table} was kept.{git_text}" + ("" if folder_gone else stuck_folder_note(picked.name)))
+                done(f"Deleted the template “{picked.title}”. The data in {table} was kept.{git_text}" + ("" if folder_gone else stuck_folder_note(picked.name)))
     with st.container(border=True):
-        st.markdown("**Delete the config and the data**")
+        st.markdown("**Delete the template and the data**")
         owns_table = bool(picked.default_table) and picked.default_table == table and not sharing     # only then may the table itself go
         if owns_table:
             st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and deletes the Azure table **{table}** with all its data. "
                        "Teneo will find nothing there until you load other data.")
         else:
-            why = f"because {', '.join(sharing)} uses it too" if sharing else "because it is not this config's own table"
-            st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and removes this config's data from the Azure table {table}. "
+            why = f"because {', '.join(sharing)} uses it too" if sharing else "because it is not this template's own table"
+            st.caption(f"Removes the folder `datasets/{picked.name}`{git_note} and removes this template's data from the Azure table {table}. "
                        f"The table itself stays, {why}.")
-        if st.button("Delete config and the data", type="primary", width="stretch"):
+        if st.button("Delete template and the data", type="primary", width="stretch"):
             step = "GitHub"
             try:
                 git_text = delete_in_github()
@@ -345,9 +345,9 @@ def delete_dialog():
                 st.session_state.pop("config_pick", None)
                 note = git_text + ("" if folder_gone else stuck_folder_note(picked.name))
                 if owns_table:
-                    done(f"Deleted the config “{picked.title}” and removed the Azure table {table} with all its data." + note)
+                    done(f"Deleted the template “{picked.title}” and removed the Azure table {table} with all its data." + note)
                 else:
-                    done(f"Deleted the config “{picked.title}” and removed its data from the Azure table {table}. The table itself stays." + note)
+                    done(f"Deleted the template “{picked.title}” and removed its data from the Azure table {table}. The table itself stays." + note)
     st.caption("Deleting cannot be undone.")
     if st.button("Cancel", width="stretch"):
         st.rerun()
@@ -483,7 +483,7 @@ with st.sidebar:
         if st.button("♻️ Reset database", width="stretch", disabled=bool(load_error),
                      help="Puts the Azure table back to the seed data (the seed data itself is not changed). Asks first."):
             reset_dialog()
-        if st.button("🗑️ Delete config", width="stretch", disabled=bool(load_error), help="Removes the config. Asks first."):
+        if st.button("🗑️ Delete template", width="stretch", disabled=bool(load_error), help="Removes the template: the seed data and the config of this dataset. Asks first."):
             delete_dialog()
     else:
         st.info("There are no datasets yet. Add one with Add New Dataset below.")

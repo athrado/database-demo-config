@@ -129,6 +129,32 @@
         }
       ],
       "status": "active"
+    },
+    "A1006": {
+      "customer_id": "C006",
+      "type": "Current account",
+      "iban": "IT28 X030 6909 6061 0000 0098 234",
+      "currency": "EUR",
+      "balance": 3420.15,
+      "average_balance_3m": 3101.4,
+      "monthly_average_balance": [
+        {
+          "month": "{{month:today-3m}}",
+          "average_balance": 3050.2,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-2m}}",
+          "average_balance": 3188.9,
+          "currency": "EUR"
+        },
+        {
+          "month": "{{month:today-1m}}",
+          "average_balance": 3065.1,
+          "currency": "EUR"
+        }
+      ],
+      "status": "active"
     }
   },
   "alerts": {
@@ -368,6 +394,38 @@
         "username_masked": "f.ro*****o",
         "password_status": "active",
         "last_login": "{{today-1d}}"
+      }
+    },
+    "C006": {
+      "name": "Elena Maria Bianchi",
+      "email": "elena.m.bianchi@example.com",
+      "phone": "+39 345 000 0306",
+      "address": "Via Garibaldi 15, 24122 Bergamo BG",
+      "plan": "Premium current account",
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "notes": [],
+      "date_of_birth": "05 September 1979",
+      "kyc_status": "verified",
+      "customer_since": "11 October 2014",
+      "credit_profile": {
+        "loan_eligible": true,
+        "pre_approved_limit": 12000,
+        "currency": "EUR",
+        "risk_band": "A",
+        "note": "Healthy balance; no proactive offer needed. Not the same person as Elena Bianchi (C001): same first and last name, here to test several customer matches."
+      },
+      "documents_page_url": "{{docs:documents-C006.html}}",
+      "identity": {
+        "id_card_masked": "CA***36EB",
+        "tax_code_masked": "BNC***79P**A794*"
+      },
+      "online_banking": {
+        "username_masked": "e.ma****i",
+        "password_status": "active",
+        "last_login": "{{today-4d}}"
       }
     }
   },
