@@ -608,6 +608,7 @@
       "amount": -450.0,
       "currency": "EUR",
       "status": "completed",
+      "review_status": "under review",
       "doc_id": "DOC8002",
       "doc_category": "Transfer receipt",
       "doc_title": "Transfer receipt - G. Ferrari, {{lastmonth:15}}",
