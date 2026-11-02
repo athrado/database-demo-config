@@ -212,7 +212,8 @@
       "plan": "Standard current account",
       "preferences": {
         "language": "en",
-        "contact_by": "phone"
+        "contact_by": "phone",
+        "contact_method_written_comms": "whatsapp"
       },
       "notes": [],
       "date_of_birth": "15 February 1984",
@@ -246,7 +247,8 @@
       "plan": "Premium current account",
       "preferences": {
         "language": "en",
-        "contact_by": "phone"
+        "contact_by": "phone",
+        "contact_method_written_comms": "email"
       },
       "notes": [],
       "date_of_birth": "30 July 1991",
@@ -283,7 +285,8 @@
       "plan": "Student account",
       "preferences": {
         "language": "en",
-        "contact_by": "sms"
+        "contact_by": "sms",
+        "contact_method_written_comms": "whatsapp"
       },
       "notes": [],
       "date_of_birth": "09 November 2003",
@@ -320,7 +323,8 @@
       "plan": "Premium current account",
       "preferences": {
         "language": "en",
-        "contact_by": "email"
+        "contact_by": "email",
+        "contact_method_written_comms": "email"
       },
       "notes": [],
       "date_of_birth": "21 April 1977",
@@ -357,7 +361,8 @@
       "plan": "Standard current account",
       "preferences": {
         "language": "en",
-        "contact_by": "phone"
+        "contact_by": "phone",
+        "contact_method_written_comms": "whatsapp"
       },
       "notes": [],
       "date_of_birth": "03 May 1989",
@@ -391,7 +396,8 @@
       "plan": "Premium current account",
       "preferences": {
         "language": "en",
-        "contact_by": "email"
+        "contact_by": "email",
+        "contact_method_written_comms": "email"
       },
       "notes": [],
       "date_of_birth": "05 September 1979",
@@ -698,6 +704,7 @@
       "period_months": 3,
       "action": "Proactive contact, then offer a personal loan",
       "requires": "loan_eligible = true in the customer's credit profile",
+      "requires_loan_eligible": true,
       "status": "active"
     },
     "R-PWRESET": {
