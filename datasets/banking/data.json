@@ -204,6 +204,8 @@
   "customers": {
     "C001": {
       "name": "Elena Bianchi",
+      "first_name": "Elena",
+      "last_name": "Bianchi",
       "email": "elena.bianchi@hotmail.com",
       "phone": "+39 347 000 0301",
       "address": "Via Torino 28, 20123 Milano MI",
@@ -236,6 +238,8 @@
     },
     "C002": {
       "name": "Marco Rossi",
+      "first_name": "Marco",
+      "last_name": "Rossi",
       "email": "marco.rossi@example.com",
       "phone": "+39 333 000 0302",
       "address": "Via Appia Nuova 120, 00183 Roma RM",
@@ -271,6 +275,8 @@
     },
     "C003": {
       "name": "Chiara Esposito",
+      "first_name": "Chiara",
+      "last_name": "Esposito",
       "email": "chiara.esposito@example.com",
       "phone": "+39 349 000 0303",
       "address": "Via Toledo 210, 80134 Napoli NA",
@@ -306,6 +312,8 @@
     },
     "C004": {
       "name": "Alessandro Conti",
+      "first_name": "Alessandro",
+      "last_name": "Conti",
       "email": "alessandro.conti@example.com",
       "phone": "+39 335 000 0304",
       "address": "Corso Vittorio Emanuele II 45, 10123 Torino TO",
@@ -341,6 +349,8 @@
     },
     "C005": {
       "name": "Francesca Romano",
+      "first_name": "Francesca",
+      "last_name": "Romano",
       "email": "francesca.romano@example.com",
       "phone": "+39 338 000 0305",
       "address": "Via Indipendenza 9, 40121 Bologna BO",
@@ -373,6 +383,8 @@
     },
     "C006": {
       "name": "Elena Maria Bianchi",
+      "first_name": "Elena Maria",
+      "last_name": "Bianchi",
       "email": "elena.m.bianchi@example.com",
       "phone": "+39 345 000 0306",
       "address": "Via Garibaldi 15, 24122 Bergamo BG",
