@@ -136,7 +136,7 @@ def collection_config(name: str, view: dict | None) -> dict:
             icon, accent = ic, ac
             break
     cfg = {"label": humanize(name), "label_one": humanize(base), "icon": icon, "accent": accent,
-           "title": None, "subtitle": [], "first": [], "hide": [], "labels": {}, "link": None}
+           "title": None, "subtitle": [], "first": [], "hide": [], "mask": [], "labels": {}, "link": None}
     cfg.update(((view or {}).get("collections") or {}).get(name, {}))
     return cfg
 
@@ -211,11 +211,19 @@ def link_label(key, value, record: dict | None = None) -> str:
     return text if len(text) <= 48 else text[:45] + "…"
 
 
+def masked_text(value) -> str:
+    """A value with its middle hidden, for the fields a config lists under "mask": CA48271AB shows as CA*****AB, 345 as ***."""
+    text = str(value)
+    return "*" * len(text) if len(text) <= 4 else text[:2] + "*" * (len(text) - 4) + text[-2:]
+
+
 def value_html(key, value, record: dict | None = None, cfg: dict | None = None) -> str:
     """One value, formatted for its kind."""
     kind = kind_of(key, value)
     if kind == "empty":
         return '<span style="opacity:.4">–</span>'
+    if key in ((cfg or {}).get("mask") or []) and not isinstance(value, (dict, list)):
+        return f'<span class="xd-mono">{esc(masked_text(value))}</span>'          # stored in full, shown masked
     if kind == "bool":
         return '<span class="xd-badge xd-good">✓ yes</span>' if value else '<span class="xd-badge xd-neutral">✗ no</span>'
     if kind in ("status", "state"):

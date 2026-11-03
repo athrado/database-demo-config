@@ -5,6 +5,11 @@
       "subtitle": [
         "plan"
       ],
+      "mask": [
+        "id_card",
+        "account_last3",
+        "tax_code"
+      ],
       "first": [
         "email",
         "phone",

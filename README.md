@@ -345,15 +345,16 @@ and the assistant either hands over to an operator (case 3A) or asks the backend
 | Where | What it holds |
 |---|---|
 | `customers.online_banking` | `password_status` (active / blocked), `blocked_since`, `failed_attempts`, `blocked_reason`, `last_login`, a masked `username_masked` |
-| `customers.identity` | `id_card_masked` (e.g. `CA***71AB`) and `tax_code_masked` (e.g. `BNC***84B**F205*`) |
+| `customers.identity` | `id_card` (e.g. `CA48271AB`), `account_last3` (the last three digits of the current account's IBAN) and `tax_code` (e.g. `BNCLNE84B55F205N`): the answers to the security interview, stored in full |
 | `accounts.iban` | the existing IBAN: the interview asks for its **last three digits** |
 | `identity_checks` | the interview log: one row per attempt (`attempt`, `result` passed/failed, `failed_fields`, the answers, masked) |
 | `password_requests` | what the backend banking service answered: `result` OK/KO, `reason_code`, `detail`, `status`, `delivery` |
 | rule `R-IDENTITY` | the three questions, where the expected answer comes from, pass rule, max 3 attempts a day |
-| rule `R-PWRESET` | the process, the operator hand-over (queue and note) for 3A, the backend request for 3B, and a sentence for every KO reason (`ko_reasons`) |
+| rule `R-PWRESET` | the process, `finish_with` (`backend` = case 3B, `operator` = case 3A: change it to switch the demo), the operator hand-over (queue and note) for 3A, the backend request for 3B, and a sentence for every KO reason (`ko_reasons`) |
 
-**Critical data is masked.** Full ID card numbers and tax codes are never stored: a `*` stands for a hidden character, so an answer is compared with the **visible** characters only
-(ignoring case and spaces). The same goes for the answers logged in `identity_checks`.
+**The identity values are demo values, stored in full and shown masked in the app.** The `mask` list of a collection in `view.json` hides the middle of those fields in the app's cards
+(`CA*****AB`), the stored value stays complete so that a flow can check the customer's answer with an exact match (ignoring case). The "JSON" view of the app shows the raw data.
+The answers logged in `identity_checks` stay masked.
 
 | Customer | Phone | Situation |
 |---|---|---|

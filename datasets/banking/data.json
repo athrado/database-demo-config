@@ -228,8 +228,9 @@
       },
       "documents_page_url": "{{docs:documents-C001.html}}",
       "identity": {
-        "id_card_masked": "CA***71AB",
-        "tax_code_masked": "BNC***84B**F205*"
+        "id_card": "CA48271AB",
+        "account_last3": "345",
+        "tax_code": "BNCLNE84B55F205N"
       },
       "online_banking": {
         "username_masked": "e.bi****i",
@@ -263,8 +264,9 @@
       },
       "documents_page_url": "{{docs:documents-C002.html}}",
       "identity": {
-        "id_card_masked": "CA***42RM",
-        "tax_code_masked": "RSS***91L**H501*"
+        "id_card": "CA19542RM",
+        "account_last3": "456",
+        "tax_code": "RSSMRC91L30H501G"
       },
       "online_banking": {
         "username_masked": "m.ro***i",
@@ -301,8 +303,9 @@
       },
       "documents_page_url": "{{docs:documents-C003.html}}",
       "identity": {
-        "id_card_masked": "CA***18CE",
-        "tax_code_masked": "SPS***03S**F839*"
+        "id_card": "CA73618CE",
+        "account_last3": "890",
+        "tax_code": "SPSCHR03S49F839I"
       },
       "online_banking": {
         "username_masked": "c.es*****o",
@@ -339,8 +342,9 @@
       },
       "documents_page_url": "{{docs:documents-C004.html}}",
       "identity": {
-        "id_card_masked": "CA***63AC",
-        "tax_code_masked": "CNT***77D**L219*"
+        "id_card": "CA20863AC",
+        "account_last3": "321",
+        "tax_code": "CNTLSN77D21L219J"
       },
       "online_banking": {
         "username_masked": "a.co***i",
@@ -377,8 +381,9 @@
       },
       "documents_page_url": "{{docs:documents-C005.html}}",
       "identity": {
-        "id_card_masked": "CA***55FR",
-        "tax_code_masked": "RMN***89E**A944*"
+        "id_card": "CA91755FR",
+        "account_last3": "223",
+        "tax_code": "RMNFNC89E43A944T"
       },
       "online_banking": {
         "username_masked": "f.ro*****o",
@@ -412,8 +417,9 @@
       },
       "documents_page_url": "{{docs:documents-C006.html}}",
       "identity": {
-        "id_card_masked": "CA***36EB",
-        "tax_code_masked": "BNC***79P**A794*"
+        "id_card": "CA54036EB",
+        "account_last3": "234",
+        "tax_code": "BNCLMR79P45A794P"
       },
       "online_banking": {
         "username_masked": "e.ma****i",
@@ -665,25 +671,25 @@
     },
     "R-IDENTITY": {
       "name": "Security interview (password reset)",
-      "description": "Before a password is reset the assistant asks three questions and sends the answers to the bank service, which says whether they are correct. The stored values are masked (* = a hidden character, the full numbers are never kept), so the answer is compared with the visible characters only, ignoring case and spaces.",
+      "description": "Before a password is reset the assistant asks three questions and sends the answers to the bank service, which says whether they are correct. The answers are compared with the stored values, ignoring case.",
       "questions": [
         {
           "id": "id_card",
           "ask": "Please tell me your ID card number.",
-          "expected_from": "customers.identity.id_card_masked",
-          "compare": "visible characters"
+          "expected_from": "customers.identity.id_card",
+          "compare": "exact, ignoring case"
         },
         {
           "id": "account_last3",
           "ask": "What are the last three digits of your current account?",
-          "expected_from": "the last 3 digits of the IBAN of the caller's current account (accounts.iban)",
-          "compare": "exact"
+          "expected_from": "customers.identity.account_last3 (the last 3 digits of the IBAN of the caller's current account)",
+          "compare": "exact, ignoring case"
         },
         {
           "id": "tax_code",
           "ask": "And your tax code, please.",
-          "expected_from": "customers.identity.tax_code_masked",
-          "compare": "visible characters"
+          "expected_from": "customers.identity.tax_code",
+          "compare": "exact, ignoring case"
         }
       ],
       "pass_when": "all three answers are correct",
@@ -711,6 +717,7 @@
       "name": "Password reset by phone",
       "description": "The caller is recognised by the phone number (customers.phone). If customers.online_banking.password_status is blocked the assistant says so and offers a reset. After a successful security interview (R-IDENTITY) there are two ways to finish.",
       "precondition": "online_banking.password_status = blocked",
+      "finish_with": "backend",
       "case_3a": {
         "name": "Hand over to an operator",
         "queue": "Online banking support",

@@ -10,6 +10,7 @@ from pathlib import Path
 
 import datasets
 import make_documents as md
+import render
 
 # The tests must not depend on anyone's private .env: an empty value (not a missing one) keeps .env from filling it in.
 os.environ["EXT_DATA_DOCS_URL"] = ""
@@ -136,16 +137,15 @@ def test_a_look_alike_customer_exists_to_test_several_matches():
 
 
 def test_password_reset_scenario_data():
-    """Password reset by phone: masked identity data, who is blocked, the interview log and the backend history agree with each other."""
+    """Password reset by phone: identity data (the app shows it masked), who is blocked, the interview log and the backend history agree with each other."""
     _, data = banking()
     customers, checks, requests, rules = data["customers"], data["identity_checks"], data["password_requests"], data["rules"]
     months = {"January": "A", "February": "B", "March": "C", "April": "D", "May": "E", "June": "H", "July": "L", "August": "M", "September": "P", "October": "R",
               "November": "S", "December": "T"}
     for cid, c in customers.items():
-        card, tax = c["identity"]["id_card_masked"], c["identity"]["tax_code_masked"]
-        assert len(card) == 9 and "*" in card and len(tax) == 16 and "*" in tax, cid                      # masked: the full numbers are not in the data
-        assert not re.fullmatch(r"[A-Z]{2}\d{5}[A-Z]{2}", card) and not re.fullmatch(r"[A-Z0-9]{16}", tax), cid
-        dob = c["date_of_birth"].split()                                                                  # the visible part of the tax code fits the person
+        card, tax = c["identity"]["id_card"], c["identity"]["tax_code"]
+        assert re.fullmatch(r"[A-Z]{2}\d{5}[A-Z]{2}", card) and re.fullmatch(r"[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]", tax), cid      # full demo values (the app shows them masked)
+        dob = c["date_of_birth"].split()                                                                  # the tax code fits the person
         assert tax[6:8] == dob[2][2:] and tax[8] == months[dob[1]], (cid, tax, c["date_of_birth"])
         assert c["online_banking"]["password_status"] in ("active", "blocked") and "*" in c["online_banking"]["username_masked"]
         assert (c["online_banking"]["password_status"] == "blocked") == ("blocked_since" in c["online_banking"]), cid
@@ -170,6 +170,13 @@ def test_password_reset_scenario_data():
     assert rules["R-PWRESET"]["case_3a"]["queue"] and rules["R-PWRESET"]["case_3b"]["logged_in"] == "password_requests"
     ibans = {a["customer_id"]: a["iban"] for a in data["accounts"].values() if a["type"] == "Current account"}
     assert set(ibans) == set(customers) and all(re.fullmatch(r"\d{3}", i.replace(" ", "")[-3:]) for i in ibans.values())    # "last three digits of the account"
+    assert all(c["identity"]["account_last3"] == ibans[cid][-3:] for cid, c in customers.items())                       # the stored answer is the end of the IBAN
+
+
+def test_identity_values_are_stored_in_full_and_shown_masked():
+    _, data = banking()
+    html = render.profile_html("customers", "C001", data["customers"]["C001"], datasets.get_dataset("banking").view)
+    assert "CA48271AB" not in html and "BNCLNE84B55F205N" not in html and "CA*****AB" in html and "BN************5N" in html
 
 
 # ---------------------------------------------------------------- the files
