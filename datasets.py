@@ -18,7 +18,7 @@ the config is loaded:
     {{today}}        15 October 2026          {{iso:today}}       2026-10-15
     {{today-7d}}     8 October 2026           {{iso:today+3d}}   2026-10-18
     {{today+2w}}     29 October 2026          {{today-1m}}        15 September 2026
-                                              {{month:today-1m}}  September 2026
+                                              {{month:today-1m}}  September 2026      {{isomonth:today-1m}}  2026-09
                                               {{mese:today-1m}}   settembre   (the month name in Italian)
     {{lastmonth:3}}  3 September 2026         {{iso:lastmonth:3}} 2026-09-03   (a fixed day of the previous calendar month)
     {{lastyear:03-15}}  15 March 2025                                       (a fixed day of the previous calendar year)
@@ -51,7 +51,7 @@ _DOCS = re.compile(r"\{\{\s*docs:([A-Za-z0-9._-]+)\s*\}\}")
 DEFAULT_DOCS_URL = "https://onlinebanking.example.com/documents"
 _MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio",
          "agosto", "settembre", "ottobre", "novembre", "dicembre"]
-_PLACEHOLDER = re.compile(r"\{\{\s*(iso:|month:|mese:)?today(?:\s*([+-])\s*(\d+)\s*([dwm]))?\s*\}\}")
+_PLACEHOLDER = re.compile(r"\{\{\s*(iso:|isomonth:|month:|mese:)?today(?:\s*([+-])\s*(\d+)\s*([dwm]))?\s*\}\}")
 
 
 @dataclass
@@ -92,6 +92,8 @@ def resolve_placeholders(value, today: date | None = None):
         day = _shift(today, match.group(2), int(match.group(3)), match.group(4)) if match.group(2) else today
         if match.group(1) == "iso:":
             return day.isoformat()
+        if match.group(1) == "isomonth:":
+            return f"{day.year}-{day.month:02d}"
         if match.group(1) == "month:":
             return f"{_MONTHS[day.month - 1]} {day.year}"
         if match.group(1) == "mese:":

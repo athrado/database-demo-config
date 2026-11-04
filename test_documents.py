@@ -145,8 +145,8 @@ def test_password_reset_scenario_data():
     for cid, c in customers.items():
         card, tax = c["identity"]["id_card"], c["identity"]["tax_code"]
         assert re.fullmatch(r"[A-Z]{2}\d{5}[A-Z]{2}", card) and re.fullmatch(r"[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]", tax), cid      # full demo values (the app shows them masked)
-        dob = c["date_of_birth"].split()                                                                  # the tax code fits the person
-        assert tax[6:8] == dob[2][2:] and tax[8] == months[dob[1]], (cid, tax, c["date_of_birth"])
+        born = date.fromisoformat(c["date_of_birth"])                                                     # the tax code fits the person (dates are ISO)
+        assert tax[6:8] == f"{born.year % 100:02d}" and tax[8] == months[born.strftime("%B")], (cid, tax, c["date_of_birth"])
         assert c["online_banking"]["password_status"] in ("active", "blocked") and "*" in c["online_banking"]["username_masked"]
         assert (c["online_banking"]["password_status"] == "blocked") == ("blocked_since" in c["online_banking"]), cid
     assert [cid for cid, c in customers.items() if c["online_banking"]["password_status"] == "blocked"] == ["C002", "C003", "C004"]
@@ -155,7 +155,7 @@ def test_password_reset_scenario_data():
         assert ic["customer_id"] in customers and set(ic["questions_asked"]) == {"id_card", "account_last3", "tax_code"}, iid
         assert ic["result"] == ("passed" if not ic["failed_fields"] else "failed"), iid
         assert all("*" in v for v in ic["answers_given_masked"].values()), iid                           # answers are logged masked too
-    todays = [ic for ic in checks.values() if ic["customer_id"] == "C003" and ic["started"] == datasets.resolve_placeholders("{{today}}", TODAY)]
+    todays = [ic for ic in checks.values() if ic["customer_id"] == "C003" and ic["started"] == TODAY.isoformat()]
     assert [ic["attempt"] for ic in todays] == [1, 2, 3] and all(ic["result"] == "failed" for ic in todays)    # C003: locked out today
     assert rules["R-IDENTITY"]["max_attempts_per_day"] == 3
 
@@ -166,7 +166,7 @@ def test_password_reset_scenario_data():
             assert r["reason_code"] in rules["R-PWRESET"]["ko_reasons"], rid                              # every KO has a sentence for the customer
         if r["identity_check"]:
             assert checks[r["identity_check"]]["customer_id"] == r["customer_id"] and checks[r["identity_check"]]["result"] == "passed", rid
-    assert [(r["customer_id"], r["result"]) for r in requests.values() if r["requested"] == datasets.resolve_placeholders("{{today}}", TODAY)] == [("C004", "OK")]
+    assert [(r["customer_id"], r["result"]) for r in requests.values() if r["requested"] == TODAY.isoformat()] == [("C004", "OK")]
     assert rules["R-PWRESET"]["case_3a"]["queue"] and rules["R-PWRESET"]["case_3b"]["logged_in"] == "password_requests"
     ibans = {a["customer_id"]: a["iban"] for a in data["accounts"].values() if a["type"] == "Current account"}
     assert set(ibans) == set(customers) and all(re.fullmatch(r"\d{3}", i.replace(" ", "")[-3:]) for i in ibans.values())    # "last three digits of the account"

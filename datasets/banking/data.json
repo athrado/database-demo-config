@@ -9,17 +9,17 @@
       "average_balance_3m": 212.4,
       "monthly_average_balance": [
         {
-          "month": "{{month:today-3m}}",
+          "month": "{{isomonth:today-3m}}",
           "average_balance": 265.1,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-2m}}",
+          "month": "{{isomonth:today-2m}}",
           "average_balance": 198.7,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-1m}}",
+          "month": "{{isomonth:today-1m}}",
           "average_balance": 173.4,
           "currency": "EUR"
         }
@@ -35,17 +35,17 @@
       "average_balance_3m": 1839.22,
       "monthly_average_balance": [
         {
-          "month": "{{month:today-3m}}",
+          "month": "{{isomonth:today-3m}}",
           "average_balance": 1790.2,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-2m}}",
+          "month": "{{isomonth:today-2m}}",
           "average_balance": 1912.6,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-1m}}",
+          "month": "{{isomonth:today-1m}}",
           "average_balance": 1814.85,
           "currency": "EUR"
         }
@@ -61,17 +61,17 @@
       "average_balance_3m": 289.9,
       "monthly_average_balance": [
         {
-          "month": "{{month:today-3m}}",
+          "month": "{{isomonth:today-3m}}",
           "average_balance": 330.4,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-2m}}",
+          "month": "{{isomonth:today-2m}}",
           "average_balance": 280.0,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-1m}}",
+          "month": "{{isomonth:today-1m}}",
           "average_balance": 259.3,
           "currency": "EUR"
         }
@@ -87,17 +87,17 @@
       "average_balance_3m": 305.2,
       "monthly_average_balance": [
         {
-          "month": "{{month:today-3m}}",
+          "month": "{{isomonth:today-3m}}",
           "average_balance": 322.6,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-2m}}",
+          "month": "{{isomonth:today-2m}}",
           "average_balance": 301.9,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-1m}}",
+          "month": "{{isomonth:today-1m}}",
           "average_balance": 291.1,
           "currency": "EUR"
         }
@@ -113,17 +113,17 @@
       "average_balance_3m": 120.0,
       "monthly_average_balance": [
         {
-          "month": "{{month:today-3m}}",
+          "month": "{{isomonth:today-3m}}",
           "average_balance": 140.2,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-2m}}",
+          "month": "{{isomonth:today-2m}}",
           "average_balance": 120.8,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-1m}}",
+          "month": "{{isomonth:today-1m}}",
           "average_balance": 99.0,
           "currency": "EUR"
         }
@@ -139,17 +139,17 @@
       "average_balance_3m": 3101.4,
       "monthly_average_balance": [
         {
-          "month": "{{month:today-3m}}",
+          "month": "{{isomonth:today-3m}}",
           "average_balance": 3050.2,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-2m}}",
+          "month": "{{isomonth:today-2m}}",
           "average_balance": 3188.9,
           "currency": "EUR"
         },
         {
-          "month": "{{month:today-1m}}",
+          "month": "{{isomonth:today-1m}}",
           "average_balance": 3065.1,
           "currency": "EUR"
         }
@@ -166,7 +166,7 @@
       "threshold": 300,
       "currency": "EUR",
       "period": "last 3 months",
-      "detected": "{{today}}",
+      "detected": "{{iso:today}}",
       "status": "no offer",
       "suggested_action": "Do not offer a loan: not eligible",
       "reason": "KYC pending, account under 3 months old"
@@ -216,9 +216,9 @@
         "contact_method_written_comms": "email"
       },
       "notes": [],
-      "date_of_birth": "15 February 1984",
+      "date_of_birth": "1984-02-15",
       "kyc_status": "verified",
-      "customer_since": "21 June 2016",
+      "customer_since": "2016-06-21",
       "credit_profile": {
         "loan_eligible": true,
         "pre_approved_limit": 10000,
@@ -235,7 +235,7 @@
       "online_banking": {
         "username_masked": "e.bi****i",
         "password_status": "active",
-        "last_login": "{{today-2d}}"
+        "last_login": "{{iso:today-2d}}"
       }
     },
     "C002": {
@@ -252,9 +252,9 @@
         "contact_method_written_comms": "email"
       },
       "notes": [],
-      "date_of_birth": "30 July 1991",
+      "date_of_birth": "1991-07-30",
       "kyc_status": "verified",
-      "customer_since": "02 April 2012",
+      "customer_since": "2012-04-02",
       "credit_profile": {
         "loan_eligible": true,
         "pre_approved_limit": 15000,
@@ -271,10 +271,10 @@
       "online_banking": {
         "username_masked": "m.ro***i",
         "password_status": "blocked",
-        "blocked_since": "{{today}}",
+        "blocked_since": "{{iso:today}}",
         "failed_attempts": 3,
         "blocked_reason": "3 wrong password attempts in the mobile app",
-        "last_login": "{{today-9d}}"
+        "last_login": "{{iso:today-9d}}"
       }
     },
     "C003": {
@@ -291,9 +291,9 @@
         "contact_method_written_comms": "whatsapp"
       },
       "notes": [],
-      "date_of_birth": "09 November 2003",
+      "date_of_birth": "2003-11-09",
       "kyc_status": "pending",
-      "customer_since": "{{today-40d}}",
+      "customer_since": "{{iso:today-40d}}",
       "credit_profile": {
         "loan_eligible": false,
         "pre_approved_limit": 0,
@@ -310,10 +310,10 @@
       "online_banking": {
         "username_masked": "c.es*****o",
         "password_status": "blocked",
-        "blocked_since": "{{today-1d}}",
+        "blocked_since": "{{iso:today-1d}}",
         "failed_attempts": 3,
         "blocked_reason": "3 wrong password attempts on the website",
-        "last_login": "{{today-15d}}"
+        "last_login": "{{iso:today-15d}}"
       }
     },
     "C004": {
@@ -330,9 +330,9 @@
         "contact_method_written_comms": "email"
       },
       "notes": [],
-      "date_of_birth": "21 April 1977",
+      "date_of_birth": "1977-04-21",
       "kyc_status": "verified",
-      "customer_since": "15 September 2009",
+      "customer_since": "2009-09-15",
       "credit_profile": {
         "loan_eligible": true,
         "pre_approved_limit": 20000,
@@ -349,10 +349,10 @@
       "online_banking": {
         "username_masked": "a.co***i",
         "password_status": "blocked",
-        "blocked_since": "{{today}}",
+        "blocked_since": "{{iso:today}}",
         "failed_attempts": 3,
         "blocked_reason": "Temporary password not changed in time",
-        "last_login": "{{today-3d}}"
+        "last_login": "{{iso:today-3d}}"
       }
     },
     "C005": {
@@ -369,9 +369,9 @@
         "contact_method_written_comms": "whatsapp"
       },
       "notes": [],
-      "date_of_birth": "03 May 1989",
+      "date_of_birth": "1989-05-03",
       "kyc_status": "verified",
-      "customer_since": "30 January 2018",
+      "customer_since": "2018-01-30",
       "credit_profile": {
         "loan_eligible": false,
         "pre_approved_limit": 0,
@@ -388,7 +388,7 @@
       "online_banking": {
         "username_masked": "f.ro*****o",
         "password_status": "active",
-        "last_login": "{{today-1d}}"
+        "last_login": "{{iso:today-1d}}"
       }
     },
     "C006": {
@@ -405,9 +405,9 @@
         "contact_method_written_comms": "email"
       },
       "notes": [],
-      "date_of_birth": "05 September 1979",
+      "date_of_birth": "1979-09-05",
       "kyc_status": "verified",
-      "customer_since": "11 October 2014",
+      "customer_since": "2014-10-11",
       "credit_profile": {
         "loan_eligible": true,
         "pre_approved_limit": 12000,
@@ -424,7 +424,7 @@
       "online_banking": {
         "username_masked": "e.ma****i",
         "password_status": "active",
-        "last_login": "{{today-4d}}"
+        "last_login": "{{iso:today-4d}}"
       }
     }
   },
@@ -432,7 +432,7 @@
     "IC7001": {
       "customer_id": "C003",
       "attempt": 1,
-      "started": "{{today}}",
+      "started": "{{iso:today}}",
       "time": "08:12",
       "channel": "Phone",
       "questions_asked": [
@@ -453,7 +453,7 @@
     "IC7002": {
       "customer_id": "C003",
       "attempt": 2,
-      "started": "{{today}}",
+      "started": "{{iso:today}}",
       "time": "08:15",
       "channel": "Phone",
       "questions_asked": [
@@ -474,7 +474,7 @@
     "IC7003": {
       "customer_id": "C003",
       "attempt": 3,
-      "started": "{{today}}",
+      "started": "{{iso:today}}",
       "time": "08:19",
       "channel": "Phone",
       "questions_asked": [
@@ -496,7 +496,7 @@
     "IC7004": {
       "customer_id": "C005",
       "attempt": 1,
-      "started": "{{today-62d}}",
+      "started": "{{iso:today-62d}}",
       "time": "17:40",
       "channel": "Phone",
       "questions_asked": [
@@ -515,7 +515,7 @@
     "IC7005": {
       "customer_id": "C004",
       "attempt": 1,
-      "started": "{{today}}",
+      "started": "{{iso:today}}",
       "time": "08:37",
       "channel": "Phone",
       "questions_asked": [
@@ -603,7 +603,7 @@
       "currency": "EUR",
       "preferred_duration_months": 36,
       "status": "under review",
-      "requested": "{{today-3d}}",
+      "requested": "{{iso:today-3d}}",
       "channel": "Chat"
     }
   },
@@ -618,13 +618,13 @@
       "remaining_months": 26,
       "currency": "EUR",
       "status": "active",
-      "started": "{{today-22m}}"
+      "started": "{{iso:today-22m}}"
     }
   },
   "password_requests": {
     "PR6001": {
       "customer_id": "C005",
-      "requested": "{{today-62d}}",
+      "requested": "{{iso:today-62d}}",
       "time": "17:42",
       "channel": "Phone",
       "identity_check": "IC7004",
@@ -636,7 +636,7 @@
     },
     "PR6002": {
       "customer_id": "C004",
-      "requested": "{{today}}",
+      "requested": "{{iso:today}}",
       "time": "08:40",
       "channel": "Phone",
       "identity_check": "IC7005",
@@ -644,12 +644,12 @@
       "reason_code": "",
       "status": "temporary password not yet changed",
       "delivery": "SMS",
-      "valid_until": "{{today+1d}}",
+      "valid_until": "{{iso:today+1d}}",
       "detail": "Password reset. A temporary password was sent by SMS to the phone number on file."
     },
     "PR6003": {
       "customer_id": "C003",
-      "requested": "{{today-1d}}",
+      "requested": "{{iso:today-1d}}",
       "time": "16:05",
       "channel": "Phone",
       "identity_check": "",

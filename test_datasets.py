@@ -52,6 +52,7 @@ def test_placeholders():
     assert r("{{ today - 1m }}") == "28 February 2026"            # month end is clamped
     assert r("{{today+10m}}") == "31 January 2027"
     assert r("{{iso:today+3d}}") == "2026-04-03"
+    assert r("{{isomonth:today}}") == "2026-03" and r("{{isomonth:today-3m}}") == "2025-12"
     assert r("{{month:today}}") == "March 2026" and r("{{month:today-2m}}") == "January 2026" and r("{{month:today-3m}}") == "December 2025"
     assert r({"a": ["x {{iso:today}} y", 5, None]}) == {"a": ["x 2026-03-31 y", 5, None]}
     assert r("{{lastmonth:3}}") == "3 February 2026" and r("{{lastmonth:31}}") == "28 February 2026" and r("{{iso:lastmonth:15}}") == "2026-02-15"

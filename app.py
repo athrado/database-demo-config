@@ -23,8 +23,10 @@ from store import META_COLLECTION, META_ID, StoreError, check_table, get_store
 # A link such as ?config=banking&collection=transactions&ids=TX1001,TX1002 shows just those records (for example the receipts a chat assistant refers to).
 FOCUS_COLLECTION = (st.query_params.get("collection", "") or "").strip()
 FOCUS_IDS = [i.strip() for i in (st.query_params.get("ids", "") or "").split(",") if i.strip()]
+# ...&collection=password_requests&customer=C002 shows the records of that collection that belong to the customer (ids and customer can be combined).
+FOCUS_CUSTOMER = (st.query_params.get("customer", "") or "").strip()
 st.set_page_config(page_title="Database demo config", page_icon="🗄️", layout="wide",
-                   initial_sidebar_state="collapsed" if FOCUS_COLLECTION and FOCUS_IDS else "auto")
+                   initial_sidebar_state="collapsed" if FOCUS_COLLECTION and (FOCUS_IDS or FOCUS_CUSTOMER) else "auto")
 st.markdown(render.CSS, unsafe_allow_html=True)
 st.markdown(
     """
@@ -575,13 +577,20 @@ with tab_browse:
                             format_func=lambda c: f"{cfgs[c]['icon']} {cfgs[c]['label']} ({len(data[c])})", label_visibility="collapsed")
         if selected is None:                                          # a click on the chosen button un-chooses it: choose the main one again
             st.rerun()
-        restricted = bool(selected == st.query_params.get("collection") and st.query_params.get("ids"))       # a link narrowed this collection down
-        focus = [i for i in FOCUS_IDS if i in data[selected]] if restricted else []
+        restricted = bool(selected == st.query_params.get("collection") and (st.query_params.get("ids") or st.query_params.get("customer")))       # a link narrowed this collection down
+        owner_field = None if selected == primary else render.link_field(selected, data[selected], primary, view)
+
+        def in_focus(rid: str, rec: dict) -> bool:
+            if FOCUS_IDS and rid not in FOCUS_IDS:
+                return False
+            return not FOCUS_CUSTOMER or (rid == FOCUS_CUSTOMER if selected == primary else rec.get(owner_field) == FOCUS_CUSTOMER)
+
+        focus = [rid for rid, rec in data[selected].items() if in_focus(rid, rec)] if restricted else []
         if restricted:
             shown = f"{len(focus)} of the {cfgs[selected]['label'].lower()}" if focus else f"none of the {cfgs[selected]['label'].lower()}"
             st.info(f"Showing {shown} selected by the link you followed.")
             if st.button(f"Show all {cfgs[selected]['label'].lower()}"):
-                for key in ("ids", "collection"):
+                for key in ("ids", "customer", "collection"):
                     st.query_params.pop(key, None)
                 st.rerun()
         query = st.text_input("Search", placeholder="🔍 Search names, ids, anything…", key="browse_search", label_visibility="collapsed").strip().lower()

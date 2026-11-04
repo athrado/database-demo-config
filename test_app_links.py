@@ -48,6 +48,18 @@ def test_without_a_link_the_page_is_unchanged():
     assert at.session_state["browse_collection"] == "customers"
 
 
+def test_a_link_with_a_customer_shows_only_that_customers_records():
+    at, _ = open_app(collection="password_requests", customer="C005")
+    cards = [m.value for m in at.markdown if 'class="xd-card' in m.value]
+    assert len(cards) == 1 and "PR6001" in cards[0]                                       # Francesca's one request, not the others
+    assert "Showing 1 of the" in " ".join(i.value for i in at.info)
+    at, _ = open_app(collection="password_requests", customer="C002")
+    assert not [m for m in at.markdown if 'class="xd-card' in m.value] and "Showing none of the" in " ".join(i.value for i in at.info)
+    at, _ = open_app(collection="password_requests", customer="C004", ids="PR6002")
+    cards = [m.value for m in at.markdown if 'class="xd-card' in m.value]
+    assert len(cards) == 1 and "PR6002" in cards[0]                                       # ids and customer combine
+
+
 def test_show_all_removes_the_restriction():
     at, _ = open_app(collection="transactions", ids="TX1001")
     {b.label: b for b in at.button}["Show all transactions"].click()
