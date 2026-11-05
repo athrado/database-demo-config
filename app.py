@@ -25,9 +25,26 @@ FOCUS_COLLECTION = (st.query_params.get("collection", "") or "").strip()
 FOCUS_IDS = [i.strip() for i in (st.query_params.get("ids", "") or "").split(",") if i.strip()]
 # ...&collection=password_requests&customer=C002 shows the records of that collection that belong to the customer (ids and customer can be combined).
 FOCUS_CUSTOMER = (st.query_params.get("customer", "") or "").strip()
-st.set_page_config(page_title="Database demo config", page_icon="🗄️", layout="wide",
-                   initial_sidebar_state="collapsed" if FOCUS_COLLECTION and (FOCUS_IDS or FOCUS_CUSTOMER) else "auto")
+# ...&view=clean shows only those records, styled like a page for the customer: no sidebar, tabs, search or buttons of the database app.
+CLEAN = bool(FOCUS_COLLECTION) and (st.query_params.get("view", "") or "").strip().lower() == "clean"
+st.set_page_config(page_title="Your records" if CLEAN else "Database demo config", page_icon="🗄️", layout="centered" if CLEAN else "wide",
+                   initial_sidebar_state="collapsed" if CLEAN or (FOCUS_COLLECTION and (FOCUS_IDS or FOCUS_CUSTOMER)) else "auto")
 st.markdown(render.CSS, unsafe_allow_html=True)
+if CLEAN:                                                             # hide everything that belongs to the database app
+    st.markdown(
+        """
+        <style>
+        [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"],
+        [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], #MainMenu, footer { display:none !important; }
+        .block-container { padding-top: 2rem; max-width: 760px; }
+        .xd-brand { font-size:.85rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; opacity:.7; }
+        .xd-clean h1 { margin:.2rem 0 0; font-size:1.8rem; }
+        .xd-clean p { margin:.2rem 0 1.2rem; opacity:.7; }
+        .xd-clean-foot { margin-top:2.5rem; font-size:.8rem; opacity:.55; }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 st.markdown(
     """
     <style>
@@ -56,6 +73,13 @@ NEW_DATASET_TEMPLATE = """{
 
 def html(markup: str) -> None:
     st.markdown(markup, unsafe_allow_html=True)
+
+
+def in_focus(rid: str, rec: dict, is_primary: bool, owner_field: str | None) -> bool:
+    """Does a record belong to what the link asked for: its ids and/or the customer it belongs to?"""
+    if FOCUS_IDS and rid not in FOCUS_IDS:
+        return False
+    return not FOCUS_CUSTOMER or (rid == FOCUS_CUSTOMER if is_primary else rec.get(owner_field) == FOCUS_CUSTOMER)
 
 
 DEFAULT_DATASET = "banking"                                          # shown when the app opens (without ?config=... in the address)
@@ -154,7 +178,7 @@ st.session_state.setdefault("version", 0)
 
 # ---------------------------------------------------------------- which dataset, and so which table
 datasets.tidy_empty_folders()                                         # folders left behind by an earlier delete
-if not st.session_state.get("github_pulled"):                         # at the start and on Refresh: datasets that are on GitHub but not here yet
+if not CLEAN and not st.session_state.get("github_pulled"):          # at the start and on Refresh: datasets that are on GitHub but not here yet
     st.session_state["github_pulled"] = True
     st.session_state.pop("github_pull_error", None)
     try:
@@ -193,6 +217,29 @@ else:
 
 loaded = all_datasets.get(marker["dataset"]) if marker else None
 view = (loaded or picked).view if (loaded or picked) else {}
+
+# ---------------------------------------------------------------- clean view (a page for the customer): only the records the link names
+if CLEAN:
+    if load_error or not data:
+        st.info("There is nothing to show here yet.")
+        st.stop()
+    primary = render.primary_of(data, view)
+    selected = FOCUS_COLLECTION if FOCUS_COLLECTION in data else primary
+    cfg = render.collection_config(selected, view)
+    owner_field = None if selected == primary else render.link_field(selected, data[selected], primary, view)
+    records = {rid: rec for rid, rec in data[selected].items() if in_focus(rid, rec, selected == primary, owner_field)}
+    owner_id = FOCUS_CUSTOMER or next((rec.get(owner_field) for rec in records.values() if owner_field and rec.get(owner_field)), "")
+    owner = data[primary].get(owner_id)
+    owner_name = render.title_of(owner_id, owner, render.collection_config(primary, view))[0] if owner else ""
+    brand = view.get("brand") or (picked.title if picked else "")
+    html(f'<div class="xd-clean"><div class="xd-brand">{render.esc(brand)}</div><h1>Your {render.esc(cfg["label"].lower())}</h1>'
+         f'<p>{render.esc(owner_name)}</p></div>')
+    if not records:
+        st.info("Nothing to show.")
+    for rid, rec in list(records.items())[:60]:
+        html(render.record_card(selected, rid, rec, view, link=owner_field))
+    html(f'<div class="xd-clean-foot">{render.esc(brand)}</div>')
+    st.stop()
 
 # A table normally belongs to one dataset. Then a reset empties the WHOLE table, so collections left over from an older
 # version of the dataset go too. If another dataset uses the same table, only this dataset's collections are touched.
@@ -580,12 +627,7 @@ with tab_browse:
         restricted = bool(selected == st.query_params.get("collection") and (st.query_params.get("ids") or st.query_params.get("customer")))       # a link narrowed this collection down
         owner_field = None if selected == primary else render.link_field(selected, data[selected], primary, view)
 
-        def in_focus(rid: str, rec: dict) -> bool:
-            if FOCUS_IDS and rid not in FOCUS_IDS:
-                return False
-            return not FOCUS_CUSTOMER or (rid == FOCUS_CUSTOMER if selected == primary else rec.get(owner_field) == FOCUS_CUSTOMER)
-
-        focus = [rid for rid, rec in data[selected].items() if in_focus(rid, rec)] if restricted else []
+        focus = [rid for rid, rec in data[selected].items() if in_focus(rid, rec, selected == primary, owner_field)] if restricted else []
         if restricted:
             shown = f"{len(focus)} of the {cfgs[selected]['label'].lower()}" if focus else f"none of the {cfgs[selected]['label'].lower()}"
             st.info(f"Showing {shown} selected by the link you followed.")

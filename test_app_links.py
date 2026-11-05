@@ -60,6 +60,17 @@ def test_a_link_with_a_customer_shows_only_that_customers_records():
     assert len(cards) == 1 and "PR6002" in cards[0]                                       # ids and customer combine
 
 
+def test_the_clean_view_is_a_page_for_the_customer():
+    at, shown = open_app(collection="transactions", customer="C004", ids="TX1001,TX1002", view="clean")
+    assert shown == ["TX1001", "TX1002"]
+    text = " ".join(m.value for m in at.markdown)
+    assert "Your transactions" in text and "Banco BPM" in text and "Alessandro Conti" in text
+    assert not at.sidebar.button and not at.sidebar.markdown and not at.tabs                # nothing of the database app
+    assert not at.info and not [b for b in at.button if b.label.startswith("Show all")]
+    at, shown = open_app(collection="password_requests", customer="C005", view="clean")     # a customer's own records of a collection
+    assert "Your password requests" in " ".join(m.value for m in at.markdown) and "PR6001" in " ".join(m.value for m in at.markdown)
+
+
 def test_show_all_removes_the_restriction():
     at, _ = open_app(collection="transactions", ids="TX1001")
     {b.label: b for b in at.button}["Show all transactions"].click()

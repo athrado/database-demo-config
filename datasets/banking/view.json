@@ -1,5 +1,6 @@
 {
   "primary": "customers",
+  "brand": "Banco BPM",
   "collections": {
     "customers": {
       "subtitle": [
