@@ -761,7 +761,7 @@
       "status": "completed",
       "doc_id": "DOC8001",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Giorgio Ferrrari, 3 September 2026",
+      "doc_title": "Transfer receipt - Giorgio Ferrrari",
       "doc_url": "{{docs:DOC8001.pdf}}"
     },
     "TX1002": {
@@ -780,7 +780,7 @@
       "review_status": "under review",
       "doc_id": "DOC8002",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - G. Ferrari, {{lastmonth:15}}",
+      "doc_title": "Transfer receipt - G. Ferrari",
       "doc_url": "{{docs:DOC8002.pdf}}"
     },
     "TX1003": {
@@ -798,7 +798,7 @@
       "status": "completed",
       "doc_id": "DOC8003",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Ferari Giorgio, {{lastmonth:28}}",
+      "doc_title": "Transfer receipt - Ferari Giorgio",
       "doc_url": "{{docs:DOC8003.pdf}}"
     },
     "TX1004": {
@@ -816,7 +816,7 @@
       "status": "pending",
       "doc_id": "DOC8004",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Giorgio Ferrari, {{today}}",
+      "doc_title": "Transfer receipt - Giorgio Ferrari",
       "doc_url": "{{docs:DOC8004.pdf}}"
     },
     "TX1005": {
@@ -834,7 +834,7 @@
       "status": "completed",
       "doc_id": "DOC8005",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Studio Notarile Bruno, {{lastmonth:9}}",
+      "doc_title": "Transfer receipt - Studio Notarile Bruno",
       "doc_url": "{{docs:DOC8005.pdf}}"
     },
     "TX1006": {
@@ -852,7 +852,7 @@
       "status": "completed",
       "doc_id": "DOC8006",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Paolo Greco, {{lastyear:02-10}}",
+      "doc_title": "Transfer receipt - Paolo Greco",
       "doc_url": "{{docs:DOC8006.pdf}}"
     },
     "TX1007": {
@@ -870,7 +870,7 @@
       "status": "completed",
       "doc_id": "DOC8007",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - VITALE MARCO PIASTRELLE, {{lastyear:03-22}}",
+      "doc_title": "Transfer receipt - VITALE MARCO PIASTRELLE",
       "doc_url": "{{docs:DOC8007.pdf}}"
     },
     "TX1008": {
@@ -888,7 +888,7 @@
       "status": "completed",
       "doc_id": "DOC8008",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - M. Vitale, {{lastyear:05-14}}",
+      "doc_title": "Transfer receipt - M. Vitale",
       "doc_url": "{{docs:DOC8008.pdf}}"
     },
     "TX1009": {
@@ -906,7 +906,7 @@
       "status": "completed",
       "doc_id": "DOC8009",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Costa Ed. Srl, {{lastyear:06-28}}",
+      "doc_title": "Transfer receipt - Costa Ed. Srl",
       "doc_url": "{{docs:DOC8009.pdf}}"
     },
     "TX1010": {
@@ -924,7 +924,7 @@
       "status": "completed",
       "doc_id": "DOC8010",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Greco P. Idraulica, {{lastyear:08-08}}",
+      "doc_title": "Transfer receipt - Greco P. Idraulica",
       "doc_url": "{{docs:DOC8010.pdf}}"
     },
     "TX1011": {
@@ -942,7 +942,7 @@
       "status": "completed",
       "doc_id": "DOC8011",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - {{lastyear:09-19}}",
+      "doc_title": "Transfer receipt",
       "doc_url": "{{docs:DOC8011.pdf}}"
     },
     "TX1012": {
@@ -960,7 +960,7 @@
       "status": "completed",
       "doc_id": "DOC8012",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Tinteggiature Rosi, {{lastyear:11-05}}",
+      "doc_title": "Transfer receipt - Tinteggiature Rosi",
       "doc_url": "{{docs:DOC8012.pdf}}"
     },
     "TX1013": {
@@ -977,7 +977,7 @@
       "status": "completed",
       "doc_id": "DOC8013",
       "doc_category": "F24 receipt",
-      "doc_title": "F24 receipt - Agenzia delle Entrate, {{lastyear:06-16}}",
+      "doc_title": "F24 receipt - Agenzia delle Entrate",
       "doc_url": "{{docs:DOC8013.pdf}}"
     },
     "TX1014": {
@@ -994,7 +994,7 @@
       "status": "completed",
       "doc_id": "DOC8014",
       "doc_category": "Direct debit notice",
-      "doc_title": "Direct debit notice - Generali Italia SpA, {{lastyear:07-12}}",
+      "doc_title": "Direct debit notice - Generali Italia SpA",
       "doc_url": "{{docs:DOC8014.pdf}}"
     },
     "TX1015": {
@@ -1011,7 +1011,7 @@
       "status": "completed",
       "doc_id": "DOC8015",
       "doc_category": "CBILL receipt",
-      "doc_title": "CBILL receipt - Enel Energia, {{lastmonth:5}}",
+      "doc_title": "CBILL receipt - Enel Energia",
       "doc_url": "{{docs:DOC8015.pdf}}"
     },
     "TX1016": {
@@ -1029,7 +1029,7 @@
       "status": "completed",
       "doc_id": "DOC8016",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:1:3}}",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl",
       "doc_url": "{{docs:DOC8016.pdf}}"
     },
     "TX1017": {
@@ -1047,7 +1047,7 @@
       "status": "completed",
       "doc_id": "DOC8017",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - IMMOB. DUOMO SRL, {{monthago:2:3}}",
+      "doc_title": "Transfer receipt - IMMOB. DUOMO SRL",
       "doc_url": "{{docs:DOC8017.pdf}}"
     },
     "TX1018": {
@@ -1065,7 +1065,7 @@
       "status": "completed",
       "doc_id": "DOC8018",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:3:3}}",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl",
       "doc_url": "{{docs:DOC8018.pdf}}"
     },
     "TX1019": {
@@ -1083,7 +1083,7 @@
       "status": "completed",
       "doc_id": "DOC8019",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:4:3}}",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl",
       "doc_url": "{{docs:DOC8019.pdf}}"
     },
     "TX1020": {
@@ -1101,7 +1101,7 @@
       "status": "completed",
       "doc_id": "DOC8020",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Immobiliare Duomo, {{monthago:5:3}}",
+      "doc_title": "Transfer receipt - Immobiliare Duomo",
       "doc_url": "{{docs:DOC8020.pdf}}"
     },
     "TX1021": {
@@ -1119,7 +1119,7 @@
       "status": "completed",
       "doc_id": "DOC8021",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:6:3}}",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl",
       "doc_url": "{{docs:DOC8021.pdf}}"
     },
     "TX1022": {
@@ -1137,7 +1137,7 @@
       "status": "completed",
       "doc_id": "DOC8022",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - {{monthago:7:3}}",
+      "doc_title": "Transfer receipt",
       "doc_url": "{{docs:DOC8022.pdf}}"
     },
     "TX1023": {
@@ -1155,7 +1155,7 @@
       "status": "completed",
       "doc_id": "DOC8023",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Immobiliare Duomo Srl, {{monthago:8:3}}",
+      "doc_title": "Transfer receipt - Immobiliare Duomo Srl",
       "doc_url": "{{docs:DOC8023.pdf}}"
     },
     "TX1024": {
@@ -1172,7 +1172,7 @@
       "status": "completed",
       "doc_id": "DOC8024",
       "doc_category": "Card receipt",
-      "doc_title": "Card receipt - Esselunga, {{today-1d}}",
+      "doc_title": "Card receipt - Esselunga",
       "doc_url": "{{docs:DOC8024.pdf}}"
     },
     "TX1025": {
@@ -1189,7 +1189,7 @@
       "status": "completed",
       "doc_id": "DOC8025",
       "doc_category": "Direct debit notice",
-      "doc_title": "Direct debit notice - TIM, {{monthago:1:10}}",
+      "doc_title": "Direct debit notice - TIM",
       "doc_url": "{{docs:DOC8025.pdf}}"
     },
     "TX1026": {
@@ -1207,7 +1207,7 @@
       "status": "completed",
       "doc_id": "DOC8026",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Autosalone Bellini Srl, {{monthago:1:20}}",
+      "doc_title": "Transfer receipt - Autosalone Bellini Srl",
       "doc_url": "{{docs:DOC8026.pdf}}"
     },
     "TX1027": {
@@ -1224,7 +1224,7 @@
       "status": "completed",
       "doc_id": "DOC8027",
       "doc_category": "Direct debit notice",
-      "doc_title": "Direct debit notice - Fastweb, {{monthago:1:8}}",
+      "doc_title": "Direct debit notice - Fastweb",
       "doc_url": "{{docs:DOC8027.pdf}}"
     },
     "TX1028": {
@@ -1241,7 +1241,7 @@
       "status": "completed",
       "doc_id": "DOC8028",
       "doc_category": "Card receipt",
-      "doc_title": "Card receipt - Eni Station, {{today-2d}}",
+      "doc_title": "Card receipt - Eni Station",
       "doc_url": "{{docs:DOC8028.pdf}}"
     },
     "TX1029": {
@@ -1259,7 +1259,7 @@
       "status": "completed",
       "doc_id": "DOC8029",
       "doc_category": "Transfer receipt",
-      "doc_title": "Transfer receipt - Universita di Roma La Sapienza, {{monthago:9:15}}",
+      "doc_title": "Transfer receipt - Universita di Roma La Sapienza",
       "doc_url": "{{docs:DOC8029.pdf}}"
     }
   }

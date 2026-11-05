@@ -58,6 +58,9 @@ if CLEAN:                                                             # hide eve
         .xd-list ul { list-style:none !important; padding:0 !important; margin:0; }
         .xd-list li { display:flex; justify-content:space-between; gap:1rem; padding:.55rem 0; border-bottom:1px solid rgba(128,128,128,.3); }
         .xd-list .d { opacity:.6; white-space:nowrap; }
+        .xd-list .r { display:flex; gap:1rem; white-space:nowrap; }
+        .xd-list .a { font-weight:600; }
+        .xd-list .tot { display:flex; justify-content:space-between; gap:1rem; margin-top:1.5rem; padding-top:.8rem; border-top:2px solid rgba(128,128,128,.5); font-weight:700; }
         .xd-list .sub { opacity:.65; margin:.2rem 0 0; }
         </style>
         """,
@@ -284,17 +287,31 @@ if CLEAN:
     company_name = view.get("company_name") or (picked.title if picked else "")
     if STYLE_LIST:                                                    # a plain list like the documents overview: title (a link), date, grouped
         spec = cfg.get("list") or {}
-        link_key, right_key, group_key = spec.get("link"), spec.get("right"), spec.get("group")
+        link_key, right_key, group_key, amount_key = spec.get("link"), spec.get("right"), spec.get("group"), spec.get("amount")
         groups: dict[str, list[str]] = {}
+        totals: dict[str, float] = {}                                  # the sum of the amounts, per currency
+        listed = 0
         for rid, rec in records.items():
             if link_key and not rec.get(link_key):                    # with a link configured, records without one are not listed
                 continue
+            listed += 1
             text = rec.get(spec.get("title") or "") or render.title_of(rid, rec, cfg)[0]
             label = f'<a href="{render.esc(rec[link_key])}" target="_blank" rel="noopener">{render.esc(text)}</a>' if link_key else render.esc(text)
-            right = f'<span class="d">{render.esc(rec[right_key])}</span>' if right_key and rec.get(right_key) not in (None, "") else ""
-            groups.setdefault(str(rec.get(group_key) or "") if group_key else "", []).append(f"<li>{label}{right}</li>")
+            right = ""
+            value = rec.get(amount_key) if amount_key else None
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                value = abs(value) if spec.get("absolute") else value
+                currency = str(rec.get("currency") or "")
+                totals[currency] = totals.get(currency, 0) + value
+                right += f'<span class="a">{render.esc(render.money_text(value, currency))}</span>'
+            if right_key and rec.get(right_key) not in (None, ""):
+                right += f'<span class="d">{render.esc(rec[right_key])}</span>'
+            groups.setdefault(str(rec.get(group_key) or "") if group_key else "", []).append(f'<li>{label}<span class="r">{right}</span></li>')
         sections = "".join((f'<h2>{render.esc(kind)}s <span class="n">{len(items)}</span></h2>' if kind else "") + f'<ul>{"".join(items)}</ul>'
                            for kind, items in sorted(groups.items()))
+        if totals and spec.get("total"):                              # a sum at the end (one amount per currency)
+            summed = ", ".join(render.money_text(round(v, 2), c) for c, v in totals.items())
+            sections += f'<div class="tot"><span>{render.esc(spec["total"])} ({listed})</span><span>{render.esc(summed)}</span></div>'
         who = f"{render.esc(company_name)} &middot; {render.esc(owner_name)}" if owner_name else render.esc(company_name)
         html(f'<div class="xd-clean xd-list"><h1>{render.esc(spec.get("heading") or "Your " + cfg["label"].lower())}</h1><p class="sub">{who}</p>'
              f'{sections or "<p>Nothing to show.</p>"}</div>')

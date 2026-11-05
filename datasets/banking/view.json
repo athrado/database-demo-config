@@ -52,6 +52,9 @@
         "heading": "Your documents",
         "title": "doc_title",
         "link": "doc_url",
+        "amount": "amount",
+        "absolute": true,
+        "total": "Total",
         "right": "booking_date",
         "group": "doc_category"
       },
