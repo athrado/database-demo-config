@@ -98,11 +98,12 @@ def test_the_list_style_looks_like_the_documents_overview():
     at, _ = open_app(collection="transactions", customer="C004", ids="TX1001,TX1002", view="clean", style="list")
     text = " ".join(m.value for m in at.markdown)
     assert 'class="xd-clean xd-list"' in text and "Your documents" in text and "Banco BPM &middot; Alessandro Conti" in text
-    assert text.count("<li><a href=") == 2 and 'class="xd-card' not in text                  # two rows, a link and a date each, no cards
+    assert text.count('<li><span class="t"><a href=') == 2 and 'class="xd-card' not in text  # two rows, a link and a date each, no cards
     assert '<span class="n">2</span>' in text                                                # grouped by document category, with a count
     amounts = [abs(datasets.resolve_placeholders(datasets.get_dataset("banking").data)["transactions"][t]["amount"]) for t in ("TX1001", "TX1002")]
     assert all(f'<span class="a">€{a:,.2f}</span>' in text for a in amounts)                 # the amount next to the date
-    assert f'<div class="tot"><span>Total (2)</span><span>€{sum(amounts):,.2f}</span></div>' in text    # and a sum at the end
+    assert f'<span class="t">Total (2)</span><span class="d"></span><span class="a">€{sum(amounts):,.2f}</span></div>' in text    # and a sum at the end
+    assert all(text.index(f'<span class="a">€{a:,.2f}') > text.index('<span class="d">') for a in amounts)         # the amount comes after the date
     at, _ = open_app(collection="transactions", customer="C004", ids="TX1001,TX1002", view="clean")
     assert 'class="xd-card' in " ".join(m.value for m in at.markdown)                       # without style=list: the cards
 

@@ -56,11 +56,12 @@ if CLEAN:                                                             # hide eve
         .xd-list h2 { margin:2rem 0 .4rem; font-size:1.15rem; }
         .xd-list .n { background:#3b82f6; color:#fff; border-radius:999px; padding:0 .5rem; font-size:.8rem; }
         .xd-list ul { list-style:none !important; padding:0 !important; margin:0; }
-        .xd-list li { display:flex; justify-content:space-between; gap:1rem; padding:.55rem 0; border-bottom:1px solid rgba(128,128,128,.3); }
+        .xd-list li, .xd-list .tot { display:grid; grid-template-columns:minmax(0,1fr) 10.5em 7.5em; gap:1rem; align-items:baseline; }
+        .xd-list li { padding:.55rem 0; border-bottom:1px solid rgba(128,128,128,.3); }
         .xd-list .d { opacity:.6; white-space:nowrap; }
-        .xd-list .r { display:flex; gap:1rem; white-space:nowrap; }
-        .xd-list .a { font-weight:600; }
-        .xd-list .tot { display:flex; justify-content:space-between; gap:1rem; margin-top:1.5rem; padding-top:.8rem; border-top:2px solid rgba(128,128,128,.5); font-weight:700; }
+        .xd-list .a { text-align:right; font-weight:600; white-space:nowrap; font-variant-numeric:tabular-nums; }
+        .xd-list .tot { margin-top:1.5rem; padding-top:.8rem; border-top:2px solid rgba(128,128,128,.5); font-weight:700; }
+        @media (max-width:560px) { .xd-list li, .xd-list .tot { grid-template-columns:1fr auto; } .xd-list .t { grid-column:1 / -1; } }
         .xd-list .sub { opacity:.65; margin:.2rem 0 0; }
         </style>
         """,
@@ -297,21 +298,22 @@ if CLEAN:
             listed += 1
             text = rec.get(spec.get("title") or "") or render.title_of(rid, rec, cfg)[0]
             label = f'<a href="{render.esc(rec[link_key])}" target="_blank" rel="noopener">{render.esc(text)}</a>' if link_key else render.esc(text)
-            right = ""
+            money = ""
             value = rec.get(amount_key) if amount_key else None
             if isinstance(value, (int, float)) and not isinstance(value, bool):
                 value = abs(value) if spec.get("absolute") else value
                 currency = str(rec.get("currency") or "")
                 totals[currency] = totals.get(currency, 0) + value
-                right += f'<span class="a">{render.esc(render.money_text(value, currency))}</span>'
-            if right_key and rec.get(right_key) not in (None, ""):
-                right += f'<span class="d">{render.esc(rec[right_key])}</span>'
-            groups.setdefault(str(rec.get(group_key) or "") if group_key else "", []).append(f'<li>{label}<span class="r">{right}</span></li>')
+                money = render.money_text(value, currency)
+            when = rec.get(right_key) if right_key and rec.get(right_key) not in (None, "") else ""
+            # three columns (title, date, amount) so that the dates and the amounts line up from row to row
+            groups.setdefault(str(rec.get(group_key) or "") if group_key else "", []).append(
+                f'<li><span class="t">{label}</span><span class="d">{render.esc(when)}</span><span class="a">{render.esc(money)}</span></li>')
         sections = "".join((f'<h2>{render.esc(kind)}s <span class="n">{len(items)}</span></h2>' if kind else "") + f'<ul>{"".join(items)}</ul>'
                            for kind, items in sorted(groups.items()))
         if totals and spec.get("total"):                              # a sum at the end (one amount per currency)
             summed = ", ".join(render.money_text(round(v, 2), c) for c, v in totals.items())
-            sections += f'<div class="tot"><span>{render.esc(spec["total"])} ({listed})</span><span>{render.esc(summed)}</span></div>'
+            sections += f'<div class="tot"><span class="t">{render.esc(spec["total"])} ({listed})</span><span class="d"></span><span class="a">{render.esc(summed)}</span></div>'
         who = f"{render.esc(company_name)} &middot; {render.esc(owner_name)}" if owner_name else render.esc(company_name)
         html(f'<div class="xd-clean xd-list"><h1>{render.esc(spec.get("heading") or "Your " + cfg["label"].lower())}</h1><p class="sub">{who}</p>'
              f'{sections or "<p>Nothing to show.</p>"}</div>')
