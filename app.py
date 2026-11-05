@@ -56,7 +56,8 @@ if CLEAN:                                                             # hide eve
         .xd-list h2 { margin:2rem 0 .4rem; font-size:1.15rem; }
         .xd-list .n { background:#3b82f6; color:#fff; border-radius:999px; padding:0 .5rem; font-size:.8rem; }
         .xd-list ul { list-style:none !important; padding:0 !important; margin:0; }
-        .xd-list li, .xd-list .tot { display:grid; grid-template-columns:minmax(0,1fr) 10.5em 7.5em; gap:1rem; align-items:baseline; }
+        .xd-list li, .xd-list .tot { display:grid; grid-template-columns:minmax(0,1fr) 9.5em 6.5em; gap:.4rem 1rem; align-items:baseline; }
+        .xd-list .d { margin-right:-.6rem; }                                                    /* date and amount closer together */
         .xd-list li { padding:.55rem 0; border-bottom:1px solid rgba(128,128,128,.3); }
         .xd-list .d { opacity:.6; white-space:nowrap; }
         .xd-list .a { text-align:right; font-weight:600; white-space:nowrap; font-variant-numeric:tabular-nums; }
