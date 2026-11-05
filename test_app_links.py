@@ -60,6 +60,29 @@ def test_a_link_with_a_customer_shows_only_that_customers_records():
     assert len(cards) == 1 and "PR6002" in cards[0]                                       # ids and customer combine
 
 
+def card_ids(at, ids):
+    cards = " ".join(m.value for m in at.markdown if 'class="xd-card' in m.value)
+    return [i for i in ids if i in cards]
+
+
+def test_where_filters_work_on_any_collection_and_field_path():
+    at, _ = open_app(collection="password_requests", **{"where.result": "ko"})                  # ignores case
+    assert card_ids(at, ("PR6001", "PR6002", "PR6003")) == ["PR6003"]
+    at, _ = open_app(collection="password_requests", **{"where.result": "OK,KO"})
+    assert card_ids(at, ("PR6001", "PR6002", "PR6003")) == ["PR6001", "PR6002", "PR6003"]       # any of the values
+    at, _ = open_app(collection="customers", **{"where.online_banking.password_status": "blocked"})
+    assert "Showing 3 of the" in " ".join(i.value for i in at.info)                              # a path into the record
+    at, _ = open_app(collection="password_requests", **{"where.result": "OK", "where.customer_id": "C004"})
+    assert card_ids(at, ("PR6001", "PR6002", "PR6003")) == ["PR6002"]                            # filters combine
+
+
+def test_q_finds_records_that_contain_the_text():
+    at, shown = open_app(collection="transactions", q="notaio")
+    n = len([m for m in at.markdown if 'class="xd-card' in m.value])
+    at2, _ = open_app(collection="transactions", q="zzzz-nothing")
+    assert n >= 1 and "Showing none of the" in " ".join(i.value for i in at2.info)
+
+
 def test_the_clean_view_is_a_page_for_the_customer():
     at, shown = open_app(collection="transactions", customer="C004", ids="TX1001,TX1002", view="clean")
     assert shown == ["TX1001", "TX1002"]
@@ -69,6 +92,16 @@ def test_the_clean_view_is_a_page_for_the_customer():
     assert not at.info and not [b for b in at.button if b.label.startswith("Show all")]
     at, shown = open_app(collection="password_requests", customer="C005", view="clean")     # a customer's own records of a collection
     assert "Your password requests" in " ".join(m.value for m in at.markdown) and "PR6001" in " ".join(m.value for m in at.markdown)
+
+
+def test_the_list_style_looks_like_the_documents_overview():
+    at, _ = open_app(collection="transactions", customer="C004", ids="TX1001,TX1002", view="clean", style="list")
+    text = " ".join(m.value for m in at.markdown)
+    assert 'class="xd-clean xd-list"' in text and "Your documents" in text and "Banco BPM &middot; Alessandro Conti" in text
+    assert text.count("<li><a href=") == 2 and 'class="xd-card' not in text                  # two rows, a link and a date each, no cards
+    assert '<span class="n">2</span>' in text                                                # grouped by document category, with a count
+    at, _ = open_app(collection="transactions", customer="C004", ids="TX1001,TX1002", view="clean")
+    assert 'class="xd-card' in " ".join(m.value for m in at.markdown)                       # without style=list: the cards
 
 
 def test_show_all_removes_the_restriction():

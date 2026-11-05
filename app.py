@@ -8,6 +8,7 @@ Each config has its own table (its `default_table`): pick the config in the side
 """
 import json
 import re
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 
@@ -21,14 +22,25 @@ import store as storage
 from store import META_COLLECTION, META_ID, StoreError, check_table, get_store
 
 # A link such as ?config=banking&collection=transactions&ids=TX1001,TX1002 shows just those records (for example the receipts a chat assistant refers to).
+# Filters, all optional and combinable (a record has to pass every one), work on any collection:
+#   ids=TX1001,TX1002           the records with these ids
+#   customer=C002               the records of the collection that belong to the customer
+#   where.<field>=a,b           the field equals one of the values, ignoring case and accents; a path such as where.online_banking.password_status=blocked works
+#   q=ferrari                   the record contains the text anywhere
 FOCUS_COLLECTION = (st.query_params.get("collection", "") or "").strip()
 FOCUS_IDS = [i.strip() for i in (st.query_params.get("ids", "") or "").split(",") if i.strip()]
-# ...&collection=password_requests&customer=C002 shows the records of that collection that belong to the customer (ids and customer can be combined).
 FOCUS_CUSTOMER = (st.query_params.get("customer", "") or "").strip()
+FOCUS_WHERE = {key[len("where."):]: [v.strip() for v in str(value).split(",") if v.strip()]
+               for key, value in st.query_params.items() if key.startswith("where.") and len(key) > len("where.")}
+FOCUS_QUERY = (st.query_params.get("q", "") or "").strip().lower()
+FILTERED = bool(FOCUS_IDS or FOCUS_CUSTOMER or FOCUS_WHERE or FOCUS_QUERY)
+FILTER_PARAMS = ("collection", "ids", "customer", "q")                 # plus every where.<field>
 # ...&view=clean shows only those records, styled like a page for the customer: no sidebar, tabs, search or buttons of the database app.
 CLEAN = bool(FOCUS_COLLECTION) and (st.query_params.get("view", "") or "").strip().lower() == "clean"
+# ...&view=clean&style=list shows them as a plain list (title, date, grouped) like a documents overview instead of cards; see "list" in view.json.
+STYLE_LIST = CLEAN and (st.query_params.get("style", "") or "").strip().lower() == "list"
 st.set_page_config(page_title="Your records" if CLEAN else "Database demo config", page_icon="🗄️", layout="centered" if CLEAN else "wide",
-                   initial_sidebar_state="collapsed" if CLEAN or (FOCUS_COLLECTION and (FOCUS_IDS or FOCUS_CUSTOMER)) else "auto")
+                   initial_sidebar_state="collapsed" if CLEAN or (FOCUS_COLLECTION and FILTERED) else "auto")
 st.markdown(render.CSS, unsafe_allow_html=True)
 if CLEAN:                                                             # hide everything that belongs to the database app
     st.markdown(
@@ -37,10 +49,16 @@ if CLEAN:                                                             # hide eve
         [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"],
         [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], #MainMenu, footer { display:none !important; }
         .block-container { padding-top: 2rem; max-width: 760px; }
-        .xd-brand { font-size:.85rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; opacity:.7; }
+        .xd-company { font-size:.85rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; opacity:.7; }
         .xd-clean h1 { margin:.2rem 0 0; font-size:1.8rem; }
         .xd-clean p { margin:.2rem 0 1.2rem; opacity:.7; }
         .xd-clean-foot { margin-top:2.5rem; font-size:.8rem; opacity:.55; }
+        .xd-list h2 { margin:2rem 0 .4rem; font-size:1.15rem; }
+        .xd-list .n { background:#3b82f6; color:#fff; border-radius:999px; padding:0 .5rem; font-size:.8rem; }
+        .xd-list ul { list-style:none !important; padding:0 !important; margin:0; }
+        .xd-list li { display:flex; justify-content:space-between; gap:1rem; padding:.55rem 0; border-bottom:1px solid rgba(128,128,128,.3); }
+        .xd-list .d { opacity:.6; white-space:nowrap; }
+        .xd-list .sub { opacity:.65; margin:.2rem 0 0; }
         </style>
         """,
         unsafe_allow_html=True,
@@ -75,11 +93,43 @@ def html(markup: str) -> None:
     st.markdown(markup, unsafe_allow_html=True)
 
 
+def _fold(value) -> str:
+    """Lower case without accents, for forgiving comparisons (Berthier = berthier, Müller = muller)."""
+    text = "true" if value is True else "false" if value is False else str(value)
+    return "".join(c for c in unicodedata.normalize("NFKD", text) if not unicodedata.combining(c)).casefold().strip()
+
+
+def _values_at(record, path: str) -> list:
+    """The value(s) of a field path such as online_banking.password_status; a list on the way means any of its entries."""
+    found = [record]
+    for step in path.split("."):
+        nxt = []
+        for item in found:
+            for one in (item if isinstance(item, list) else [item]):
+                if isinstance(one, dict) and step in one:
+                    nxt.append(one[step])
+        found = nxt
+    return [x for item in found for x in (item if isinstance(item, list) else [item])]
+
+
+def _same(found, wanted) -> bool:
+    a, b = _fold(found), _fold(wanted)
+    try:
+        return float(a) == float(b)                                      # 1200 = 1200.00
+    except ValueError:
+        return a == b
+
+
 def in_focus(rid: str, rec: dict, is_primary: bool, owner_field: str | None) -> bool:
-    """Does a record belong to what the link asked for: its ids and/or the customer it belongs to?"""
+    """Does a record pass every filter of the link: ids, customer, where.<field> and q?"""
     if FOCUS_IDS and rid not in FOCUS_IDS:
         return False
-    return not FOCUS_CUSTOMER or (rid == FOCUS_CUSTOMER if is_primary else rec.get(owner_field) == FOCUS_CUSTOMER)
+    if FOCUS_CUSTOMER and not (rid == FOCUS_CUSTOMER if is_primary else rec.get(owner_field) == FOCUS_CUSTOMER):
+        return False
+    for path, wanted in FOCUS_WHERE.items():
+        if not any(_same(found, w) for found in _values_at(rec, path) for w in wanted):
+            return False
+    return not FOCUS_QUERY or FOCUS_QUERY in render.record_text(rid, rec).lower()
 
 
 DEFAULT_DATASET = "banking"                                          # shown when the app opens (without ?config=... in the address)
@@ -231,14 +281,31 @@ if CLEAN:
     owner_id = FOCUS_CUSTOMER or next((rec.get(owner_field) for rec in records.values() if owner_field and rec.get(owner_field)), "")
     owner = data[primary].get(owner_id)
     owner_name = render.title_of(owner_id, owner, render.collection_config(primary, view))[0] if owner else ""
-    brand = view.get("brand") or (picked.title if picked else "")
-    html(f'<div class="xd-clean"><div class="xd-brand">{render.esc(brand)}</div><h1>Your {render.esc(cfg["label"].lower())}</h1>'
+    company_name = view.get("company_name") or (picked.title if picked else "")
+    if STYLE_LIST:                                                    # a plain list like the documents overview: title (a link), date, grouped
+        spec = cfg.get("list") or {}
+        link_key, right_key, group_key = spec.get("link"), spec.get("right"), spec.get("group")
+        groups: dict[str, list[str]] = {}
+        for rid, rec in records.items():
+            if link_key and not rec.get(link_key):                    # with a link configured, records without one are not listed
+                continue
+            text = rec.get(spec.get("title") or "") or render.title_of(rid, rec, cfg)[0]
+            label = f'<a href="{render.esc(rec[link_key])}" target="_blank" rel="noopener">{render.esc(text)}</a>' if link_key else render.esc(text)
+            right = f'<span class="d">{render.esc(rec[right_key])}</span>' if right_key and rec.get(right_key) not in (None, "") else ""
+            groups.setdefault(str(rec.get(group_key) or "") if group_key else "", []).append(f"<li>{label}{right}</li>")
+        sections = "".join((f'<h2>{render.esc(kind)}s <span class="n">{len(items)}</span></h2>' if kind else "") + f'<ul>{"".join(items)}</ul>'
+                           for kind, items in sorted(groups.items()))
+        who = f"{render.esc(company_name)} &middot; {render.esc(owner_name)}" if owner_name else render.esc(company_name)
+        html(f'<div class="xd-clean xd-list"><h1>{render.esc(spec.get("heading") or "Your " + cfg["label"].lower())}</h1><p class="sub">{who}</p>'
+             f'{sections or "<p>Nothing to show.</p>"}</div>')
+        st.stop()
+    html(f'<div class="xd-clean"><div class="xd-company">{render.esc(company_name)}</div><h1>Your {render.esc(cfg["label"].lower())}</h1>'
          f'<p>{render.esc(owner_name)}</p></div>')
     if not records:
         st.info("Nothing to show.")
     for rid, rec in list(records.items())[:60]:
         html(render.record_card(selected, rid, rec, view, link=owner_field))
-    html(f'<div class="xd-clean-foot">{render.esc(brand)}</div>')
+    html(f'<div class="xd-clean-foot">{render.esc(company_name)}</div>')
     st.stop()
 
 # A table normally belongs to one dataset. Then a reset empties the WHOLE table, so collections left over from an older
@@ -624,7 +691,7 @@ with tab_browse:
                             format_func=lambda c: f"{cfgs[c]['icon']} {cfgs[c]['label']} ({len(data[c])})", label_visibility="collapsed")
         if selected is None:                                          # a click on the chosen button un-chooses it: choose the main one again
             st.rerun()
-        restricted = bool(selected == st.query_params.get("collection") and (st.query_params.get("ids") or st.query_params.get("customer")))       # a link narrowed this collection down
+        restricted = bool(selected == st.query_params.get("collection") and FILTERED)                          # a link narrowed this collection down
         owner_field = None if selected == primary else render.link_field(selected, data[selected], primary, view)
 
         focus = [rid for rid, rec in data[selected].items() if in_focus(rid, rec, selected == primary, owner_field)] if restricted else []
@@ -632,7 +699,7 @@ with tab_browse:
             shown = f"{len(focus)} of the {cfgs[selected]['label'].lower()}" if focus else f"none of the {cfgs[selected]['label'].lower()}"
             st.info(f"Showing {shown} selected by the link you followed.")
             if st.button(f"Show all {cfgs[selected]['label'].lower()}"):
-                for key in ("ids", "customer", "collection"):
+                for key in [k for k in list(st.query_params) if k in FILTER_PARAMS or k.startswith("where.")]:
                     st.query_params.pop(key, None)
                 st.rerun()
         query = st.text_input("Search", placeholder="🔍 Search names, ids, anything…", key="browse_search", label_visibility="collapsed").strip().lower()

@@ -16,7 +16,17 @@ what the Teneo solution sees**, and the other way round.
   - **Add New Dataset** / **Delete template**: make a new demo dataset, or remove one (it asks first).
 - **Storage Connections** shows where the data lives (Azure) and the GitHub repository the templates are saved in.
 - **Links into the app.** Opening `<app address>/?config=banking&collection=transactions&ids=TX1001,TX1002` shows just those records (here two payments with their receipts) on that dataset's page, with the sidebar collapsed and a **Show all** button. A chat assistant can use such a link to point a customer at exactly the relevant records. Without `collection` and `ids` the app opens as usual; `config=` alone picks the dataset.
-  Two more parameters: `customer=C004` keeps only the records of that collection that belong to the customer (e.g. `&collection=password_requests&customer=C002`; it can be combined with `ids`), and `view=clean` turns the page into one for the customer: no sidebar, tabs, search or buttons, only a heading (the `brand` of the config's `view.json`, "Your transactions", the customer's name) and the cards, e.g. `<app address>/?config=banking&collection=transactions&customer=C004&ids=TX1001,TX1002&view=clean`. The address is still the app's, and a data-less sleeping app needs a moment to wake up.
+  The filters work on any collection and can be combined (a record has to pass all of them):
+
+  | Parameter | Keeps the records that… | Example |
+  |---|---|---|
+  | `ids=a,b` | have one of these ids | `&collection=transactions&ids=TX1001,TX1002` |
+  | `customer=C002` | belong to the customer (the collection's link field, or the customer record itself) | `&collection=password_requests&customer=C002` |
+  | `where.<field>=a,b` | have a field equal to one of the values, ignoring case and accents; a path such as `online_banking.password_status` works, `1200` equals `1200.00` | `&collection=password_requests&where.result=KO&where.reason_code=ALREADY_REQUESTED` |
+  | `q=text` | contain the text anywhere | `&collection=transactions&q=ferrari` |
+
+  `view=clean` turns the page into one for the customer: no sidebar, tabs, search or buttons, only a heading (the `company_name` of the config's `view.json`, "Your transactions", the customer's name) and the cards, e.g. `<app address>/?config=banking&collection=transactions&customer=C004&q=ferrari&view=clean`. The address is still the app's, and a sleeping app needs a moment to wake up.
+  Add `style=list` to the clean view for a plain list instead of cards, like the documents overview pages (heading, "Banco BPM · customer name", the records grouped with a count, each row a title and a date): `<app address>/?config=banking&collection=transactions&customer=C004&q=ferrari&view=clean&style=list`. What the list shows comes from a `list` entry of the collection in `view.json` (banking, transactions: `heading` "Your documents", `title` doc_title, `link` doc_url, `right` booking_date, `group` doc_category); records without the `link` field are left out. A collection without a `list` entry gets its normal title and no link, date or groups.
 
 **In Teneo** (through MCP). The data is served by an MCP server with 17 tools: find a customer, read or change a record or a single field, add or remove list entries,
 change or delete several records at once, replace or clear a collection, and **reset** to the template. Delete-type tools only show a preview until you pass `confirm = true`.

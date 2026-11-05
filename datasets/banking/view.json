@@ -1,6 +1,6 @@
 {
   "primary": "customers",
-  "brand": "Banco BPM",
+  "company_name": "Banco BPM",
   "collections": {
     "customers": {
       "subtitle": [
@@ -48,6 +48,13 @@
     },
     "transactions": {
       "link": "customer_id",
+      "list": {
+        "heading": "Your documents",
+        "title": "doc_title",
+        "link": "doc_url",
+        "right": "booking_date",
+        "group": "doc_category"
+      },
       "title": "causale",
       "subtitle": [
         "payment_type"
