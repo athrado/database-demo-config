@@ -1,0 +1,1173 @@
+{
+  "customers": {
+    "C001": {
+      "customer_number": "TN-40128371",
+      "name": "Emily Carter",
+      "first_name": "Emily",
+      "last_name": "Carter",
+      "email": "emily.carter@example.com",
+      "phone": "+15125550101",
+      "address": {
+        "street": "210 Lavaca St, Apt 5B",
+        "city": "Austin",
+        "state": "TX",
+        "zip": "78701"
+      },
+      "zip": "78701",
+      "date_of_birth": "1990-03-14",
+      "plan": "Plus",
+      "segment": "consumer",
+      "pin": "4821",
+      "auth": {
+        "failed_attempts_today": 0,
+        "locked": false
+      },
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "customer_since": "2019-05-12",
+      "notes": []
+    },
+    "C002": {
+      "customer_number": "TN-40128372",
+      "name": "Marcus Johnson",
+      "first_name": "Marcus",
+      "last_name": "Johnson",
+      "email": "marcus.johnson@example.com",
+      "phone": "+13125550102",
+      "address": {
+        "street": "155 N Michigan Ave, Unit 1204",
+        "city": "Chicago",
+        "state": "IL",
+        "zip": "60601"
+      },
+      "zip": "60601",
+      "date_of_birth": "1984-11-02",
+      "plan": "Unlimited",
+      "segment": "consumer",
+      "pin": "7390",
+      "auth": {
+        "failed_attempts_today": 0,
+        "locked": false
+      },
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "customer_since": "2016-08-30",
+      "notes": []
+    },
+    "C003": {
+      "customer_number": "TN-40128373",
+      "name": "Sofia Ramirez",
+      "first_name": "Sofia",
+      "last_name": "Ramirez",
+      "email": "sofia.ramirez@example.com",
+      "phone": "+13055550103",
+      "address": {
+        "street": "88 SW 7th St, Apt 1810",
+        "city": "Miami",
+        "state": "FL",
+        "zip": "33130"
+      },
+      "zip": "33130",
+      "date_of_birth": "1997-06-21",
+      "plan": "Essential",
+      "segment": "consumer",
+      "pin": "1557",
+      "auth": {
+        "failed_attempts_today": 0,
+        "locked": false
+      },
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "customer_since": "2023-02-01",
+      "notes": []
+    },
+    "C004": {
+      "customer_number": "TN-40128374",
+      "name": "David Kim",
+      "first_name": "David",
+      "last_name": "Kim",
+      "email": "david.kim@example.com",
+      "phone": "+12065550104",
+      "address": {
+        "street": "1521 2nd Ave, Apt 3302",
+        "city": "Seattle",
+        "state": "WA",
+        "zip": "98101"
+      },
+      "zip": "98101",
+      "date_of_birth": "1979-09-08",
+      "plan": "Family Share",
+      "segment": "consumer",
+      "pin": "2648",
+      "auth": {
+        "failed_attempts_today": 0,
+        "locked": false
+      },
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "customer_since": "2014-10-19",
+      "notes": [
+        "Account holder for the family plan (Grace and Leo Kim are additional lines)."
+      ]
+    },
+    "C005": {
+      "customer_number": "TN-40128375",
+      "name": "Jessica Brown",
+      "first_name": "Jessica",
+      "last_name": "Brown",
+      "email": "jessica.brown@example.com",
+      "phone": "+13035550105",
+      "address": {
+        "street": "1700 Lincoln St, Suite 400",
+        "city": "Denver",
+        "state": "CO",
+        "zip": "80202"
+      },
+      "zip": "80202",
+      "date_of_birth": "1988-01-30",
+      "plan": "Business Pro",
+      "segment": "business",
+      "pin": "9031",
+      "auth": {
+        "failed_attempts_today": 0,
+        "locked": false
+      },
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "customer_since": "2021-03-08",
+      "notes": [],
+      "company": "Brown & Ortega Architects LLC"
+    },
+    "C006": {
+      "customer_number": "TN-40128376",
+      "name": "Michael Thompson",
+      "first_name": "Michael",
+      "last_name": "Thompson",
+      "email": "michael.thompson@example.com",
+      "phone": "+16175550106",
+      "address": {
+        "street": "45 Beacon St, Apt 2",
+        "city": "Boston",
+        "state": "MA",
+        "zip": "02108"
+      },
+      "zip": "02108",
+      "date_of_birth": "1962-04-17",
+      "plan": "Essential",
+      "segment": "consumer",
+      "pin": "3302",
+      "auth": {
+        "failed_attempts_today": 0,
+        "locked": false
+      },
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "customer_since": "2011-06-15",
+      "notes": []
+    },
+    "C007": {
+      "customer_number": "TN-40128377",
+      "name": "Emily Carter",
+      "first_name": "Emily",
+      "last_name": "Carter",
+      "email": "emily.carter2@example.com",
+      "phone": "+15035550107",
+      "address": {
+        "street": "1120 SW Morrison St, Apt 707",
+        "city": "Portland",
+        "state": "OR",
+        "zip": "97205"
+      },
+      "zip": "97205",
+      "date_of_birth": "1993-12-05",
+      "plan": "Unlimited",
+      "segment": "consumer",
+      "pin": "6114",
+      "auth": {
+        "failed_attempts_today": 0,
+        "locked": false
+      },
+      "preferences": {
+        "language": "en",
+        "contact_by": "email"
+      },
+      "customer_since": "2020-09-22",
+      "notes": []
+    },
+    "C008": {
+      "customer_number": "TN-40128378",
+      "name": "Robert Wilson",
+      "first_name": "Robert",
+      "last_name": "Wilson",
+      "email": "robert.wilson@example.com",
+      "phone": "+14045550108",
+      "address": {
+        "street": "60 Peachtree St NW, Apt 902",
+        "city": "Atlanta",
+        "state": "GA",
+        "zip": "30303"
+      },
+      "zip": "30303",
+      "date_of_birth": "1971-07-26",
+      "plan": "Plus",
+      "segment": "consumer",
+      "pin": "8875",
+      "auth": {
+        "failed_attempts_today": 3,
+        "locked": true,
+        "locked_at": "{{iso:today}}"
+      },
+      "preferences": {
+        "language": "en",
+        "contact_by": "sms"
+      },
+      "customer_since": "2018-01-04",
+      "notes": []
+    }
+  },
+  "subscriptions": {
+    "S2001": {
+      "customer_id": "C001",
+      "line_number": "+1 (512) 555-0101",
+      "user_name": "Emily Carter",
+      "plan_id": "P-PLUS",
+      "plan": "Plus",
+      "monthly_price": 55.0,
+      "data_used_gb": 41.2,
+      "data_allowance": "50 GB",
+      "contract_end_date": "{{today+5m}}",
+      "status": "active",
+      "roaming_enabled": true,
+      "addons": [],
+      "currency": "USD"
+    },
+    "S2002": {
+      "customer_id": "C002",
+      "line_number": "+1 (312) 555-0102",
+      "user_name": "Marcus Johnson",
+      "plan_id": "P-UNL",
+      "plan": "Unlimited",
+      "monthly_price": 75.0,
+      "data_used_gb": 63.8,
+      "data_allowance": "Unlimited",
+      "contract_end_date": "{{today+11m}}",
+      "status": "active",
+      "roaming_enabled": true,
+      "addons": [
+        "AO-INTL"
+      ],
+      "currency": "USD"
+    },
+    "S2003": {
+      "customer_id": "C003",
+      "line_number": "+1 (305) 555-0103",
+      "user_name": "Sofia Ramirez",
+      "plan_id": "P-ESS",
+      "plan": "Essential",
+      "monthly_price": 35.0,
+      "data_used_gb": 3.1,
+      "data_allowance": "10 GB",
+      "contract_end_date": "{{today+2m}}",
+      "status": "active",
+      "roaming_enabled": false,
+      "addons": [],
+      "currency": "USD"
+    },
+    "S2004": {
+      "customer_id": "C004",
+      "line_number": "+1 (206) 555-0104",
+      "user_name": "David Kim",
+      "plan_id": "P-FAM",
+      "plan": "Family Share",
+      "monthly_price": 120.0,
+      "data_used_gb": 38.5,
+      "data_allowance": "100 GB shared",
+      "contract_end_date": "{{today+7m}}",
+      "status": "active",
+      "roaming_enabled": false,
+      "addons": [
+        "AO-PROTECT"
+      ],
+      "role": "primary",
+      "currency": "USD"
+    },
+    "S2005": {
+      "customer_id": "C004",
+      "line_number": "+1 (206) 555-0114",
+      "user_name": "Grace Kim",
+      "plan_id": "P-FAM",
+      "plan": "Family Share",
+      "monthly_price": 0.0,
+      "data_used_gb": 22.0,
+      "data_allowance": "100 GB shared",
+      "contract_end_date": "{{today+7m}}",
+      "status": "active",
+      "roaming_enabled": false,
+      "addons": [],
+      "role": "additional line",
+      "currency": "USD"
+    },
+    "S2006": {
+      "customer_id": "C004",
+      "line_number": "+1 (206) 555-0124",
+      "user_name": "Leo Kim",
+      "plan_id": "P-FAM",
+      "plan": "Family Share",
+      "monthly_price": 0.0,
+      "data_used_gb": 31.7,
+      "data_allowance": "100 GB shared",
+      "contract_end_date": "{{today+7m}}",
+      "status": "active",
+      "roaming_enabled": false,
+      "addons": [],
+      "role": "additional line",
+      "currency": "USD"
+    },
+    "S2007": {
+      "customer_id": "C005",
+      "line_number": "+1 (303) 555-0105",
+      "user_name": "Jessica Brown",
+      "plan_id": "P-BIZ",
+      "plan": "Business Pro",
+      "monthly_price": 65.0,
+      "data_used_gb": 27.4,
+      "data_allowance": "Unlimited",
+      "contract_end_date": "{{today+18m}}",
+      "status": "active",
+      "roaming_enabled": true,
+      "addons": [],
+      "currency": "USD"
+    },
+    "S2008": {
+      "customer_id": "C005",
+      "line_number": "+1 (303) 555-0115",
+      "user_name": "Daniel Ortega",
+      "plan_id": "P-BIZ",
+      "plan": "Business Pro",
+      "monthly_price": 65.0,
+      "data_used_gb": 12.9,
+      "data_allowance": "Unlimited",
+      "contract_end_date": "{{today+18m}}",
+      "status": "active",
+      "roaming_enabled": true,
+      "addons": [],
+      "currency": "USD"
+    },
+    "S2009": {
+      "customer_id": "C006",
+      "line_number": "+1 (617) 555-0106",
+      "user_name": "Michael Thompson",
+      "plan_id": "P-ESS",
+      "plan": "Essential",
+      "monthly_price": 35.0,
+      "data_used_gb": 1.4,
+      "data_allowance": "10 GB",
+      "contract_end_date": "{{today+9m}}",
+      "status": "active",
+      "roaming_enabled": false,
+      "addons": [],
+      "currency": "USD"
+    },
+    "S2010": {
+      "customer_id": "C007",
+      "line_number": "+1 (503) 555-0107",
+      "user_name": "Emily Carter",
+      "plan_id": "P-UNL",
+      "plan": "Unlimited",
+      "monthly_price": 75.0,
+      "data_used_gb": 18.2,
+      "data_allowance": "Unlimited",
+      "contract_end_date": "{{today+1m}}",
+      "status": "active",
+      "roaming_enabled": true,
+      "addons": [],
+      "currency": "USD"
+    },
+    "S2011": {
+      "customer_id": "C008",
+      "line_number": "+1 (404) 555-0108",
+      "user_name": "Robert Wilson",
+      "plan_id": "P-PLUS",
+      "plan": "Plus",
+      "monthly_price": 55.0,
+      "data_used_gb": 9.6,
+      "data_allowance": "50 GB",
+      "contract_end_date": "{{today+4m}}",
+      "status": "active",
+      "roaming_enabled": true,
+      "addons": [],
+      "currency": "USD"
+    }
+  },
+  "devices": {
+    "D3001": {
+      "customer_id": "C001",
+      "subscription_id": "S2001",
+      "brand": "Apple",
+      "model": "iPhone 15",
+      "os": "iOS",
+      "supported": true,
+      "purchased": "{{iso:today-14m}}",
+      "warranty_until": "{{iso:today+10m}}",
+      "protection": false
+    },
+    "D3002": {
+      "customer_id": "C002",
+      "subscription_id": "S2002",
+      "brand": "Samsung",
+      "model": "Galaxy S24",
+      "os": "Android",
+      "supported": true,
+      "purchased": "{{iso:today-9m}}",
+      "warranty_until": "{{iso:today+15m}}",
+      "protection": true
+    },
+    "D3003": {
+      "customer_id": "C003",
+      "subscription_id": "S2003",
+      "brand": "Google",
+      "model": "Pixel 8",
+      "os": "Android",
+      "supported": true,
+      "purchased": "{{iso:today-20m}}",
+      "warranty_until": "{{iso:today+4m}}",
+      "protection": false
+    },
+    "D3004": {
+      "customer_id": "C004",
+      "subscription_id": "S2004",
+      "brand": "OnePlus",
+      "model": "OnePlus 12",
+      "os": "Android",
+      "supported": true,
+      "purchased": "{{iso:today-11m}}",
+      "warranty_until": "{{iso:today+13m}}",
+      "protection": true
+    },
+    "D3005": {
+      "customer_id": "C004",
+      "subscription_id": "S2005",
+      "brand": "Apple",
+      "model": "iPhone 13",
+      "os": "iOS",
+      "supported": true,
+      "purchased": "{{iso:today-36m}}",
+      "warranty_until": "{{iso:today-12m}}",
+      "protection": false
+    },
+    "D3006": {
+      "customer_id": "C004",
+      "subscription_id": "S2006",
+      "brand": "Xiaomi",
+      "model": "Xiaomi 14",
+      "os": "Android",
+      "supported": true,
+      "purchased": "{{iso:today-6m}}",
+      "warranty_until": "{{iso:today+18m}}",
+      "protection": true
+    },
+    "D3007": {
+      "customer_id": "C005",
+      "subscription_id": "S2007",
+      "brand": "Motorola",
+      "model": "Motorola Edge 50",
+      "os": "Android",
+      "supported": true,
+      "purchased": "{{iso:today-5m}}",
+      "warranty_until": "{{iso:today+19m}}",
+      "protection": false
+    },
+    "D3008": {
+      "customer_id": "C005",
+      "subscription_id": "S2008",
+      "brand": "Apple",
+      "model": "iPhone 15",
+      "os": "iOS",
+      "supported": true,
+      "purchased": "{{iso:today-5m}}",
+      "warranty_until": "{{iso:today+19m}}",
+      "protection": false
+    },
+    "D3009": {
+      "customer_id": "C006",
+      "subscription_id": "S2009",
+      "brand": "Nokia",
+      "model": "Nokia G42",
+      "os": "Android",
+      "supported": false,
+      "purchased": "{{iso:today-16m}}",
+      "warranty_until": "{{iso:today+8m}}",
+      "protection": false
+    },
+    "D3010": {
+      "customer_id": "C007",
+      "subscription_id": "S2010",
+      "brand": "Samsung",
+      "model": "Galaxy S23",
+      "os": "Android",
+      "supported": true,
+      "purchased": "{{iso:today-27m}}",
+      "warranty_until": "{{iso:today-3m}}",
+      "protection": false
+    },
+    "D3011": {
+      "customer_id": "C008",
+      "subscription_id": "S2011",
+      "brand": "Apple",
+      "model": "iPhone 14",
+      "os": "iOS",
+      "supported": true,
+      "purchased": "{{iso:today-25m}}",
+      "warranty_until": "{{iso:today-1m}}",
+      "protection": false
+    }
+  },
+  "invoices": {
+    "INV7001": {
+      "customer_id": "C001",
+      "period": "{{month:today-2m}}",
+      "amount": 61.2,
+      "currency": "USD",
+      "due_date": "{{today-35d}}",
+      "status": "paid",
+      "line_items": [
+        {
+          "description": "Plus plan",
+          "amount": 55.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 6.2
+        }
+      ]
+    },
+    "INV7002": {
+      "customer_id": "C001",
+      "period": "{{month:today-1m}}",
+      "amount": 61.2,
+      "currency": "USD",
+      "due_date": "{{today+9d}}",
+      "status": "pending",
+      "line_items": [
+        {
+          "description": "Plus plan",
+          "amount": 55.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 6.2
+        }
+      ]
+    },
+    "INV7003": {
+      "customer_id": "C002",
+      "period": "{{month:today-2m}}",
+      "amount": 84.6,
+      "currency": "USD",
+      "due_date": "{{today-35d}}",
+      "status": "paid",
+      "line_items": [
+        {
+          "description": "Unlimited plan",
+          "amount": 75.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 9.6
+        }
+      ],
+      "note": "Usual monthly bill, for comparison with the next one"
+    },
+    "INV7004": {
+      "customer_id": "C002",
+      "period": "{{month:today-1m}}",
+      "amount": 167.1,
+      "currency": "USD",
+      "due_date": "{{today+9d}}",
+      "status": "pending",
+      "line_items": [
+        {
+          "description": "Unlimited plan",
+          "amount": 75.0
+        },
+        {
+          "description": "Travel Pass Europe, 7 days in Italy and France",
+          "amount": 70.0
+        },
+        {
+          "description": "International calls outside the International Calling 200 add-on (62 min)",
+          "amount": 12.5
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 9.6
+        }
+      ],
+      "note": "Higher than usual because of roaming in Europe and extra international calls"
+    },
+    "INV7005": {
+      "customer_id": "C003",
+      "period": "{{month:today-1m}}",
+      "amount": 39.4,
+      "currency": "USD",
+      "due_date": "{{today+9d}}",
+      "status": "pending",
+      "line_items": [
+        {
+          "description": "Essential plan",
+          "amount": 35.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 4.4
+        }
+      ]
+    },
+    "INV7006": {
+      "customer_id": "C004",
+      "period": "{{month:today-2m}}",
+      "amount": 147.6,
+      "currency": "USD",
+      "due_date": "{{today-12d}}",
+      "status": "overdue",
+      "line_items": [
+        {
+          "description": "Family Share plan (3 lines)",
+          "amount": 120.0
+        },
+        {
+          "description": "Device Protection (OnePlus 12)",
+          "amount": 12.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 15.6
+        }
+      ]
+    },
+    "INV7007": {
+      "customer_id": "C004",
+      "period": "{{month:today-1m}}",
+      "amount": 147.6,
+      "currency": "USD",
+      "due_date": "{{today+9d}}",
+      "status": "pending",
+      "line_items": [
+        {
+          "description": "Family Share plan (3 lines)",
+          "amount": 120.0
+        },
+        {
+          "description": "Device Protection (OnePlus 12)",
+          "amount": 12.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 15.6
+        }
+      ]
+    },
+    "INV7008": {
+      "customer_id": "C005",
+      "period": "{{month:today-1m}}",
+      "amount": 144.7,
+      "currency": "USD",
+      "due_date": "{{today+9d}}",
+      "status": "pending",
+      "line_items": [
+        {
+          "description": "Business Pro plan (2 lines)",
+          "amount": 130.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 14.7
+        }
+      ]
+    },
+    "INV7009": {
+      "customer_id": "C006",
+      "period": "{{month:today-1m}}",
+      "amount": 39.4,
+      "currency": "USD",
+      "due_date": "{{today+9d}}",
+      "status": "paid",
+      "line_items": [
+        {
+          "description": "Essential plan",
+          "amount": 35.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 4.4
+        }
+      ]
+    },
+    "INV7010": {
+      "customer_id": "C007",
+      "period": "{{month:today-1m}}",
+      "amount": 84.6,
+      "currency": "USD",
+      "due_date": "{{today+9d}}",
+      "status": "paid",
+      "line_items": [
+        {
+          "description": "Unlimited plan",
+          "amount": 75.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 9.6
+        }
+      ]
+    },
+    "INV7011": {
+      "customer_id": "C008",
+      "period": "{{month:today-1m}}",
+      "amount": 61.2,
+      "currency": "USD",
+      "due_date": "{{today+9d}}",
+      "status": "pending",
+      "line_items": [
+        {
+          "description": "Plus plan",
+          "amount": 55.0
+        },
+        {
+          "description": "Taxes and fees",
+          "amount": 6.2
+        }
+      ]
+    }
+  },
+  "repair_bookings": {
+    "RB5001": {
+      "customer_id": "C004",
+      "device_id": "D3006",
+      "device": "Xiaomi 14 (Leo Kim)",
+      "store_id": "ST105",
+      "store": "Seattle Downtown",
+      "date": "{{iso:today+2d}}",
+      "time": "10:30 AM",
+      "issue": "Cracked screen after a drop",
+      "status": "confirmed",
+      "created": "{{iso:today-1d}}",
+      "channel": "chat"
+    }
+  },
+  "requests": {
+    "RQ6001": {
+      "customer_id": "C005",
+      "type": "Add a line",
+      "plan": "Business Pro",
+      "status": "pending",
+      "requested": "{{today-2d}}",
+      "details": "Third line for a new employee, eSIM requested."
+    },
+    "RQ6002": {
+      "customer_id": "C002",
+      "type": "Add-on activated",
+      "addon_id": "AO-ROAM2",
+      "status": "completed",
+      "requested": "{{today-40d}}",
+      "details": "Travel Pass Europe for a trip to Italy and France."
+    }
+  },
+  "plans": {
+    "P-ESS": {
+      "name": "Essential",
+      "monthly_price": 35.0,
+      "currency": "USD",
+      "data_allowance": "10 GB",
+      "hotspot_gb": 0,
+      "roaming": "none",
+      "segment": "consumer",
+      "max_lines": 1,
+      "available": true,
+      "highlights": [
+        "10 GB high-speed data",
+        "Unlimited talk and text in the US"
+      ]
+    },
+    "P-PLUS": {
+      "name": "Plus",
+      "monthly_price": 55.0,
+      "currency": "USD",
+      "data_allowance": "50 GB",
+      "hotspot_gb": 10,
+      "roaming": "Canada and Mexico included",
+      "segment": "consumer",
+      "max_lines": 1,
+      "available": true,
+      "highlights": [
+        "50 GB 5G data",
+        "10 GB hotspot",
+        "Canada and Mexico included"
+      ]
+    },
+    "P-UNL": {
+      "name": "Unlimited",
+      "monthly_price": 75.0,
+      "currency": "USD",
+      "data_allowance": "Unlimited",
+      "hotspot_gb": 40,
+      "roaming": "Canada and Mexico included",
+      "segment": "consumer",
+      "max_lines": 1,
+      "available": true,
+      "highlights": [
+        "Unlimited 5G data",
+        "40 GB hotspot",
+        "Canada and Mexico included",
+        "HD streaming"
+      ]
+    },
+    "P-FAM": {
+      "name": "Family Share",
+      "monthly_price": 120.0,
+      "currency": "USD",
+      "data_allowance": "100 GB shared",
+      "hotspot_gb": 20,
+      "roaming": "Canada and Mexico included",
+      "segment": "consumer",
+      "max_lines": 4,
+      "available": true,
+      "highlights": [
+        "Up to 4 lines",
+        "100 GB shared data",
+        "Parental controls"
+      ]
+    },
+    "P-BIZ": {
+      "name": "Business Pro",
+      "monthly_price": 65.0,
+      "currency": "USD",
+      "price_basis": "per line",
+      "data_allowance": "Unlimited",
+      "hotspot_gb": 50,
+      "roaming": "Zone 1 and 2 included",
+      "segment": "business",
+      "max_lines": 50,
+      "available": true,
+      "highlights": [
+        "Unlimited 5G data",
+        "50 GB hotspot",
+        "Europe roaming included",
+        "Priority support"
+      ]
+    }
+  },
+  "addons": {
+    "AO-DATA10": {
+      "name": "Extra 10 GB",
+      "price": 10.0,
+      "currency": "USD",
+      "billing": "one-off",
+      "category": "data"
+    },
+    "AO-ROAM1": {
+      "name": "Travel Pass North America",
+      "price": 5.0,
+      "currency": "USD",
+      "billing": "per day",
+      "category": "roaming",
+      "zone": 1,
+      "countries": [
+        "Canada",
+        "Mexico"
+      ]
+    },
+    "AO-ROAM2": {
+      "name": "Travel Pass Europe",
+      "price": 10.0,
+      "currency": "USD",
+      "billing": "per day",
+      "category": "roaming",
+      "zone": 2,
+      "countries": [
+        "United Kingdom",
+        "France",
+        "Germany",
+        "Italy",
+        "Spain",
+        "Netherlands",
+        "Ireland",
+        "Portugal",
+        "Switzerland",
+        "Sweden"
+      ]
+    },
+    "AO-ROAM3": {
+      "name": "Travel Pass World",
+      "price": 15.0,
+      "currency": "USD",
+      "billing": "per day",
+      "category": "roaming",
+      "zone": 3,
+      "countries": [
+        "Japan",
+        "Australia",
+        "Brazil",
+        "India",
+        "South Africa",
+        "United Arab Emirates",
+        "Thailand"
+      ]
+    },
+    "AO-INTL": {
+      "name": "International Calling 200",
+      "price": 10.0,
+      "currency": "USD",
+      "billing": "monthly",
+      "category": "calling",
+      "description": "200 minutes to landlines and mobiles in 80 countries"
+    },
+    "AO-PROTECT": {
+      "name": "Device Protection",
+      "price": 12.0,
+      "currency": "USD",
+      "billing": "monthly",
+      "category": "insurance",
+      "description": "Screen and accidental damage repair, 49 USD deductible"
+    }
+  },
+  "outages": {
+    "OUT1001": {
+      "city": "Miami",
+      "state": "FL",
+      "zips": [
+        "33130",
+        "33131",
+        "33129"
+      ],
+      "service": "Mobile data",
+      "status": "active",
+      "started": "{{today}}, 7:40 AM ET",
+      "expected_fix": "{{today}}, 6:00 PM ET",
+      "description": "Fiber cut affecting 4G and 5G data at two cell sites in Brickell and Downtown Miami. Calls and texts still work.",
+      "workaround": "Use Wi-Fi calling and Wi-Fi where available."
+    },
+    "OUT1002": {
+      "city": "Seattle",
+      "state": "WA",
+      "zips": [
+        "98101",
+        "98104"
+      ],
+      "service": "Calls and mobile data",
+      "status": "resolved",
+      "started": "{{today-1d}}, 2:15 PM PT",
+      "expected_fix": "{{today-1d}}, 5:30 PM PT",
+      "resolved": "{{today-1d}}, 5:05 PM PT",
+      "description": "Power failure at a cell site in Downtown Seattle.",
+      "workaround": ""
+    },
+    "OUT1003": {
+      "city": "Chicago",
+      "state": "IL",
+      "zips": [
+        "60601",
+        "60602",
+        "60603"
+      ],
+      "service": "Calls and mobile data",
+      "status": "planned",
+      "started": "{{today+3d}}, 1:00 AM CT",
+      "expected_fix": "{{today+3d}}, 4:00 AM CT",
+      "description": "Planned network upgrade in the Loop. Short interruptions possible during the window.",
+      "workaround": ""
+    }
+  },
+  "stores": {
+    "ST101": {
+      "name": "Downtown Austin",
+      "address": "600 Congress Ave, Austin, TX 78701",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701",
+      "latitude": 30.2686,
+      "longitude": -97.7425,
+      "phone": "+1 (512) 555-0150",
+      "repair_center": true,
+      "hours": "Mon-Sat 10 AM-8 PM, Sun 11 AM-6 PM",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes",
+        "device repair"
+      ]
+    },
+    "ST102": {
+      "name": "Austin Domain",
+      "address": "11410 Century Oaks Terrace, Austin, TX 78758",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78758",
+      "latitude": 30.402,
+      "longitude": -97.7253,
+      "phone": "+1 (512) 555-0151",
+      "repair_center": false,
+      "hours": "Mon-Sat 10 AM-7 PM, closed Sunday",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes"
+      ]
+    },
+    "ST103": {
+      "name": "Chicago Loop",
+      "address": "25 E Washington St, Chicago, IL 60602",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60602",
+      "latitude": 41.8833,
+      "longitude": -87.6262,
+      "phone": "+1 (312) 555-0152",
+      "repair_center": true,
+      "hours": "Mon-Sat 10 AM-8 PM, Sun 11 AM-6 PM",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes",
+        "device repair"
+      ]
+    },
+    "ST104": {
+      "name": "Miami Brickell",
+      "address": "701 S Miami Ave, Miami, FL 33130",
+      "city": "Miami",
+      "state": "FL",
+      "zip": "33130",
+      "latitude": 25.7663,
+      "longitude": -80.1936,
+      "phone": "+1 (305) 555-0153",
+      "repair_center": true,
+      "hours": "Mon-Sat 10 AM-8 PM, Sun 11 AM-6 PM",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes",
+        "device repair"
+      ]
+    },
+    "ST105": {
+      "name": "Seattle Downtown",
+      "address": "400 Pine St, Seattle, WA 98101",
+      "city": "Seattle",
+      "state": "WA",
+      "zip": "98101",
+      "latitude": 47.6114,
+      "longitude": -122.3371,
+      "phone": "+1 (206) 555-0154",
+      "repair_center": true,
+      "hours": "Mon-Sat 10 AM-8 PM, Sun 11 AM-6 PM",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes",
+        "device repair"
+      ]
+    },
+    "ST106": {
+      "name": "Denver 16th Street",
+      "address": "500 16th St, Denver, CO 80202",
+      "city": "Denver",
+      "state": "CO",
+      "zip": "80202",
+      "latitude": 39.7424,
+      "longitude": -104.9905,
+      "phone": "+1 (303) 555-0155",
+      "repair_center": false,
+      "hours": "Mon-Sat 10 AM-7 PM, closed Sunday",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes"
+      ]
+    },
+    "ST107": {
+      "name": "Denver Cherry Creek",
+      "address": "3000 E 1st Ave, Denver, CO 80206",
+      "city": "Denver",
+      "state": "CO",
+      "zip": "80206",
+      "latitude": 39.7178,
+      "longitude": -104.953,
+      "phone": "+1 (303) 555-0156",
+      "repair_center": true,
+      "hours": "Mon-Sat 10 AM-8 PM, Sun 11 AM-6 PM",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes",
+        "device repair"
+      ]
+    },
+    "ST108": {
+      "name": "Boston Downtown Crossing",
+      "address": "350 Washington St, Boston, MA 02108",
+      "city": "Boston",
+      "state": "MA",
+      "zip": "02108",
+      "latitude": 42.3555,
+      "longitude": -71.0604,
+      "phone": "+1 (617) 555-0157",
+      "repair_center": true,
+      "hours": "Mon-Sat 10 AM-8 PM, Sun 11 AM-6 PM",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes",
+        "device repair"
+      ]
+    },
+    "ST109": {
+      "name": "Portland Pioneer Square",
+      "address": "700 SW 5th Ave, Portland, OR 97204",
+      "city": "Portland",
+      "state": "OR",
+      "zip": "97204",
+      "latitude": 45.5189,
+      "longitude": -122.6776,
+      "phone": "+1 (503) 555-0158",
+      "repair_center": true,
+      "hours": "Mon-Sat 10 AM-8 PM, Sun 11 AM-6 PM",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes",
+        "device repair"
+      ]
+    },
+    "ST110": {
+      "name": "Atlanta Midtown",
+      "address": "1000 Peachtree St NE, Atlanta, GA 30309",
+      "city": "Atlanta",
+      "state": "GA",
+      "zip": "30309",
+      "latitude": 33.7817,
+      "longitude": -84.3836,
+      "phone": "+1 (404) 555-0159",
+      "repair_center": true,
+      "hours": "Mon-Sat 10 AM-8 PM, Sun 11 AM-6 PM",
+      "services": [
+        "sales",
+        "SIM and eSIM",
+        "plan changes",
+        "device repair"
+      ]
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "primary": "customers",
+  "collections": {
+    "customers": {
+      "subtitle": [
+        "customer_number",
+        "plan"
+      ],
+      "mask": [
+        "pin"
+      ],
+      "first": [
+        "email",
+        "phone",
+        "address",
+        "segment",
+        "preferences",
+        "auth"
+      ]
+    },
+    "subscriptions": {
+      "link": "customer_id",
+      "title": "line_number",
+      "subtitle": [
+        "plan"
+      ],
+      "first": [
+        "user_name",
+        "status",
+        "monthly_price",
+        "data_used_gb",
+        "data_allowance",
+        "contract_end_date"
+      ],
+      "labels": {
+        "data_used_gb": "Data used (GB)"
+      }
+    },
+    "devices": {
+      "link": "customer_id",
+      "title": "model",
+      "subtitle": [
+        "brand"
+      ],
+      "first": [
+        "supported",
+        "os",
+        "warranty_until",
+        "protection"
+      ]
+    },
+    "invoices": {
+      "link": "customer_id",
+      "title": "period",
+      "first": [
+        "amount",
+        "status",
+        "due_date",
+        "line_items"
+      ]
+    },
+    "repair_bookings": {
+      "link": "customer_id",
+      "title": "date",
+      "subtitle": [
+        "device"
+      ],
+      "first": [
+        "store_id",
+        "time",
+        "issue",
+        "status"
+      ]
+    },
+    "requests": {
+      "link": "customer_id",
+      "title": "type"
+    },
+    "plans": {
+      "title": "name",
+      "subtitle": [
+        "monthly_price"
+      ],
+      "first": [
+        "data_allowance",
+        "hotspot_gb",
+        "roaming",
+        "segment"
+      ]
+    },
+    "addons": {
+      "title": "name",
+      "subtitle": [
+        "price"
+      ]
+    },
+    "outages": {
+      "title": "city",
+      "subtitle": [
+        "status"
+      ],
+      "first": [
+        "zips",
+        "service",
+        "started",
+        "expected_fix",
+        "description"
+      ]
+    },
+    "stores": {
+      "title": "name",
+      "subtitle": [
+        "city"
+      ],
+      "first": [
+        "address",
+        "zip",
+        "repair_center",
+        "hours",
+        "phone"
+      ]
+    }
+  }
+}
