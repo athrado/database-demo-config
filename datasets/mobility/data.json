@@ -1,0 +1,117 @@
+{
+  "customers": {
+    "C001": {
+      "name": "Anna Meier",
+      "first_name": "Anna",
+      "last_name": "Meier",
+      "licence_number": "CH-ZH-8847261",
+      "email": "anna.meier@example.com",
+      "phone": "+41795550189",
+      "address": {"street": "Seefeldstrasse 41", "zip": "8008", "city": "Zürich"},
+      "date_of_birth": "1988-04-23",
+      "plan": "FLEX",
+      "card_on_file": {"brand": "Visa", "last4": "1234", "expires": "09/28"},
+      "demo_otp": "482913",
+      "usage": {"avg_hours_per_month": 10, "usual_class": "comfort_ev", "bookings_last_3m": 11},
+      "auth": {"failed_attempts_today": 0, "locked": false},
+      "preferences": {"language": "en", "contact_by": "sms"},
+      "customer_since": "2021-06-02"
+    },
+    "C002": {
+      "name": "Luca Bernasconi",
+      "first_name": "Luca",
+      "last_name": "Bernasconi",
+      "licence_number": "CH-TI-5521093",
+      "email": "luca.bernasconi@example.com",
+      "phone": "+41795550247",
+      "address": {"street": "Langstrasse 120", "zip": "8004", "city": "Zürich"},
+      "date_of_birth": "1993-09-11",
+      "plan": "FLEX_PLUS",
+      "card_on_file": {"brand": "Mastercard", "last4": "5678", "expires": "03/27"},
+      "demo_otp": "615204",
+      "usage": {"avg_hours_per_month": 22, "usual_class": "compact_ev", "bookings_last_3m": 19},
+      "auth": {"failed_attempts_today": 0, "locked": false},
+      "preferences": {"language": "en", "contact_by": "sms"},
+      "customer_since": "2019-02-14"
+    },
+    "C003": {
+      "name": "Sophie Dubois",
+      "first_name": "Sophie",
+      "last_name": "Dubois",
+      "licence_number": "CH-GE-3307815",
+      "email": "sophie.dubois@example.com",
+      "phone": "+41795550311",
+      "address": {"street": "Rue de Carouge 18", "zip": "1205", "city": "Genève"},
+      "date_of_birth": "1979-12-05",
+      "plan": "OCCASIONAL",
+      "card_on_file": {"brand": "Visa", "last4": "9012", "expires": "11/26"},
+      "demo_otp": "730551",
+      "usage": {"avg_hours_per_month": 3, "usual_class": "compact_ev", "bookings_last_3m": 2},
+      "auth": {"failed_attempts_today": 3, "locked": true, "locked_at": "{{iso:today}}"},
+      "preferences": {"language": "fr", "contact_by": "email"},
+      "customer_since": "2024-03-30"
+    },
+    "C004": {
+      "name": "Thomas Keller",
+      "first_name": "Thomas",
+      "last_name": "Keller",
+      "licence_number": "CH-ZH-6120448",
+      "email": "thomas.keller@example.com",
+      "phone": "+41795550466",
+      "address": {"street": "Hottingerstrasse 9", "zip": "8032", "city": "Zürich"},
+      "date_of_birth": "1985-07-19",
+      "plan": "FLEX",
+      "card_on_file": {"brand": "Visa", "last4": "3456", "expires": "05/29"},
+      "demo_otp": "204877",
+      "usage": {"avg_hours_per_month": 6, "usual_class": "compact_ev", "bookings_last_3m": 7},
+      "auth": {"failed_attempts_today": 0, "locked": false},
+      "preferences": {"language": "de", "contact_by": "email"},
+      "customer_since": "2022-10-01"
+    }
+  },
+  "bookings": {
+    "BK-118001": {"customer_id": "C001", "vehicle_id": "V101", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "13:00", "end": "18:00", "status": "active", "plan": "FLEX"},
+    "BK-118002": {"customer_id": "C004", "vehicle_id": "V101", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "19:30", "end": "22:00", "status": "confirmed", "plan": "FLEX"},
+    "BK-118003": {"customer_id": "C004", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today+1d}}", "start": "08:00", "end": "12:00", "status": "confirmed", "plan": "FLEX"},
+    "BK-118004": {"customer_id": "C002", "vehicle_id": "V310", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "12:00", "end": "17:30", "status": "active", "plan": "FLEX_PLUS"},
+    "BK-117950": {"customer_id": "C001", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today-7d}}", "start": "09:00", "end": "12:30", "status": "completed", "plan": "FLEX", "price": 47.25}
+  },
+  "vehicles": {
+    "V101": {"model": "VW ID.3", "short_name": "ID.3", "plate": "ZH 123 412", "class": "compact_ev", "powertrain": "electric", "charge_percent": 38, "range_km_full": 360, "battery_kwh": 58, "boot_litres": 385, "seats": 5, "child_seat": false, "station_id": "ST-HB", "status": "in_use", "location": {"lat": 47.3732, "lon": 8.5398, "description": "Bahnhofstrasse, Zürich"}},
+    "V205": {"model": "VW ID.4", "short_name": "ID.4", "plate": "ZH 456 907", "class": "comfort_ev", "powertrain": "electric", "charge_percent": 86, "range_km_full": 400, "battery_kwh": 77, "boot_litres": 543, "seats": 5, "child_seat": true, "station_id": "ST-LP", "status": "available", "location": {"lat": 47.3757, "lon": 8.5378, "description": "Löwenplatz station"}},
+    "V310": {"model": "Renault Zoe", "short_name": "Zoe", "plate": "ZH 789 120", "class": "compact_ev", "powertrain": "electric", "charge_percent": 31, "range_km_full": 300, "battery_kwh": 52, "boot_litres": 338, "seats": 5, "child_seat": false, "station_id": "ST-HB", "status": "in_use", "location": {"lat": 47.3779, "lon": 8.5403, "description": "Zürich HB Sihlquai station"}},
+    "V412": {"model": "Toyota Corolla Touring Hybrid", "short_name": "Corolla", "plate": "ZH 246 801", "class": "hybrid", "powertrain": "hybrid", "fuel_percent": 70, "range_km_full": 850, "boot_litres": 598, "seats": 5, "child_seat": true, "station_id": "ST-SH", "status": "available", "location": {"lat": 47.3667, "lon": 8.5485, "description": "Stadelhofen station"}},
+    "V318": {"model": "Fiat 500e", "short_name": "500e", "plate": "ZH 135 790", "class": "compact_ev", "powertrain": "electric", "charge_percent": 29, "range_km_full": 260, "battery_kwh": 42, "boot_litres": 185, "seats": 4, "child_seat": false, "station_id": "ST-LP", "status": "available", "location": {"lat": 47.3757, "lon": 8.5378, "description": "Löwenplatz station"}}
+  },
+  "stations": {
+    "ST-HB": {"name": "Zürich HB Sihlquai", "address": "Sihlquai 1, 8001 Zürich", "lat": 47.3779, "lon": 8.5403, "chargers": 6},
+    "ST-LP": {"name": "Löwenplatz", "address": "Löwenstrasse 29, 8001 Zürich", "lat": 47.3757, "lon": 8.5378, "chargers": 4},
+    "ST-SH": {"name": "Stadelhofen", "address": "Stadelhoferstrasse 10, 8001 Zürich", "lat": 47.3667, "lon": 8.5485, "chargers": 2},
+    "ST-LU": {"name": "Luzern Bahnhof", "address": "Zentralstrasse 1, 6003 Luzern", "lat": 47.0502, "lon": 8.3093, "chargers": 4}
+  },
+  "destinations": {
+    "DEST-LU": {"name": "Luzern", "aliases": ["Luzern", "Lucerne"], "distance_km": 52, "charger_id": "CHG-LU"},
+    "DEST-ZG": {"name": "Zug", "aliases": ["Zug"], "distance_km": 30, "charger_id": "CHG-ZG"},
+    "DEST-WI": {"name": "Winterthur", "aliases": ["Winterthur"], "distance_km": 25, "charger_id": ""},
+    "DEST-BS": {"name": "Basel", "aliases": ["Basel", "Basle"], "distance_km": 87, "charger_id": "CHG-BS"},
+    "DEST-BE": {"name": "Bern", "aliases": ["Bern", "Berne"], "distance_km": 125, "charger_id": "CHG-BE"},
+    "DEST-ZM": {"name": "Zermatt", "aliases": ["Zermatt"], "distance_km": 240, "charger_id": "CHG-TA"}
+  },
+  "chargers": {
+    "CHG-LU": {"name": "Luzern Inseli", "city": "Luzern", "power_kw": 22, "destination_id": "DEST-LU"},
+    "CHG-ZG": {"name": "Zug Metalli", "city": "Zug", "power_kw": 50, "destination_id": "DEST-ZG"},
+    "CHG-BS": {"name": "Basel Messe", "city": "Basel", "power_kw": 150, "destination_id": "DEST-BS"},
+    "CHG-BE": {"name": "Bern Wankdorf", "city": "Bern", "power_kw": 50, "destination_id": "DEST-BE"},
+    "CHG-TA": {"name": "Täsch Terminal", "city": "Täsch", "power_kw": 50, "destination_id": "DEST-ZM"}
+  },
+  "plans": {
+    "OCCASIONAL": {"name": "Occasional", "monthly_fee": 0, "hourly_rates": {"compact_ev": 15.0, "comfort_ev": 17.0, "hybrid": 14.0}, "km_included": 50},
+    "FLEX": {"name": "Flex", "monthly_fee": 0, "hourly_rates": {"compact_ev": 12.0, "comfort_ev": 13.5, "hybrid": 11.0}, "km_included": 100},
+    "FLEX_PLUS": {"name": "Flex Plus", "monthly_fee": 25, "hourly_rates": {"compact_ev": 8.5, "comfort_ev": 9.5, "hybrid": 7.5}, "km_included": 150}
+  },
+  "rules": {
+    "R-EV": {"name": "EV return rule", "min_return_percent": 20, "charge_buffer_percent": 5, "description": "Electric cars must be returned with at least 20% charge, otherwise a low-charge fee applies."},
+    "R-BOOKING": {"name": "Booking rule", "turnaround_minutes": 15, "start_lead_minutes": 5, "walking_metres_per_minute": 80, "description": "15 minutes between two bookings of the same car; a new booking starts at the earliest 5 minutes from now."},
+    "R-DISCOUNT": {"name": "Discount rule", "allowed": false, "description": "The assistant never grants discounts or waives fees; it may point to the plans."}
+  }
+}

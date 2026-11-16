@@ -1,0 +1,26 @@
+{
+  "primary": "customers",
+  "collections": {
+    "customers": {
+      "subtitle": ["licence_number", "plan"],
+      "mask": ["demo_otp"],
+      "first": ["phone", "email", "card_on_file", "usage", "auth", "preferences"]
+    },
+    "bookings": {
+      "link": "customer_id",
+      "title": "vehicle_id",
+      "subtitle": ["date", "start", "end"],
+      "first": ["status", "station_id", "plan", "price"]
+    },
+    "vehicles": {
+      "title": "model",
+      "subtitle": ["plate", "status"],
+      "first": ["charge_percent", "fuel_percent", "range_km_full", "station_id", "class", "location"]
+    },
+    "stations": {"title": "name", "subtitle": ["address"]},
+    "destinations": {"title": "name", "subtitle": ["distance_km"]},
+    "chargers": {"title": "name", "subtitle": ["city", "power_kw"]},
+    "plans": {"title": "name", "subtitle": ["monthly_fee"], "first": ["hourly_rates", "km_included"]},
+    "rules": {"title": "name", "first": ["description"]}
+  }
+}
