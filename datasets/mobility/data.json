@@ -126,7 +126,7 @@
     "BK-118003": {"customer_id": "C004", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today+1d}}", "start": "08:00", "end": "12:00", "status": "confirmed", "plan": "FLEX"},
     "BK-118004": {"customer_id": "C002", "vehicle_id": "V310", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "12:00", "end": "17:30", "status": "active", "plan": "FLEX_PLUS"},
     "BK-117950": {"customer_id": "C001", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today-7d}}", "start": "09:00", "end": "12:30", "status": "completed", "plan": "FLEX", "price": 47.25},
-    "BK-118010": {"customer_id": "C005", "vehicle_id": "V412", "station_id": "ST-SH", "date": "{{iso:today}}", "start": "16:30", "end": "20:00", "status": "confirmed", "plan": "FLEX"},
+    "BK-118010": {"customer_id": "C005", "vehicle_id": "V412", "station_id": "ST-SH", "date": "{{iso:today}}", "start": "16:30", "end": "20:00", "status": "active", "plan": "FLEX"},
     "BK-117800": {"customer_id": "C007", "vehicle_id": "V150", "station_id": "ST-SH", "date": "{{iso:today-14d}}", "start": "10:00", "end": "17:00", "status": "completed", "plan": "OCCASIONAL", "price": 105.0},
     "BK-117820": {"customer_id": "C007", "vehicle_id": "V318", "station_id": "ST-LP", "date": "{{iso:today-9d}}", "start": "18:00", "end": "20:30", "status": "completed", "plan": "OCCASIONAL", "price": 37.5}
   },
@@ -173,7 +173,7 @@
     "DMG-2201": {"vehicle_id": "V412", "part": "rear right bumper", "type": "dent", "details": "Fist-sized dent with scraped paint", "reported": "{{iso:today-1d}}", "reported_by": "C004", "status": "known", "safety_relevant": false}
   },
   "fees": {
-    "FEE-3101": {"customer_id": "C007", "booking_id": "BK-117800", "vehicle_id": "V150", "date": "{{iso:today-14d}}", "type": "cleaning", "amount": 80.0, "note": "Sand and pet hair on the back seats", "status": "open", "invoice_id": "INV-7001"}
+    "FEE-3101": {"customer_id": "C007", "booking_id": "BK-117800", "vehicle_id": "V150", "date": "{{iso:today-14d}}", "type": "cleaning", "amount": 80.0, "note": "Sand and pet hair on the back seats", "reported_by": "cleaning team", "photos": true, "status": "open", "invoice_id": "INV-7001"}
   },
   "invoices": {
     "INV-7001": {"customer_id": "C007", "date": "{{iso:today-3d}}", "total": 222.5, "items": [{"booking_id": "BK-117800", "amount": 105.0}, {"booking_id": "BK-117820", "amount": 37.5}, {"fee_id": "FEE-3101", "amount": 80.0}], "status": "open"}
