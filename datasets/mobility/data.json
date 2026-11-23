@@ -67,6 +67,57 @@
       "auth": {"failed_attempts_today": 0, "locked": false},
       "preferences": {"language": "de", "contact_by": "email"},
       "customer_since": "2022-10-01"
+    },
+    "C005": {
+      "name": "Lea Fischer",
+      "first_name": "Lea",
+      "last_name": "Fischer",
+      "licence_number": "CH-ZH-4419027",
+      "email": "lea.fischer@example.com",
+      "phone": "+41795550352",
+      "address": {"street": "Zeltweg 12", "zip": "8032", "city": "Zürich", "lat": 47.3672, "lon": 8.5521},
+      "date_of_birth": "1990-02-17",
+      "plan": "FLEX",
+      "card_on_file": {"brand": "Mastercard", "last4": "7788", "expires": "08/28"},
+      "demo_otp": "357961",
+      "usage": {"avg_hours_per_month": 8, "usual_class": "hybrid", "bookings_last_3m": 9},
+      "auth": {"failed_attempts_today": 0, "locked": false},
+      "preferences": {"language": "en", "contact_by": "sms"},
+      "customer_since": "2023-04-03"
+    },
+    "C006": {
+      "name": "Jonas Weber",
+      "first_name": "Jonas",
+      "last_name": "Weber",
+      "licence_number": "CH-ZH-2258316",
+      "email": "jonas.weber@example.com",
+      "phone": "+41795550573",
+      "address": {"street": "Limmatstrasse 150", "zip": "8005", "city": "Zürich", "lat": 47.3862, "lon": 8.5263},
+      "date_of_birth": "1996-06-30",
+      "plan": "FLEX",
+      "card_on_file": {"brand": "Visa", "last4": "2468", "expires": "02/29"},
+      "demo_otp": "640218",
+      "usage": {"avg_hours_per_month": 5, "usual_class": "compact_ev", "bookings_last_3m": 4},
+      "auth": {"failed_attempts_today": 0, "locked": false},
+      "preferences": {"language": "en", "contact_by": "sms"},
+      "customer_since": "2024-09-15"
+    },
+    "C007": {
+      "name": "Sofia Brunner",
+      "first_name": "Sofia",
+      "last_name": "Brunner",
+      "licence_number": "CH-ZH-7730564",
+      "email": "sofia.brunner@example.com",
+      "phone": "+41795550418",
+      "address": {"street": "Badenerstrasse 312", "zip": "8004", "city": "Zürich"},
+      "date_of_birth": "1984-11-08",
+      "plan": "OCCASIONAL",
+      "card_on_file": {"brand": "Visa", "last4": "4410", "expires": "06/27"},
+      "demo_otp": "829140",
+      "usage": {"avg_hours_per_month": 4, "usual_class": "compact_ev", "bookings_last_3m": 5},
+      "auth": {"failed_attempts_today": 0, "locked": false},
+      "preferences": {"language": "en", "contact_by": "sms"},
+      "customer_since": "2020-05-12"
     }
   },
   "bookings": {
@@ -74,20 +125,28 @@
     "BK-118002": {"customer_id": "C004", "vehicle_id": "V101", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "19:30", "end": "22:00", "status": "confirmed", "plan": "FLEX"},
     "BK-118003": {"customer_id": "C004", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today+1d}}", "start": "08:00", "end": "12:00", "status": "confirmed", "plan": "FLEX"},
     "BK-118004": {"customer_id": "C002", "vehicle_id": "V310", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "12:00", "end": "17:30", "status": "active", "plan": "FLEX_PLUS"},
-    "BK-117950": {"customer_id": "C001", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today-7d}}", "start": "09:00", "end": "12:30", "status": "completed", "plan": "FLEX", "price": 47.25}
+    "BK-117950": {"customer_id": "C001", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today-7d}}", "start": "09:00", "end": "12:30", "status": "completed", "plan": "FLEX", "price": 47.25},
+    "BK-118010": {"customer_id": "C005", "vehicle_id": "V412", "station_id": "ST-SH", "date": "{{iso:today}}", "start": "16:30", "end": "20:00", "status": "confirmed", "plan": "FLEX"},
+    "BK-117800": {"customer_id": "C007", "vehicle_id": "V150", "station_id": "ST-SH", "date": "{{iso:today-14d}}", "start": "10:00", "end": "17:00", "status": "completed", "plan": "OCCASIONAL", "price": 105.0},
+    "BK-117820": {"customer_id": "C007", "vehicle_id": "V318", "station_id": "ST-LP", "date": "{{iso:today-9d}}", "start": "18:00", "end": "20:30", "status": "completed", "plan": "OCCASIONAL", "price": 37.5}
   },
   "vehicles": {
     "V101": {"model": "VW ID.3", "short_name": "ID.3", "plate": "ZH 123 412", "class": "compact_ev", "powertrain": "electric", "charge_percent": 38, "range_km_full": 360, "battery_kwh": 58, "boot_litres": 385, "seats": 5, "child_seat": false, "station_id": "ST-HB", "status": "in_use", "location": {"lat": 47.3732, "lon": 8.5398, "description": "Bahnhofstrasse, Zürich"}},
     "V205": {"model": "VW ID.4", "short_name": "ID.4", "plate": "ZH 456 907", "class": "comfort_ev", "powertrain": "electric", "charge_percent": 86, "range_km_full": 400, "battery_kwh": 77, "boot_litres": 543, "seats": 5, "child_seat": true, "station_id": "ST-LP", "status": "available", "location": {"lat": 47.3757, "lon": 8.5378, "description": "Löwenplatz station"}},
     "V310": {"model": "Renault Zoe", "short_name": "Zoe", "plate": "ZH 789 120", "class": "compact_ev", "powertrain": "electric", "charge_percent": 31, "range_km_full": 300, "battery_kwh": 52, "boot_litres": 338, "seats": 5, "child_seat": false, "station_id": "ST-HB", "status": "in_use", "location": {"lat": 47.3779, "lon": 8.5403, "description": "Zürich HB Sihlquai station"}},
     "V412": {"model": "Toyota Corolla Touring Hybrid", "short_name": "Corolla", "plate": "ZH 246 801", "class": "hybrid", "powertrain": "hybrid", "fuel_percent": 70, "range_km_full": 850, "boot_litres": 598, "seats": 5, "child_seat": true, "station_id": "ST-SH", "status": "available", "location": {"lat": 47.3667, "lon": 8.5485, "description": "Stadelhofen station"}},
-    "V318": {"model": "Fiat 500e", "short_name": "500e", "plate": "ZH 135 790", "class": "compact_ev", "powertrain": "electric", "charge_percent": 29, "range_km_full": 260, "battery_kwh": 42, "boot_litres": 185, "seats": 4, "child_seat": false, "station_id": "ST-LP", "status": "available", "location": {"lat": 47.3757, "lon": 8.5378, "description": "Löwenplatz station"}}
+    "V318": {"model": "Fiat 500e", "short_name": "500e", "plate": "ZH 135 790", "class": "compact_ev", "powertrain": "electric", "charge_percent": 29, "range_km_full": 260, "battery_kwh": 42, "boot_litres": 185, "seats": 4, "child_seat": false, "station_id": "ST-LP", "status": "available", "location": {"lat": 47.3757, "lon": 8.5378, "description": "Löwenplatz station"}},
+    "V150": {"model": "VW Polo", "short_name": "Polo", "plate": "ZH 902 315", "class": "hybrid", "powertrain": "petrol", "fuel_percent": 64, "range_km_full": 750, "boot_litres": 351, "seats": 5, "child_seat": false, "station_id": "ST-SH", "status": "available", "location": {"lat": 47.3667, "lon": 8.5485, "description": "Stadelhofen station"}},
+    "V520": {"model": "Ford Transit Custom", "short_name": "Transit", "plate": "ZH 610 442", "class": "van", "powertrain": "diesel", "fuel_percent": 82, "range_km_full": 700, "seats": 3, "child_seat": false, "load_length_m": 2.55, "load_width_m": 1.39, "load_height_m": 1.4, "load_volume_m3": 6.0, "station_id": "ST-HW", "status": "available", "location": {"lat": 47.3853, "lon": 8.5172, "description": "Hardbrücke station"}},
+    "V521": {"model": "Renault Trafic", "short_name": "Trafic", "plate": "ZH 610 517", "class": "van", "powertrain": "diesel", "fuel_percent": 75, "range_km_full": 680, "seats": 3, "child_seat": false, "load_length_m": 2.54, "load_width_m": 1.27, "load_height_m": 1.39, "load_volume_m3": 5.8, "station_id": "ST-AS", "status": "available", "location": {"lat": 47.3914, "lon": 8.4889, "description": "Altstetten station"}}
   },
   "stations": {
     "ST-HB": {"name": "Zürich HB Sihlquai", "address": "Sihlquai 1, 8001 Zürich", "lat": 47.3779, "lon": 8.5403, "chargers": 6},
     "ST-LP": {"name": "Löwenplatz", "address": "Löwenstrasse 29, 8001 Zürich", "lat": 47.3757, "lon": 8.5378, "chargers": 4},
     "ST-SH": {"name": "Stadelhofen", "address": "Stadelhoferstrasse 10, 8001 Zürich", "lat": 47.3667, "lon": 8.5485, "chargers": 2},
-    "ST-LU": {"name": "Luzern Bahnhof", "address": "Zentralstrasse 1, 6003 Luzern", "lat": 47.0502, "lon": 8.3093, "chargers": 4}
+    "ST-LU": {"name": "Luzern Bahnhof", "address": "Zentralstrasse 1, 6003 Luzern", "lat": 47.0502, "lon": 8.3093, "chargers": 4},
+    "ST-HW": {"name": "Hardbrücke", "address": "Hardstrasse 219, 8005 Zürich", "lat": 47.3853, "lon": 8.5172, "chargers": 2},
+    "ST-AS": {"name": "Altstetten", "address": "Hohlstrasse 455, 8048 Zürich", "lat": 47.3914, "lon": 8.4889, "chargers": 2}
   },
   "destinations": {
     "DEST-LU": {"name": "Luzern", "aliases": ["Luzern", "Lucerne"], "distance_km": 52, "charger_id": "CHG-LU"},
@@ -95,7 +154,8 @@
     "DEST-WI": {"name": "Winterthur", "aliases": ["Winterthur"], "distance_km": 25, "charger_id": ""},
     "DEST-BS": {"name": "Basel", "aliases": ["Basel", "Basle"], "distance_km": 87, "charger_id": "CHG-BS"},
     "DEST-BE": {"name": "Bern", "aliases": ["Bern", "Berne"], "distance_km": 125, "charger_id": "CHG-BE"},
-    "DEST-ZM": {"name": "Zermatt", "aliases": ["Zermatt"], "distance_km": 240, "charger_id": "CHG-TA"}
+    "DEST-ZM": {"name": "Zermatt", "aliases": ["Zermatt"], "distance_km": 240, "charger_id": "CHG-TA"},
+    "DEST-ZH": {"name": "around Zürich", "aliases": [], "distance_km": 10, "charger_id": "", "local": true}
   },
   "chargers": {
     "CHG-LU": {"name": "Luzern Inseli", "city": "Luzern", "power_kw": 22, "destination_id": "DEST-LU"},
@@ -105,13 +165,29 @@
     "CHG-TA": {"name": "Täsch Terminal", "city": "Täsch", "power_kw": 50, "destination_id": "DEST-ZM"}
   },
   "plans": {
-    "OCCASIONAL": {"name": "Occasional", "monthly_fee": 0, "hourly_rates": {"compact_ev": 15.0, "comfort_ev": 17.0, "hybrid": 14.0}, "km_included": 50},
-    "FLEX": {"name": "Flex", "monthly_fee": 0, "hourly_rates": {"compact_ev": 12.0, "comfort_ev": 13.5, "hybrid": 11.0}, "km_included": 100},
-    "FLEX_PLUS": {"name": "Flex Plus", "monthly_fee": 25, "hourly_rates": {"compact_ev": 8.5, "comfort_ev": 9.5, "hybrid": 7.5}, "km_included": 150}
+    "OCCASIONAL": {"name": "Occasional", "monthly_fee": 0, "hourly_rates": {"compact_ev": 15.0, "comfort_ev": 17.0, "hybrid": 14.0, "van": 19.0}, "km_included": 50},
+    "FLEX": {"name": "Flex", "monthly_fee": 0, "hourly_rates": {"compact_ev": 12.0, "comfort_ev": 13.5, "hybrid": 11.0, "van": 16.0}, "km_included": 100},
+    "FLEX_PLUS": {"name": "Flex Plus", "monthly_fee": 25, "hourly_rates": {"compact_ev": 8.5, "comfort_ev": 9.5, "hybrid": 7.5, "van": 12.0}, "km_included": 150}
+  },
+  "damages": {
+    "DMG-2201": {"vehicle_id": "V412", "part": "rear right bumper", "type": "dent", "details": "Fist-sized dent with scraped paint", "reported": "{{iso:today-1d}}", "reported_by": "C004", "status": "known", "safety_relevant": false}
+  },
+  "fees": {
+    "FEE-3101": {"customer_id": "C007", "booking_id": "BK-117800", "vehicle_id": "V150", "date": "{{iso:today-14d}}", "type": "cleaning", "amount": 80.0, "note": "Sand and pet hair on the back seats", "status": "open", "invoice_id": "INV-7001"}
+  },
+  "invoices": {
+    "INV-7001": {"customer_id": "C007", "date": "{{iso:today-3d}}", "total": 222.5, "items": [{"booking_id": "BK-117800", "amount": 105.0}, {"booking_id": "BK-117820", "amount": 37.5}, {"fee_id": "FEE-3101", "amount": 80.0}], "status": "open"}
   },
   "rules": {
     "R-EV": {"name": "EV return rule", "min_return_percent": 20, "charge_buffer_percent": 5, "description": "Electric cars must be returned with at least 20% charge, otherwise a low-charge fee applies."},
     "R-BOOKING": {"name": "Booking rule", "turnaround_minutes": 15, "start_lead_minutes": 5, "walking_metres_per_minute": 80, "description": "15 minutes between two bookings of the same car; a new booking starts at the earliest 5 minutes from now."},
-    "R-DISCOUNT": {"name": "Discount rule", "allowed": false, "description": "The assistant never grants discounts or waives fees; it may point to the plans."}
+    "R-DISCOUNT": {"name": "Discount rule", "allowed": false, "description": "The assistant never grants discounts or waives fees; it may point to the plans."},
+    "R-LATE": {"name": "Late return", "topic": "late return", "grace_minutes": 10, "fee_per_15_minutes": 15, "description": "If you bring a car back more than 10 minutes late, a late fee of CHF 15 is charged for every started 15 minutes. If the next customer cannot start on time because of the delay, their replacement costs can be charged to you as well. As long as nobody has booked the car after you, you can extend the booking in the app or by phone at any time, also while you are driving."},
+    "R-ABROAD": {"name": "Trips abroad", "topic": "driving abroad", "allowed_countries": ["Germany", "Austria", "France", "Italy", "Liechtenstein"], "description": "Our cars may be driven to Germany, Austria, France, Italy and Liechtenstein. Tick 'trip abroad' when you book, or tell us by phone; it costs nothing extra and the insurance and breakdown assistance abroad are included. Tolls and vignettes abroad are paid by the driver. Electric cars can be charged abroad with the charging card in the car. Trips to any other country are not allowed. A booking abroad can be made up to 6 months in advance, like any booking."},
+    "R-DAMAGE": {"name": "Damage", "topic": "damage", "check_working_days": 2, "description": "Report any damage before you drive off, by phone or in the app. We then text you a link to add photos: one photo of each damage, and one of the whole side of the car where it is. Damage reported before the trip is never charged to you. Do not drive if the damage affects safety (lights, mirrors, tyres, windscreen, brakes); we then move your booking to another car at no extra cost. When you bring the car back, park and lock it as normal; nothing else is needed. The damage team checks a reported car within 2 working days."},
+    "R-CLEAN": {"name": "Cleaning", "topic": "cleaning fee", "fee": 80, "review_working_days": 3, "refund_working_days": 5, "description": "Normal use is fine: some sand, dust, light dirt or crumbs are never charged. A cleaning fee of CHF 80 is charged when a car needs extra cleaning: pet hair, smoke, food waste, heavy mud or spilled liquids. The fee is based on the report and photos of the next customer or the cleaning team. A disputed fee is put on hold and reviewed by the billing team within 3 working days; if they agree with the customer, the fee is refunded to the card on file within 5 working days."},
+    "R-DRIVERS": {"name": "Drivers", "topic": "other drivers", "description": "Only registered members may drive our cars. A co-driver registers in the app (about 5 minutes, with a photo of the driving licence) and is then added to the booking in the app, at no extra cost. Co-drivers cannot be added by phone. The person who booked stays responsible for the car."},
+    "R-PETS": {"name": "Pets", "topic": "pets", "description": "Pets may travel in our cars in a closed transport box or on a seat cover in the boot. Pet hair left in the car leads to a cleaning fee of CHF 80."},
+    "R-EXTRAS": {"name": "Van extras", "topic": "extras", "extras": {"trolley": {"name": "sack trolley", "price": 5}, "blankets": {"name": "moving blankets", "price": 5}}, "description": "For vans, a sack trolley and moving blankets can be added to a booking for CHF 5 each. They are in the van when you pick it up."}
   }
 }

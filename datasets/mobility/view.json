@@ -21,6 +21,9 @@
     "destinations": {"title": "name", "subtitle": ["distance_km"]},
     "chargers": {"title": "name", "subtitle": ["city", "power_kw"]},
     "plans": {"title": "name", "subtitle": ["monthly_fee"], "first": ["hourly_rates", "km_included"]},
-    "rules": {"title": "name", "first": ["description"]}
+    "rules": {"title": "name", "first": ["description"]},
+    "damages": {"title": "part", "subtitle": ["vehicle_id", "type", "status"], "first": ["details", "reported", "reported_by", "safety_relevant"]},
+    "fees": {"link": "customer_id", "title": "type", "subtitle": ["amount", "status"], "first": ["note", "booking_id", "invoice_id", "date"]},
+    "invoices": {"link": "customer_id", "title": "date", "subtitle": ["total", "status"], "first": ["items"]}
   }
 }
