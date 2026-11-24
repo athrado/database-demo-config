@@ -1,11 +1,11 @@
 {
   "customers": {
     "C001": {
-      "name": "Anna Meier",
+      "name": "Anna Meyer",
       "first_name": "Anna",
-      "last_name": "Meier",
+      "last_name": "Meyer",
       "licence_number": "CH-ZH-8847261",
-      "email": "anna.meier@example.com",
+      "email": "anna.meyer@example.com",
       "phone": "+41795550189",
       "address": {"street": "Seefeldstrasse 41", "zip": "8008", "city": "Zürich"},
       "date_of_birth": "1988-04-23",
