@@ -148,6 +148,13 @@ def test_field_kinds_and_formatting():
     assert render.collection_config("orders", {"collections": {"orders": {"icon": "X"}}})["icon"] == "X"
     assert render.field_icon("model", "plain", {"icons": {"model": "🚗"}}) == "🚗" and render.field_icon("email", "email", {}) == "✉️"
     assert render.collection_config("vehicles", None)["icon"] == "🚗" and render.collection_config("cards", None)["icon"] == "💳"
+    assert render.status_class("completed") == "xd-done" and render.status_class("active") == "xd-good"
+    per = {"date": "date", "from": "start", "until": "end"}
+    assert render.period_text({"date": "2026-11-25", "start": "13:00", "end": "18:00"}, per, date(2026, 11, 25)) == "Today · 13:00 – 18:00"
+    assert render.period_text({"date": "2026-11-03", "start": "9:00", "end": "11:00"}, per, date(2026, 11, 25)) == "Tue 3 Nov 2026 · 9:00 – 11:00"
+    card = render.record_card("bookings", "B1", {"date": "2026-11-26", "start": "08:00", "end": "12:00"}, {"collections": {"bookings": {"period": per}}})
+    assert "08:00 – 12:00" in card and "Start" not in card
+    assert "xd-past" in render.record_card("bookings", "B1", {"status": "completed"}) and "xd-past" not in render.record_card("bookings", "B2", {"status": "active"})
 
 
 def test_rendering_every_dataset():

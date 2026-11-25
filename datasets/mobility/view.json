@@ -12,7 +12,8 @@
       "icon": "📅",
       "link": "customer_id",
       "title": "vehicle_model",
-      "subtitle": ["date", "start", "end"],
+      "subtitle": [],
+      "period": {"date": "date", "from": "start", "until": "end"},
       "first": ["status", "vehicle_id", "station_id", "plan", "price"],
       "icons": {"vehicle_id": "🚗", "vehicle_model": "🚗", "station_id": "📍", "plan": "📋", "start": "🕑", "end": "🏁", "extras": "🧰", "replaces": "🔄"}
     },

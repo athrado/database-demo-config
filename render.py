@@ -21,6 +21,8 @@ configuration. A config's view.json can refine it:
     first      fields shown first, in this order     hide    fields never shown
     labels     {field: label} overrides              icon / accent / label / label_one
     icons      {field: icon} shown before that field's label (instead of the icon for its kind)
+    period     {"date": field, "from": field, "until": field}: one chip "Today · 13:00 – 18:00" under the title
+               instead of separate date / start / end values
 
 Everything here returns HTML strings with no line breaks (so Streamlit's markdown keeps them intact).
 All data is escaped.
@@ -62,6 +64,8 @@ WARN = {"pending", "processing", "in progress", "awaiting", "waiting", "schedule
         "pending confirmation", "trial", "medium", "assigned", "investigating", "in review"}
 BAD = {"failed", "overdue", "rejected", "denied", "blocked", "cancelled", "canceled", "critical", "urgent", "expired", "suspended",
        "declined", "lost", "disputed", "unpaid", "refused", "no", "false", "high", "outage", "stolen"}
+# Finished states: a muted badge, and the whole card is faded so current records stand out.
+DONE = {"completed", "complete", "ended", "finished", "returned"}
 CURRENCY = {"EUR": "€", "GBP": "£", "USD": "$", "TRY": "₺", "CHF": "CHF "}
 ACRONYMS = {"id": "ID", "iban": "IBAN", "bic": "BIC", "sku": "SKU", "url": "URL", "vat": "VAT", "sim": "SIM", "imei": "IMEI",
             "ip": "IP", "os": "OS", "pin": "PIN", "dob": "Date of birth", "nr": "No.", "msisdn": "MSISDN", "vpn": "VPN",
@@ -79,10 +83,12 @@ CSS = """
 .xd-big{font-weight:800;font-size:1.6rem;line-height:1.2}
 .xd-id{font-family:ui-monospace,Consolas,monospace;font-size:.78rem;opacity:.65}
 .xd-sub{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 6px}
+.xd-chip.xd-when{font-weight:700;font-size:.85rem}
 .xd-chip{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.78rem;background:rgba(128,128,128,.18);margin:1px 3px 1px 0}
 .xd-badge{display:inline-block;padding:1px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
 .xd-good{background:rgba(34,165,91,.18);color:#22a55b}.xd-warn{background:rgba(217,142,4,.20);color:#d98e04}
-.xd-bad{background:rgba(224,72,62,.18);color:#e0483e}.xd-neutral{background:rgba(128,128,128,.2)}
+.xd-bad{background:rgba(224,72,62,.18);color:#e0483e}.xd-done{background:rgba(128,128,128,.16);color:#7d8b84}
+.xd-card.xd-past{opacity:.55;border-left-color:#9aa5a0;filter:saturate(.4)}.xd-card.xd-past:hover{opacity:.9}.xd-neutral{background:rgba(128,128,128,.2)}
 .xd-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:10px 0}
 .xd-tile{display:flex;gap:10px;align-items:center;border:1px solid rgba(128,128,128,.25);border-radius:10px;padding:8px 12px;background:rgba(128,128,128,.07)}
 .xd-tile .xd-ico{font-size:1.3rem}
@@ -149,6 +155,8 @@ def status_class(value) -> str:
     text = norm(value)
     if text in BAD or any(w in text for w in ("overdue", "failed", "rejected", "cancel", "critical", "blocked")):
         return "xd-bad"
+    if text in DONE:
+        return "xd-done"
     if text in WARN or "pending" in text or "required" in text or "progress" in text:
         return "xd-warn"
     if text in GOOD or text.startswith(("deliver", "resolv", "complet", "approv")):
@@ -327,6 +335,24 @@ def section_header(icon: str, title: str, accent: str, count: int | None = None,
     return f'<div{ident} class="xd-sec acc-{esc(accent)}"><span class="xd-ico">{icon}</span><span>{esc(title)}</span>{badge}</div>'
 
 
+def period_text(record: dict, period: dict, today=None) -> str | None:
+    """"Today · 13:00 – 18:00", "Tomorrow · ...", "Mon 3 Nov 2026 · ..." from a record's date / from / until fields."""
+    import datetime as _dt
+    day, start, end = (record.get(period.get(k)) for k in ("date", "from", "until"))
+    if not (day or start or end):
+        return None
+    when = str(day or "")
+    try:
+        d = _dt.date.fromisoformat(when)
+        today = today or _dt.date.today()
+        names = {0: "Today", 1: "Tomorrow", -1: "Yesterday"}
+        when = names.get((d - today).days) or f"{d:%a} {d.day} {d:%b %Y}"
+    except ValueError:
+        pass
+    times = " – ".join(str(t) for t in (start, end) if t)
+    return " · ".join(t for t in (when, times) if t)
+
+
 def record_card(collection: str, record_id: str, record: dict, view: dict | None = None, link: str | None = None,
                 owner: str | None = None) -> str:
     """A card for one record of any collection.
@@ -345,14 +371,21 @@ def record_card(collection: str, record_id: str, record: dict, view: dict | None
     badge_skip = set(sub_keys)
     status = badges_html(record, badge_skip)
     status_keys = {k for k, v in record.items() if kind_of(k, v) == "status" and isinstance(v, (str, int, float))}
-    chips = "".join(f'<span class="xd-chip">{esc(record[k])}</span>' for k in sub_keys)
+    period = cfg.get("period") or {}
+    period_keys = {f for f in period.values() if f in record}
+    when = period_text(record, period) if period else None
+    skip |= period_keys
+    chips = "".join(f'<span class="xd-chip">{esc(record[k])}</span>' for k in sub_keys if k not in period_keys)
+    if when:
+        chips = f'<span class="xd-chip xd-when">🕑 {esc(when)}</span>' + chips
     if owner:
         chips = f'<span class="xd-chip">{esc(owner)}</span>' + chips
     ident = f'<span class="xd-id">#{esc(record_id)}</span>' if title != record_id else ""
     head = f'<div class="xd-head"><span class="xd-ico">{cfg["icon"]}</span><span class="xd-title">{esc(title)}</span>{ident}{status}</div>'
     sub = f'<div class="xd-sub">{chips}</div>' if chips else ""
     body = grid_html(record, cfg, skip | status_keys)
-    return f'<div class="xd-card acc-{esc(cfg["accent"])}">{head}{sub}{body}</div>'
+    past = " xd-past" if any(norm(record[k]) in DONE for k in status_keys) else ""
+    return f'<div class="xd-card acc-{esc(cfg["accent"])}{past}">{head}{sub}{body}</div>'
 
 
 def profile_html(collection: str, record_id: str, record: dict, view: dict | None = None) -> str:
