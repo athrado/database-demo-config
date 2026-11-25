@@ -121,14 +121,20 @@
     }
   },
   "bookings": {
-    "BK-118001": {"customer_id": "C001", "vehicle_id": "V101", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "13:00", "end": "18:00", "status": "active", "plan": "FLEX"},
-    "BK-118002": {"customer_id": "C004", "vehicle_id": "V101", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "19:30", "end": "22:00", "status": "confirmed", "plan": "FLEX"},
-    "BK-118003": {"customer_id": "C004", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today+1d}}", "start": "08:00", "end": "12:00", "status": "confirmed", "plan": "FLEX"},
-    "BK-118004": {"customer_id": "C002", "vehicle_id": "V310", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "12:00", "end": "17:30", "status": "active", "plan": "FLEX_PLUS"},
-    "BK-117950": {"customer_id": "C001", "vehicle_id": "V205", "station_id": "ST-LP", "date": "{{iso:today-7d}}", "start": "09:00", "end": "12:30", "status": "completed", "plan": "FLEX", "price": 47.25},
-    "BK-118010": {"customer_id": "C005", "vehicle_id": "V412", "station_id": "ST-SH", "date": "{{iso:today}}", "start": "16:30", "end": "20:00", "status": "active", "plan": "FLEX"},
-    "BK-117800": {"customer_id": "C007", "vehicle_id": "V150", "station_id": "ST-SH", "date": "{{iso:today-14d}}", "start": "10:00", "end": "17:00", "status": "completed", "plan": "OCCASIONAL", "price": 105.0},
-    "BK-117820": {"customer_id": "C007", "vehicle_id": "V318", "station_id": "ST-LP", "date": "{{iso:today-9d}}", "start": "18:00", "end": "20:30", "status": "completed", "plan": "OCCASIONAL", "price": 37.5}
+    "BK-118001": {"customer_id": "C001", "vehicle_id": "V101", "vehicle_model": "VW ID.3", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "13:00", "end": "18:00", "status": "active", "plan": "FLEX"},
+    "BK-118002": {"customer_id": "C004", "vehicle_id": "V101", "vehicle_model": "VW ID.3", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "19:30", "end": "22:00", "status": "confirmed", "plan": "FLEX"},
+    "BK-118003": {"customer_id": "C004", "vehicle_id": "V205", "vehicle_model": "VW ID.4", "station_id": "ST-LP", "date": "{{iso:today+1d}}", "start": "08:00", "end": "12:00", "status": "confirmed", "plan": "FLEX"},
+    "BK-118004": {"customer_id": "C002", "vehicle_id": "V310", "vehicle_model": "Renault Zoe", "station_id": "ST-HB", "date": "{{iso:today}}", "start": "12:00", "end": "17:30", "status": "active", "plan": "FLEX_PLUS"},
+    "BK-117950": {"customer_id": "C001", "vehicle_id": "V205", "vehicle_model": "VW ID.4", "station_id": "ST-LP", "date": "{{iso:today-7d}}", "start": "09:00", "end": "12:30", "status": "completed", "plan": "FLEX", "price": 47.25},
+    "BK-117960": {"customer_id": "C001", "vehicle_id": "V205", "vehicle_model": "VW ID.4", "station_id": "ST-LP", "date": "{{iso:today-3d}}", "start": "14:00", "end": "17:00", "status": "completed", "plan": "FLEX", "price": 40.5},
+    "BK-117930": {"customer_id": "C001", "vehicle_id": "V101", "vehicle_model": "VW ID.3", "station_id": "ST-HB", "date": "{{iso:today-10d}}", "start": "08:30", "end": "11:30", "status": "completed", "plan": "FLEX", "price": 36.0},
+    "BK-117900": {"customer_id": "C001", "vehicle_id": "V205", "vehicle_model": "VW ID.4", "station_id": "ST-LP", "date": "{{iso:today-14d}}", "start": "18:00", "end": "22:00", "status": "completed", "plan": "FLEX", "price": 54.0},
+    "BK-117880": {"customer_id": "C001", "vehicle_id": "V205", "vehicle_model": "VW ID.4", "station_id": "ST-LP", "date": "{{iso:today-17d}}", "start": "10:00", "end": "13:00", "status": "completed", "plan": "FLEX", "price": 40.5},
+    "BK-117860": {"customer_id": "C001", "vehicle_id": "V101", "vehicle_model": "VW ID.3", "station_id": "ST-HB", "date": "{{iso:today-20d}}", "start": "12:00", "end": "15:30", "status": "completed", "plan": "FLEX", "price": 42.0},
+    "BK-117840": {"customer_id": "C001", "vehicle_id": "V205", "vehicle_model": "VW ID.4", "station_id": "ST-LP", "date": "{{iso:today-23d}}", "start": "09:00", "end": "12:00", "status": "completed", "plan": "FLEX", "price": 40.5},
+    "BK-118010": {"customer_id": "C005", "vehicle_id": "V412", "vehicle_model": "Toyota Corolla Touring Hybrid", "station_id": "ST-SH", "date": "{{iso:today}}", "start": "16:30", "end": "20:00", "status": "active", "plan": "FLEX"},
+    "BK-117800": {"customer_id": "C007", "vehicle_id": "V150", "vehicle_model": "VW Polo", "station_id": "ST-SH", "date": "{{iso:today-14d}}", "start": "10:00", "end": "17:00", "status": "completed", "plan": "OCCASIONAL", "price": 105.0},
+    "BK-117820": {"customer_id": "C007", "vehicle_id": "V318", "vehicle_model": "Fiat 500e", "station_id": "ST-LP", "date": "{{iso:today-9d}}", "start": "18:00", "end": "20:30", "status": "completed", "plan": "OCCASIONAL", "price": 37.5}
   },
   "vehicles": {
     "V101": {"model": "VW ID.3", "short_name": "ID.3", "plate": "ZH 123 412", "class": "compact_ev", "powertrain": "electric", "charge_percent": 38, "range_km_full": 360, "battery_kwh": 58, "boot_litres": 385, "seats": 5, "child_seat": false, "station_id": "ST-HB", "status": "in_use", "location": {"lat": 47.3732, "lon": 8.5398, "description": "Bahnhofstrasse, Zürich"}},
