@@ -20,6 +20,7 @@ configuration. A config's view.json can refine it:
     subtitle   fields shown as small chips under the title
     first      fields shown first, in this order     hide    fields never shown
     labels     {field: label} overrides              icon / accent / label / label_one
+    icons      {field: icon} shown before that field's label (instead of the icon for its kind)
 
 Everything here returns HTML strings with no line breaks (so Streamlit's markdown keeps them intact).
 All data is escaped.
@@ -45,6 +46,9 @@ CATEGORIES = [
     ("account", "🏦", "blue"), ("card", "💳", "purple"), ("policy", "🛡️", "blue"),
     ("asset", "💻", "slate"), ("device", "📱", "slate"), ("equipment", "💻", "slate"),
     ("product", "🏷️", "green"), ("item", "🏷️", "green"), ("loan", "🏠", "amber"), ("complaint", "😠", "red"),
+    ("vehicle", "🚗", "blue"), ("car", "🚗", "blue"), ("station", "📍", "teal"), ("destination", "🗺️", "green"),
+    ("charger", "🔌", "amber"), ("damage", "🔧", "red"), ("fee", "💰", "orange"), ("rule", "📜", "slate"),
+    ("message", "💬", "teal"), ("otp", "🔐", "slate"),
 ]
 DEFAULT_CATEGORY = ("🗂️", "slate")
 
@@ -136,7 +140,7 @@ def collection_config(name: str, view: dict | None) -> dict:
             icon, accent = ic, ac
             break
     cfg = {"label": humanize(name), "label_one": humanize(base), "icon": icon, "accent": accent,
-           "title": None, "subtitle": [], "first": [], "hide": [], "mask": [], "labels": {}, "link": None}
+           "title": None, "subtitle": [], "first": [], "hide": [], "mask": [], "labels": {}, "icons": {}, "link": None}
     cfg.update(((view or {}).get("collections") or {}).get(name, {}))
     return cfg
 
@@ -259,9 +263,20 @@ def table_html(rows: list, cfg: dict | None = None) -> str:
     return f'<table class="xd-table"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table>'
 
 
+# Field names that get an icon in any dataset (after the config's own "icons", before the icon for the kind).
+FIELD_ICONS = {"channel": "📨", "subject": "✉️", "text": "💬", "body": "💬", "message": "💬", "successfully sent": "✅",
+               "result": "📬", "model": "🚗", "vehicle model": "🚗", "vehicle id": "🚗", "plate": "🔢", "station id": "📍",
+               "charge percent": "🔋", "fuel percent": "⛽", "document id": "📄"}
+
+
+def field_icon(key, kind: str, cfg: dict | None = None) -> str:
+    """The icon in front of a field label: the config's "icons" {field: icon} first, then FIELD_ICONS, else the icon for its kind."""
+    return ((cfg or {}).get("icons") or {}).get(key) or FIELD_ICONS.get(norm(key)) or ICONS.get(kind, "")
+
+
 def _cell(key, value, record, cfg) -> str:
     kind = kind_of(key, value)
-    icon = ICONS.get(kind, "")
+    icon = field_icon(key, kind, cfg)
     label = (icon + " " if icon else "") + humanize(key, (cfg or {}).get("labels"))
     wide = " xd-wide" if kind in ("table", "dict", "text") else ""
     return f'<div class="{wide.strip()}"><div class="xd-lab">{esc(label)}</div><div class="xd-val">{value_html(key, value, record, cfg)}</div></div>'
@@ -358,7 +373,7 @@ def profile_html(collection: str, record_id: str, record: dict, view: dict | Non
             f'<span class="xd-id">#{esc(record_id)}</span>{badges}</div>')
     sub = f'<div class="xd-sub">{chips}</div>' if chips else ""
     tiles = "".join(
-        f'<div class="xd-tile"><span class="xd-ico">{ICONS[kind_of(k, record[k])]}</span><div><div class="xd-lab">{esc(humanize(k, labels))}</div>'
+        f'<div class="xd-tile"><span class="xd-ico">{field_icon(k, kind_of(k, record[k]), cfg)}</span><div><div class="xd-lab">{esc(humanize(k, labels))}</div>'
         f'<div class="xd-val">{value_html(k, record[k], record, cfg)}</div></div></div>' for k in tile_keys)
     tiles = f'<div class="xd-tiles">{tiles}</div>' if tiles else ""
     details = grid_html(record, cfg, skip)

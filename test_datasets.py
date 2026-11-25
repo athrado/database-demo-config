@@ -146,6 +146,8 @@ def test_field_kinds_and_formatting():
     assert render.collection_config("orders", None)["icon"] == "🛒" and render.collection_config("claims", None)["icon"] == "📋"
     assert render.collection_config("odd_things", None)["icon"] == "🗂️"
     assert render.collection_config("orders", {"collections": {"orders": {"icon": "X"}}})["icon"] == "X"
+    assert render.field_icon("model", "plain", {"icons": {"model": "🚗"}}) == "🚗" and render.field_icon("email", "email", {}) == "✉️"
+    assert render.collection_config("vehicles", None)["icon"] == "🚗" and render.collection_config("cards", None)["icon"] == "💳"
 
 
 def test_rendering_every_dataset():

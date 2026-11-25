@@ -2,28 +2,82 @@
   "primary": "customers",
   "collections": {
     "customers": {
+      "icon": "👤",
       "subtitle": ["licence_number", "plan"],
       "mask": ["demo_otp"],
-      "first": ["phone", "email", "card_on_file", "usage", "auth", "preferences"]
+      "first": ["phone", "email", "card_on_file", "usage", "auth", "preferences"],
+      "icons": {"licence_number": "🪪", "card_on_file": "💳", "plan": "📋", "usage": "📊", "auth": "🔐", "preferences": "⚙️", "customer_since": "🤝"}
     },
     "bookings": {
+      "icon": "📅",
       "link": "customer_id",
-      "title": "vehicle_id",
+      "title": "vehicle_model",
       "subtitle": ["date", "start", "end"],
-      "first": ["status", "station_id", "plan", "price"]
+      "first": ["status", "vehicle_id", "station_id", "plan", "price"],
+      "icons": {"vehicle_id": "🚗", "vehicle_model": "🚗", "station_id": "📍", "plan": "📋", "start": "🕑", "end": "🏁", "extras": "🧰", "replaces": "🔄"}
     },
     "vehicles": {
+      "icon": "🚗",
       "title": "model",
       "subtitle": ["plate", "status"],
-      "first": ["charge_percent", "fuel_percent", "range_km_full", "station_id", "class", "location"]
+      "first": ["charge_percent", "fuel_percent", "range_km_full", "station_id", "class", "location"],
+      "icons": {"model": "🚗", "short_name": "🚗", "plate": "🔢", "charge_percent": "🔋", "battery_kwh": "🔋", "fuel_percent": "⛽",
+                "range_km_full": "🛣️", "station_id": "📍", "class": "🏷️", "powertrain": "⚡", "seats": "💺", "child_seat": "👶",
+                "boot_litres": "🧳", "load_volume_m3": "📦", "load_length_m": "📏", "load_width_m": "📏", "load_height_m": "📏"}
     },
-    "stations": {"title": "name", "subtitle": ["address"]},
-    "destinations": {"title": "name", "subtitle": ["distance_km"]},
-    "chargers": {"title": "name", "subtitle": ["city", "power_kw"]},
-    "plans": {"title": "name", "subtitle": ["monthly_fee"], "first": ["hourly_rates", "km_included"]},
-    "rules": {"title": "name", "first": ["description"]},
-    "damages": {"title": "part", "subtitle": ["vehicle_id", "type", "status"], "first": ["details", "reported", "reported_by", "safety_relevant"]},
-    "fees": {"link": "customer_id", "title": "type", "subtitle": ["amount", "status"], "first": ["note", "booking_id", "invoice_id", "date"]},
-    "invoices": {"link": "customer_id", "title": "date", "subtitle": ["total", "status"], "first": ["items"]}
+    "stations": {
+      "icon": "📍",
+      "title": "name",
+      "subtitle": ["address"],
+      "icons": {"chargers": "🔌", "lat": "🌐", "lon": "🌐"}
+    },
+    "destinations": {
+      "icon": "🗺️",
+      "title": "name",
+      "subtitle": ["distance_km"],
+      "icons": {"distance_km": "🛣️", "charger_id": "🔌", "aliases": "🏷️"}
+    },
+    "chargers": {
+      "icon": "🔌",
+      "title": "name",
+      "subtitle": ["city", "power_kw"],
+      "icons": {"power_kw": "⚡", "destination_id": "🗺️"}
+    },
+    "plans": {
+      "icon": "📋",
+      "title": "name",
+      "subtitle": ["monthly_fee"],
+      "first": ["hourly_rates", "km_included"],
+      "icons": {"hourly_rates": "⏱️", "km_included": "🛣️"}
+    },
+    "rules": {
+      "icon": "📜",
+      "title": "name",
+      "first": ["description"],
+      "icons": {"description": "📝", "topic": "🏷️"}
+    },
+    "damages": {
+      "icon": "🔧",
+      "title": "part",
+      "subtitle": ["vehicle_id", "type", "status"],
+      "first": ["details", "reported", "reported_by", "safety_relevant"],
+      "icons": {"vehicle_id": "🚗", "details": "📝", "reported_by": "👤", "safety_relevant": "⚠️"}
+    },
+    "fees": {
+      "icon": "💰",
+      "link": "customer_id",
+      "title": "type",
+      "subtitle": ["amount", "status"],
+      "first": ["note", "booking_id", "invoice_id", "date"],
+      "icons": {"note": "📝", "booking_id": "📅", "invoice_id": "🧾", "vehicle_id": "🚗", "photos": "📷", "reported_by": "👤"}
+    },
+    "invoices": {
+      "icon": "🧾",
+      "link": "customer_id",
+      "title": "date",
+      "subtitle": ["total", "status"],
+      "first": ["items"]
+    }
+
   }
 }
