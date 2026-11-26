@@ -412,7 +412,12 @@ def test_links_show_a_short_label_not_the_whole_url():
     assert render.link_label("documents_page_url", "https://x.example/documents-C004.html?sig=S") == "Documents page"
     assert render.link_label("website", "https://example.com/a/very/long/path/that/goes/on/and/on/and/on/forever.html?token=1").endswith("…")
     assert "token" not in render.link_label("website", "https://example.com/page?token=1")
-    card = render.record_card("transactions", "TX1", {"customer_id": "C1", "doc_id": "DOC8001", "doc_category": "Transfer receipt", "doc_url": url,
+    jira = "https://artificialsolutions.atlassian.net/browse/TDEMO-24"
+    assert render.link_label("jira_url", jira) == "Jira ticket TDEMO-24"
+    assert render.link_label("ticket", jira) == "Jira ticket TDEMO-24"                                          # recognised by the address too
+    assert render.link_label("jira_url", "https://artificialsolutions.atlassian.net/jira/boards/1") == "Jira ticket"
+    assert '>Jira ticket TDEMO-24</a>' in render.value_html("jira_url", jira)
+    card =render.record_card("transactions", "TX1", {"customer_id": "C1", "doc_id": "DOC8001", "doc_category": "Transfer receipt", "doc_url": url,
                                                       "doc_title": "Receipt", "causale": "x"}, {})
     visible = re.sub(r"<[^>]+>", " ", card)
     assert "Receipt DOC8001" in visible and "SECRET" not in visible and "sig=" not in visible

@@ -219,6 +219,9 @@ def link_label(key, value, record: dict | None = None) -> str:
         return f"Receipt {record['doc_id']}"                                       # e.g. "Receipt DOC8001"
     if "documents page" in k:
         return "Documents page"
+    if "jira" in k or "atlassian.net/browse/" in str(value):
+        issue = str(value).split("?")[0].rstrip("/").rsplit("/", 1)[-1]
+        return f"Jira ticket {issue}" if re.fullmatch(r"[A-Z][A-Z0-9]+-\d+", issue) else "Jira ticket"   # e.g. "Jira ticket TDEMO-24"
     text = re.sub(r"^https?://", "", str(value).split("?")[0])
     return text if len(text) <= 48 else text[:45] + "…"
 
