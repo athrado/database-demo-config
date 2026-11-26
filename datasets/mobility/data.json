@@ -1,9 +1,9 @@
 {
   "customers": {
     "C001": {
-      "name": "Anna Meyer",
+      "name": "Anna Meier",
       "first_name": "Anna",
-      "last_name": "Meyer",
+      "last_name": "Meier",
       "licence_number": "CH-ZH-8847261",
       "email": "anna.meyer@example.com",
       "phone": "+41795550189",
