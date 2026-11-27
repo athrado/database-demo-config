@@ -108,6 +108,30 @@ def test_the_list_style_looks_like_the_documents_overview():
     assert 'class="xd-card' in " ".join(m.value for m in at.markdown)                       # without style=list: the cards
 
 
+HIDE_CHROME = '[data-testid="stHeader"]'
+
+
+def test_demo_hides_the_header_and_sidebar_but_keeps_the_database_view():
+    at, _ = open_app(demo="1")
+    assert any(HIDE_CHROME in m.value for m in at.markdown)                                  # header and sidebar hidden
+    assert at.tabs and at.session_state["browse_collection"] == "customers"                  # the database view itself is unchanged
+    at, _ = open_app()
+    assert not any(HIDE_CHROME in m.value for m in at.markdown)                              # without demo=1 nothing is hidden
+
+
+def test_demo_main_shows_only_the_main_record():
+    at, _ = open_app(demo="main", customer="C004")
+    text = " ".join(m.value for m in at.markdown)
+    assert HIDE_CHROME in text and '[role="tablist"]' in text                                # header, sidebar and tab bar hidden
+    assert "browse_search" not in [w.key for w in at.text_input] and not at.expander         # no search, no raw JSON
+    assert not [p for p in at.get("button_group")]                                           # no collection buttons
+    picker = [s for s in at.selectbox if s.key and s.key.startswith("pick_")]
+    assert picker and picker[0].value == "C004"                                              # opens on the customer from the link
+    at, _ = open_app(demo="1")
+    assert "browse_search" in [w.key for w in at.text_input]                                 # demo=1 keeps the search
+    assert '[role="tablist"]' not in " ".join(m.value for m in at.markdown)                  # and the tabs
+
+
 def test_show_all_removes_the_restriction():
     at, _ = open_app(collection="transactions", ids="TX1001")
     {b.label: b for b in at.button}["Show all transactions"].click()

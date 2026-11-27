@@ -39,9 +39,32 @@ FILTER_PARAMS = ("collection", "ids", "customer", "q")                 # plus ev
 CLEAN = bool(FOCUS_COLLECTION) and (st.query_params.get("view", "") or "").strip().lower() == "clean"
 # ...&view=clean&style=list shows them as a plain list (title, date, grouped) like a documents overview instead of cards; see "list" in view.json.
 STYLE_LIST = CLEAN and (st.query_params.get("style", "") or "").strip().lower() == "list"
+# ...&demo=1 keeps the full database view (tabs, records) but hides Streamlit's header and the sidebar, for showing on screen in a demo.
+# ...&demo=main also hides the tabs, collection buttons, search and raw JSON: just the main record (a customer) and its related records,
+# with the picker to switch between them; &customer=C001 opens on that one.
+# Pick the config in the address too (config=mobility): without the sidebar it cannot be changed on the page.
+DEMO_MODE = "" if CLEAN else (st.query_params.get("demo", "") or "").strip().lower()
+DEMO = DEMO_MODE in ("1", "true", "yes", "main")
+MAIN_ONLY = DEMO_MODE == "main"
 st.set_page_config(page_title="Your records" if CLEAN else "Database demo config", page_icon="🗄️", layout="centered" if CLEAN else "wide",
-                   initial_sidebar_state="collapsed" if CLEAN or (FOCUS_COLLECTION and FILTERED) else "auto")
+                   initial_sidebar_state="collapsed" if CLEAN or DEMO or (FOCUS_COLLECTION and FILTERED) else "auto")
 st.markdown(render.CSS, unsafe_allow_html=True)
+if DEMO:
+    st.markdown(
+        """
+        <style>
+        [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"],
+        [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], #MainMenu, footer { display:none !important; }
+        </style>
+        """
+        + ("""
+        <style>
+        [data-testid="stTabs"] [role="tablist"],
+        .stTabs [data-baseweb="tab-list"], .stTabs [data-baseweb="tab-border"], .stTabs [data-baseweb="tab-highlight"] { display:none !important; }
+        </style>
+        """ if MAIN_ONLY else ""),
+        unsafe_allow_html=True,
+    )
 if CLEAN:                                                             # hide everything that belongs to the database app
     st.markdown(
         """
@@ -707,8 +730,11 @@ with tab_browse:
             st.session_state["browse_collection"] = FOCUS_COLLECTION
         if st.session_state.get("browse_collection") not in order:
             st.session_state["browse_collection"] = primary
-        selected = st.pills("Collection", order, selection_mode="single", key="browse_collection",
-                            format_func=lambda c: f"{cfgs[c]['icon']} {cfgs[c]['label']} ({len(data[c])})", label_visibility="collapsed")
+        if MAIN_ONLY:                                                 # demo=main: only the main collection, no buttons to switch
+            selected = primary
+        else:
+            selected = st.pills("Collection", order, selection_mode="single", key="browse_collection",
+                                format_func=lambda c: f"{cfgs[c]['icon']} {cfgs[c]['label']} ({len(data[c])})", label_visibility="collapsed")
         if selected is None:                                          # a click on the chosen button un-chooses it: choose the main one again
             st.rerun()
         restricted = bool(selected == st.query_params.get("collection") and FILTERED)                          # a link narrowed this collection down
@@ -722,7 +748,8 @@ with tab_browse:
                 for key in [k for k in list(st.query_params) if k in FILTER_PARAMS or k.startswith("where.")]:
                     st.query_params.pop(key, None)
                 st.rerun()
-        query = st.text_input("Search", placeholder="🔍 Search names, ids, anything…", key="browse_search", label_visibility="collapsed").strip().lower()
+        query = "" if MAIN_ONLY else st.text_input("Search", placeholder="🔍 Search names, ids, anything…", key="browse_search",
+                                                   label_visibility="collapsed").strip().lower()
         links = {c: render.link_field(c, data[c], primary, view) for c in order if c != primary}
 
         def related_text(pid: str) -> str:
@@ -736,6 +763,8 @@ with tab_browse:
                 st.info("Nothing matches your search.")
             else:
                 pcfg = cfgs[primary]
+                if DEMO and FOCUS_CUSTOMER in matches and f"pick_{table}" not in st.session_state:   # demo link with &customer=C001
+                    st.session_state[f"pick_{table}"] = FOCUS_CUSTOMER
                 pid = st.selectbox(pcfg["label_one"], list(matches), key=f"pick_{table}",
                                    format_func=lambda rid: f"{render.title_of(rid, matches[rid], pcfg)[0]}  ·  {rid}")
                 html(render.profile_html(primary, pid, matches[pid], view) + render.related_html(primary, pid, data, view))
@@ -750,10 +779,12 @@ with tab_browse:
             if len(matches) > 60:
                 st.caption(f"Showing the first 60 of {len(matches)}. Use the search to narrow it down.")
 
-        with st.expander("Raw JSON of everything in this table"):
-            st.json(data)
+        if not MAIN_ONLY:
+            with st.expander("Raw JSON of everything in this table"):
+                st.json(data)
 
-    st.caption(f"Table: **{table}**")                                  # the very end of the page
+    if not MAIN_ONLY:
+        st.caption(f"Table: **{table}**")                              # the very end of the page
 
 # ---------------------------------------------------------------- tables
 with tab_tables:
